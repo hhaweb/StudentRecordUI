@@ -1,0 +1,19 @@
+<div class="login">
+    <div class="account-login">
+      
+        <h1>Account Login</h1>
+       <div class="login-form">
+          <div>
+            <input type="text" placeholder="Email" pInputText [(ngModel)]="email"/>
+          </div>
+          <div>
+            <input type="password" placeholder="Password" pInputText [(ngModel)]="password"/>
+          </div>
+          <button class="btn" (click) = "login()">Login</button>
+          <div>
+             <a href="#" class="pull-right">Forgot Password?</a>
+          </div>
+        
+        </div>
+    </div>
+</div>
