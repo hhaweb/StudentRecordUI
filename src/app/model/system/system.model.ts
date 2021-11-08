@@ -9,5 +9,5 @@ export class Menu {
 }
 
 export class ConfigData {
-    public menuList: Menu[];
+    public menus: Menu[];
 }

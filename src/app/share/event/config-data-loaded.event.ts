@@ -7,7 +7,7 @@ import { BroadcasterService } from 'src/app/service/utility/broadcaster.service'
 export class ConfigDataLoadedEvent {
   constructor(private broadcasterService: BroadcasterService) {}
 
-  fire(data: any): void {
+  fire(data: ConfigData): void {
     this.broadcasterService.broadcast(ConfigDataLoadedEvent, data);
   }
 

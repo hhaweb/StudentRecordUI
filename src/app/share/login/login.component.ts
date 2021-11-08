@@ -1,6 +1,6 @@
 import { AuthorizationService } from './../../service/utility/authorization.service';
 import { UtilityService } from './../../service/utility/utility.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { TokenResponse } from 'src/app/model/user/user.model';
 import { AppComponent } from 'src/app/app.component';
 import { CookieService } from 'ngx-cookie-service';
@@ -8,13 +8,15 @@ import { ConfigDataLoadedEvent } from '../event/config-data-loaded.event';
 import { AuthenticationService } from 'src/app/service/utility/authentication.service';
 import { ConfigData } from 'src/app/model/system/system.model';
 import { Router } from '@angular/router';
+import { FullScreenService } from '../event/full-screen.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   password: string;
   email: string;
   webApiToken: TokenResponse;
@@ -26,12 +28,18 @@ export class LoginComponent implements OnInit {
     public app: AppComponent,
     private cookieService: CookieService,
     private configDataLoadedEvent: ConfigDataLoadedEvent,
+    private fullScreenService: FullScreenService,
     private router: Router) {  
   this.email = '';
   this.password = ''; 
   }
 
   ngOnInit( ): void {}
+
+  ngAfterViewInit() {
+    this.fullScreenService.fire();
+    console.log('enter');
+  }
 
   login() {
     if (!this.email || !this.password) {
@@ -46,13 +54,9 @@ export class LoginComponent implements OnInit {
       (response: TokenResponse) => {
         that.utilityService.hideLoading();
         that.webApiToken = response;
-        this.app.configData = new ConfigData();
-        this.app.configData.menuList = response.menuList;
-        this.configDataLoadedEvent.fire(this.app.configData);
         const today = new Date();
         const hours = today.getHours() + 1;
         that.authenticationService.UserLoggedIn.next(true);
-        
         const expirationDate = new Date(
           today.getFullYear(),
           today.getMonth(),
@@ -62,13 +66,25 @@ export class LoginComponent implements OnInit {
           0,
           0
         );
+        const loadSystemConfig = this.authenticationService.getSystemConfig();
+        forkJoin([loadSystemConfig]).subscribe(
+          (data: any) => {
+            console.log('get config data ', data[0]);
+            this.app.configData = new ConfigData();
+            this.app.configData.menus = data[0].menus;
+            this.configDataLoadedEvent.fire(data[0]);
+            }
+          ,
+          (error: any) => {
+            this.utilityService.showErrorModal('Error', error);
+          }
+        );
         that.cookieService.set(
           'authorizationData',
           JSON.stringify({
             token: that.webApiToken.token,
             userName: that.webApiToken.userName, 
             email: that.webApiToken.email 
-
           }),
           expirationDate,
           '/'
@@ -77,9 +93,6 @@ export class LoginComponent implements OnInit {
         const isSuperAdmin = response.roles.indexOf('ROLE_SUPER_ADMIN');
         const isAdmin = response.roles.indexOf('ROLE_ADMIN');
         const isStudent = response.roles.indexOf('ROLE_STUDENT');
-
-        
-
         if(isSuperAdmin != -1) {
           this.returnUrl = 'upload/data-upload'
         } else if(isAdmin != -1) {
@@ -87,10 +100,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.returnUrl = 'student/profile'
         }
-
-        void this.router.navigateByUrl(this.returnUrl);
-
-
+        void this.router.navigate([this.returnUrl]);
       },
       (err) => {
         // console.log(err);

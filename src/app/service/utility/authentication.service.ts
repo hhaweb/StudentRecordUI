@@ -1,3 +1,4 @@
+import { ConfigData } from './../../model/system/system.model';
 import { AuthUrls } from './../../model/config-model/auth-url';
 import { APIUrls } from './../../model/config-model/api-url';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -31,21 +32,28 @@ export class AuthenticationService {
 
   
   logout() {
-    this.userLogout().subscribe(
-      (response: HttpResponseData) => {
-        if (response.status !== 'Successful') {
-          console.log('logout unsuccessful');
-        }
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
+    // this.userLogout().subscribe(
+    //   (response: HttpResponseData) => {
+    //     if (response.status !== 'Successful') {
+    //       console.log('logout unsuccessful');
+    //     }
+    //   },
+    //   (err: any) => {
+    //     console.log(err);
+    //   }
+    // );
     this.UserLoggedIn.next(false);
     this.cookieService.delete('currentUser');
     this.cookieService.delete('routePermissions');
     this.cookieService.delete('authorizationData');
     void this.router.navigate(['/' + RoutesModel.Login]);
+  }
+
+  
+  getSystemConfig(): Observable<ConfigData> {
+    return this.httpClient.get<ConfigData>(
+      APIUrls.AuthUrls.GetSystemConfig
+    );
   }
 
   userLogout() {
@@ -129,12 +137,8 @@ export class AuthenticationService {
 
   isAuthorized(): boolean {
     const authorizationData = this.cookieService.get('authorizationData');
-    const twoFactorRequired = this.cookieService.get('twoFactorRequired');
-
-    if (
-      authorizationData &&
-      (!twoFactorRequired || twoFactorRequired === 'False')
-    ) {
+    if (authorizationData)
+    {
       return true;
     }
     return false;

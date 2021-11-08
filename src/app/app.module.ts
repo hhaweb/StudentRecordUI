@@ -21,6 +21,9 @@ import { GolbalErrorHandlerService } from './service/utility/golbal-error-handle
 import { AuthenticationService } from './service/utility/authentication.service';
 import { ConfigDataLoadedEvent } from './share/event/config-data-loaded.event';
 import { UploadComponent } from './view/upload/upload.component';
+import { FullScreenService } from './share/event/full-screen.service';
+import { StudentListComponent } from './view/student-list/student-list.component';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -28,12 +31,14 @@ import { UploadComponent } from './view/upload/upload.component';
     MenuComponent,
     HomeComponent,
     LoginComponent,
-    UploadComponent
+    UploadComponent,
+    StudentListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MenubarModule,
+    ButtonModule,
     CardModule,
     InputTextModule,
     HttpClientModule,
@@ -52,7 +57,8 @@ import { UploadComponent } from './view/upload/upload.component';
       multi: true,
     },
     { provide: ErrorHandler, useClass: GolbalErrorHandlerService },
-    ConfigDataLoadedEvent
+    ConfigDataLoadedEvent,
+    FullScreenService
 
   ],
   bootstrap: [AppComponent]

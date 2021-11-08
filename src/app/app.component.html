@@ -1,7 +1,8 @@
 
-<app-login></app-login>
-<app-menu></app-menu>
-<div class="grid">
- 
-  <router-outlet></router-outlet>
+<div *ngIf="!showFullScreen">
+  <app-menu></app-menu>
+</div>
+
+<div class="layout-content">
+  <router-outlet (activate)="changeOfRoutes()"></router-outlet>
 </div>

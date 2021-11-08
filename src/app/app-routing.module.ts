@@ -1,3 +1,5 @@
+import { StudentListComponent } from './view/student-list/student-list.component';
+import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { UploadComponent } from './view/upload/upload.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -5,17 +7,21 @@ import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: RoutesModel.Home, pathMatch: 'full' },
   {
-    path: '',
+    path: RoutesModel.Home,
+    component: HomeComponent
+  },
+  {
+    path: RoutesModel.Login,
     component: LoginComponent,
   },
   {
-    path: 'home',
-    component: HomeComponent,
-    data: { newRoute: '/' + '' },
+    path: RoutesModel.StudentList,
+    component: StudentListComponent
   },
   {
-    path: 'upload/data-upload',
+    path: RoutesModel.Upload,
     component: UploadComponent
   },
 ];
