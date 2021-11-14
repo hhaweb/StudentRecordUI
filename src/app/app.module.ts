@@ -6,7 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {MenubarModule} from 'primeng/menubar';
-import {MenuItem, MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
 import { MenuComponent } from './share/menu/menu.component';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
@@ -24,6 +24,12 @@ import { UploadComponent } from './view/upload/upload.component';
 import { FullScreenService } from './share/event/full-screen.service';
 import { StudentListComponent } from './view/student-list/student-list.component';
 import {ButtonModule} from 'primeng/button';
+import {FileUploadModule} from 'primeng/fileupload';
+import { LoadingComponent } from './share/loading/loading.component';
+import { ToastComponent } from './share/toast/toast.component';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {DialogModule} from 'primeng/dialog';
+import {ToastModule} from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -32,7 +38,9 @@ import {ButtonModule} from 'primeng/button';
     HomeComponent,
     LoginComponent,
     UploadComponent,
-    StudentListComponent
+    StudentListComponent,
+    LoadingComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -42,11 +50,17 @@ import {ButtonModule} from 'primeng/button';
     CardModule,
     InputTextModule,
     HttpClientModule,
+    ToastModule,
+    DialogModule,
     FormsModule,
-    PasswordModule
+    PasswordModule,
+    CardModule,
+    FileUploadModule,
+    ConfirmDialogModule
   ],
   providers: [
     MessageService,
+    ConfirmationService,
     UtilityService,
     BroadcasterService, 
     AuthorizationService,
@@ -61,6 +75,7 @@ import {ButtonModule} from 'primeng/button';
     FullScreenService
 
   ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

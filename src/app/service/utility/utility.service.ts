@@ -60,7 +60,6 @@ export class UtilityService {
     });
   }
 
-  
   showLoading(
     loadingMessage: string,
     showCancelButton = false,

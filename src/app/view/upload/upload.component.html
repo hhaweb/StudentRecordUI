@@ -1,1 +1,20 @@
-<p>upload works!</p>
+<div class="grid col-12 justify-content-center pt-20">
+    <div class="col-8">
+        <p-card>
+            <div class="grid justify-content-between">
+                <div class="col-3"><button pButton pRipple class="width-auto" type="button" (click)="goToStudentList()"
+                        label="Add New Student"></button></div>
+                <div class="col-3">
+                    <p-fileUpload #studentUplaodFile  chooseLabel="Upload Student" mode="basic" name="studentUploadFile"
+                     auto='true' customUpload="true" multiple="false" accept=".csv"  (uploadHandler)="onUploadEvent($event,'student')">
+                    </p-fileUpload>
+                </div>
+                <div class="col-3">
+                    <p-fileUpload #courseUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Course"
+                     auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'course')">
+                    </p-fileUpload>
+                </div>
+            </div>
+        </p-card>
+    </div>
+</div>

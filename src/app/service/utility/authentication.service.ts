@@ -22,9 +22,9 @@ export class AuthenticationService {
     this.UserLoggedIn.next(false);
   }
 
-  loginToWebApi(email: string, password: string): Observable<TokenResponse> {
+  loginToWebApi(userName: string, password: string): Observable<TokenResponse> {
     const userData = {
-      email:  email,
+      userName:  userName,
       password: encodeURIComponent(password)
     }
     return this.httpClient.post<TokenResponse>(APIUrls.AuthUrls.Login, userData);

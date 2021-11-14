@@ -1,0 +1,38 @@
+<div class="loader-screen semi-transparent" *ngIf="showLoading">
+    <div class="box-loader">
+      <div class="boxes">
+        <div class="box">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="box">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="box">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <div class="box">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </div>
+    <div class="ui-g loading-message">
+      <div class="p-grid">
+        <div class="p-col-12">{{ loadingMessage }}...</div>
+        <div class="p-col-12" *ngIf="showCancelButton">
+          <button type="button" label="Cancel" pButton (click)="cancelClick()"></button>
+        </div>
+      </div>
+    </div>
+  </div>

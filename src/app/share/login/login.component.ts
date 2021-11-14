@@ -18,7 +18,7 @@ import { forkJoin } from 'rxjs';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   password: string;
-  email: string;
+  userName: string;
   webApiToken: TokenResponse;
   returnUrl: string;
   constructor(
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private configDataLoadedEvent: ConfigDataLoadedEvent,
     private fullScreenService: FullScreenService,
     private router: Router) {  
-  this.email = '';
+  this.userName = '';
   this.password = ''; 
   }
 
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   login() {
-    if (!this.email || !this.password) {
+    if (!this.userName || !this.password) {
       this.utilityService.showError(
         'Invalid Input',
         'Please enter user name and password.'
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
     const that = this;
-    this.authenticationService.loginToWebApi(this.email, this.password).subscribe(
+    this.authenticationService.loginToWebApi(this.userName, this.password).subscribe(
       (response: TokenResponse) => {
         that.utilityService.hideLoading();
         that.webApiToken = response;
