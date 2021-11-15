@@ -1,7 +1,10 @@
+import { HttpResponseData } from './../../model/config-model/response.data';
 import { UtilityService } from './../../service/utility/utility.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from 'src/app/service/controller-service/upload.service';
 import { FileUpload } from 'primeng/fileupload';
+import { MessageService } from 'primeng/api';
+import { UploadResult } from 'src/app/model/upload/upload.model';
 
 @Component({
   selector: 'app-upload',
@@ -13,9 +16,11 @@ export class UploadComponent implements OnInit {
   @ViewChild('courseUploadFile') courseFile: FileUpload;
   courseUploadFile: any;
   studentUplaodFile: any;
+  studentResult: UploadResult;
   constructor(
     private uploadService: UploadService,
-    private utilityService: UtilityService) { }
+    private utilityService: UtilityService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
@@ -35,8 +40,14 @@ export class UploadComponent implements OnInit {
     formData.append('file', this.studentUplaodFile,this.studentUplaodFile.name);
     this.utilityService.showLoading('Uploading...')
     this.uploadService.uploadStudentFile(formData).subscribe(
-      (response: any) => {
-        console.log('file upload response', response)
+      (response: HttpResponseData) => {
+        if (response.status) {
+          this.studentResult = response.payLoad;
+        } else {
+
+        }
+        
+        this.utilityService.showSuccess('Success', 'Upload Successfully')
       },(error: any) => {
         this.utilityService.subscribeError(error, 'Unable to upload');
       },
@@ -48,7 +59,8 @@ export class UploadComponent implements OnInit {
   }
 
   goToStudentList() {
-    this.utilityService.showLoading('Uploading...')
+  //  this.utilityService.showLoading('Uploading...')
+
   }
 
   clear() {

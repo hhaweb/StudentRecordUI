@@ -52,6 +52,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const that = this;
     this.authenticationService.loginToWebApi(this.userName, this.password).subscribe(
       (response: TokenResponse) => {
+        if (!response.status) {
+          this.utilityService.showError('Error', 'Invalid username and password');
+          console.log('Invalid user name and password')
+          return;
+        }
         that.utilityService.hideLoading();
         that.webApiToken = response;
         const today = new Date();
@@ -66,6 +71,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
           0,
           0
         );
+        that.cookieService.set(
+          'authorizationData',
+          JSON.stringify({
+            token: that.webApiToken.token,
+            userName: that.webApiToken.userName, 
+            email: that.webApiToken.email 
+          }),
+          expirationDate,
+          '/'
+        );
+
         const loadSystemConfig = this.authenticationService.getSystemConfig();
         forkJoin([loadSystemConfig]).subscribe(
           (data: any) => {
@@ -79,16 +95,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.utilityService.showErrorModal('Error', error);
           }
         );
-        that.cookieService.set(
-          'authorizationData',
-          JSON.stringify({
-            token: that.webApiToken.token,
-            userName: that.webApiToken.userName, 
-            email: that.webApiToken.email 
-          }),
-          expirationDate,
-          '/'
-        );
+
 
         const isSuperAdmin = response.roles.indexOf('ROLE_SUPER_ADMIN');
         const isAdmin = response.roles.indexOf('ROLE_ADMIN');
@@ -103,7 +110,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         void this.router.navigate([this.returnUrl]);
       },
       (err) => {
-        // console.log(err);
+         console.log('error:::::',err.message);
         let errorMessage = err.error
           ? err.error.error_description
           : 'Login Failed';

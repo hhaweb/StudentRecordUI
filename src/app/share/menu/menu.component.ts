@@ -12,12 +12,29 @@ import { ConfigData } from 'src/app/model/system/system.model';
 })
 export class MenuComponent implements OnInit {
   items: MenuItem[] = [];
+  rightMenuItem: MenuItem[] = [];
   constructor( 
     public app: AppComponent,
     private configDataLoadedEvent: ConfigDataLoadedEvent,
     private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    this.rightMenuItem = [
+      {
+        items: [{
+            label: 'Profile',
+            icon: 'pi pi-user',
+            url: 'http://angular.io'
+        },
+        {
+            label: 'Logout',
+            icon: 'pi pi-times',
+            command: () => {
+              this.logout();
+          }
+        }
+    ]}
+    ]
     const that = this;
     this.configDataLoadedEvent.on().subscribe((data: ConfigData) => {
       that.items = data.menus;

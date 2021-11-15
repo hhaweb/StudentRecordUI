@@ -30,7 +30,15 @@ import { ToastComponent } from './share/toast/toast.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
-
+import { MessagesModule } from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MenuModule} from 'primeng/menu';
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
+import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,6 +52,7 @@ import {ToastModule} from 'primeng/toast';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MenubarModule,
     ButtonModule,
@@ -56,7 +65,11 @@ import {ToastModule} from 'primeng/toast';
     PasswordModule,
     CardModule,
     FileUploadModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    MessagesModule,
+    MessageModule,
+    MenuModule,
+    FontAwesomeModule
   ],
   providers: [
     MessageService,
@@ -75,7 +88,13 @@ import {ToastModule} from 'primeng/toast';
     FullScreenService
 
   ],
-  
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(library: FaIconLibrary) {
+    this.buildFontAwesomeLibrary(library);
+  }
+  buildFontAwesomeLibrary(library: FaIconLibrary) {
+    library.addIcons(faUserCircle);
+  }
+}

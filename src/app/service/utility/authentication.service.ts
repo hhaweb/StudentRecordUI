@@ -42,6 +42,7 @@ export class AuthenticationService {
     //     console.log(err);
     //   }
     // );
+    console.log('logout');
     this.UserLoggedIn.next(false);
     this.cookieService.delete('currentUser');
     this.cookieService.delete('routePermissions');

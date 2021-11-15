@@ -1,5 +1,13 @@
+
 /* You can add global styles to this file, and also import other style files */
 /* #region Custom Page Loading */
+body{
+  font-family: Roboto,Helvetica Neue,sans-serif;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+  min-height: 100%;
+}
 .loader-screen {
   width: 100%;
   min-height: 100%;
@@ -49,4 +57,20 @@
 
   .pr-10{
     padding-right: 10px;
+  }
+
+  .p-menubar {
+    background-color: #3f51b5de;
+  }
+
+  .p-menubar-root-list > li > a > .p-menuitem-icon {
+    color: #ffffff !important;
+  }
+
+  .p-menubar-root-list > li > a > .p-menuitem-text {
+    color: #ffffff !important;
+  }
+
+  .p-menubar-root-list > li > a > .p-submenu-icon {
+    color: #ffffff !important;
   }

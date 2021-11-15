@@ -1,5 +1,7 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="end">
-        <button pButton  icon="pi pi-power-off" (click) = "logout()"></button>
+        <fa-icon class="menu-icon" icon="user-circle" (click)="menu.toggle($event)"></fa-icon>
+
+        <p-menu #menu [popup]="true" [model]="rightMenuItem"></p-menu>
     </ng-template>
 </p-menubar>

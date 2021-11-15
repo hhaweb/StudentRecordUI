@@ -8,13 +8,23 @@
                     <p-fileUpload #studentUplaodFile  chooseLabel="Upload Student" mode="basic" name="studentUploadFile"
                      auto='true' customUpload="true" multiple="false" accept=".csv"  (uploadHandler)="onUploadEvent($event,'student')">
                     </p-fileUpload>
+                   <div class="grid" *ngIf="studentResult">
+                       <div class="col-12 mt-15"><strong>Student Upload Result</strong></div>
+                       <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{studentResult.totalCount}}</div>
+                       <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{studentResult.successCount}}</div>
+                       <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{studentResult.failCount}}</div>
+
+                   </div>
+
                 </div>
                 <div class="col-3">
                     <p-fileUpload #courseUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Course"
                      auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'course')">
                     </p-fileUpload>
                 </div>
+              
             </div>
         </p-card>
     </div>
 </div>
+
