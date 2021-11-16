@@ -59,7 +59,7 @@ export class UploadComponent implements OnInit {
   }
 
   goToStudentList() {
-  //  this.utilityService.showLoading('Uploading...')
+  ////  this.utilityService.showLoading('Uploading...')
 
   }
 
