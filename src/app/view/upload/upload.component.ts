@@ -70,4 +70,27 @@ export class UploadComponent implements OnInit {
     this.courseUploadFile = null;
   }
 
+  downloadErrorFile() {
+    this.uploadService.downloadFile('').subscribe(
+      (res: any) => {
+        this.utilityService.hideLoading();
+        if (res.body) {
+          this.utilityService.fileSaveAs(res);
+        } else {
+          this.utilityService.showWarning('Warning', 'File not found');
+        }
+      },
+      (error: any) => {
+        setTimeout(() => this.utilityService.hideLoading());
+        this.utilityService.subscribeError(
+          error,
+          'Unable to download file'
+        );
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
+  }
+
 }

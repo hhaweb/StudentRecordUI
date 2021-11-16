@@ -13,7 +13,7 @@
                        <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{studentResult.totalCount}}</div>
                        <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{studentResult.successCount}}</div>
                        <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{studentResult.failCount}}</div>
-
+                       <div class="col-12" style="padding: 0;"><p-button  (click)=downloadErrorFile() label="Download error file" styleClass="p-button-link"></p-button></div>
                    </div>
 
                 </div>

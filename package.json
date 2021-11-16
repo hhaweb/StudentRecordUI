@@ -31,7 +31,8 @@
     "zone.js": "~0.11.4",
     "@fortawesome/angular-fontawesome": "^0.6.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4"
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "file-saver": "^2.0.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.7",
