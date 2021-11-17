@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
+import { StudentProfileComponent } from './view/student-profile/student-profile.component';
 
 const routes: Routes = [
   { path: '', redirectTo: RoutesModel.Home, pathMatch: 'full' },
@@ -24,6 +25,10 @@ const routes: Routes = [
     path: RoutesModel.Upload,
     component: UploadComponent
   },
+  {
+    path: RoutesModel.StudentProfile,
+    component: StudentProfileComponent
+  }
 ];
 
 @NgModule({

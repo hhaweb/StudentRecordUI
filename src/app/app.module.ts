@@ -30,6 +30,9 @@ import { ToastComponent } from './share/toast/toast.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
+import { StudentProfileComponent } from './view/student-profile/student-profile.component';
+import {DropdownModule} from 'primeng/dropdown';
+import {RadioButtonModule} from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,7 @@ import {ToastModule} from 'primeng/toast';
     LoginComponent,
     UploadComponent,
     StudentListComponent,
+    StudentProfileComponent,
     LoadingComponent,
     ToastComponent
   ],
@@ -56,7 +60,9 @@ import {ToastModule} from 'primeng/toast';
     PasswordModule,
     CardModule,
     FileUploadModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DropdownModule,
+    RadioButtonModule
   ],
   providers: [
     MessageService,

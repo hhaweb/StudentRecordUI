@@ -2,6 +2,8 @@ import { UtilityService } from './../../service/utility/utility.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UploadService } from 'src/app/service/controller-service/upload.service';
 import { FileUpload } from 'primeng/fileupload';
+import { Router } from '@angular/router';
+import { RoutesModel } from 'src/app/model/config-model/route-model';
 
 @Component({
   selector: 'app-upload',
@@ -15,7 +17,8 @@ export class UploadComponent implements OnInit {
   studentUplaodFile: any;
   constructor(
     private uploadService: UploadService,
-    private utilityService: UtilityService) { }
+    private utilityService: UtilityService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -47,8 +50,8 @@ export class UploadComponent implements OnInit {
     this.clear();
   }
 
-  goToStudentList() {
-    this.utilityService.showLoading('Uploading...')
+  goToStudentProfile(){
+    void this.router.navigate([RoutesModel.StudentProfile]);
   }
 
   clear() {

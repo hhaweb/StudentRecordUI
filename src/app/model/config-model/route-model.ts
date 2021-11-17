@@ -4,5 +4,6 @@ export const RoutesModel = {
     ForgotPassword: 'forget-password',
     ResetPassword: 'reset-password',
     StudentList: 'student/student-list',
-    Upload: 'upload/data-upload'
+    Upload: 'upload/data-upload',
+    StudentProfile: 'student/student-profile'
 }
