@@ -94,6 +94,7 @@ export class AppModule {
   constructor(library: FaIconLibrary) {
     this.buildFontAwesomeLibrary(library);
   }
+  //build library
   buildFontAwesomeLibrary(library: FaIconLibrary) {
     library.addIcons(faUserCircle);
   }
