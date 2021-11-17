@@ -34,6 +34,15 @@ import { StudentProfileComponent } from './view/student-profile/student-profile.
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
 
+import { MessagesModule } from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MenuModule} from 'primeng/menu';
+import {
+  FaIconLibrary,
+  FontAwesomeModule,
+} from '@fortawesome/angular-fontawesome';
+import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +57,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     MenubarModule,
     ButtonModule,
@@ -62,7 +72,11 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     FileUploadModule,
     ConfirmDialogModule,
     DropdownModule,
-    RadioButtonModule
+    RadioButtonModule,
+    MessagesModule,
+    MessageModule,
+    MenuModule,
+    FontAwesomeModule
   ],
   providers: [
     MessageService,
@@ -81,7 +95,13 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     FullScreenService
 
   ],
-  
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+  constructor(library: FaIconLibrary) {
+    this.buildFontAwesomeLibrary(library);
+  }
+  buildFontAwesomeLibrary(library: FaIconLibrary) {
+    library.addIcons(faUserCircle);
+  }
+}

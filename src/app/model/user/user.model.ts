@@ -23,6 +23,7 @@ export class TokenResponse {
     public email: string;
     public menuList: Menu[];
     public roles: string[];
+    public status: boolean;
 }
 
 

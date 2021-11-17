@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
-import { Subject } from 'rxjs';
+import { Subject, throwError, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { LoadingBarModel } from 'src/app/model/config-model/loading-bar-model';
-
+import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root'
 })
@@ -110,5 +111,41 @@ export class UtilityService {
       summary,
       detail,
     });
+  }
+
+  
+  fileSaveAs(response: any) {
+    const blob = response.body;
+    // attachment; filename="FileName.xlsx"
+    const re = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/; // get filename.xlsx from above
+    const contentDisposition = response.headers.get('content-disposition');
+    // console.log(contentDisposition);
+    const filenameArray = contentDisposition.match(re);
+    let filename = contentDisposition;
+    if (filenameArray.length > 1) {
+      filename = filenameArray[1].replace(/['"]/g, '');
+    }
+    saveAs(blob, filename);
+  }
+
+  convertBlobToText(blob: Blob): Observable<string> {
+    if (blob instanceof Blob === false) {
+      return throwError('Unknown error');
+    }
+    const fileAsTextObservable = new Observable<string>((observer) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const responseText = (e.target as any).result;
+
+        observer.next(responseText);
+        observer.complete();
+      };
+    });
+
+    return fileAsTextObservable.pipe(
+      switchMap((errMsgJsonAsText) => {
+        return throwError(JSON.parse(errMsgJsonAsText));
+      })
+    );
   }
 }
