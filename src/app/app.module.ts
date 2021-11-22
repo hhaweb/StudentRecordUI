@@ -33,6 +33,7 @@ import {ToastModule} from 'primeng/toast';
 import { StudentProfileComponent } from './view/student-profile/student-profile.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {TableModule} from 'primeng/table';
 
 import { MessagesModule } from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -76,7 +77,8 @@ import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
     MessagesModule,
     MessageModule,
     MenuModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    TableModule
   ],
   providers: [
     MessageService,

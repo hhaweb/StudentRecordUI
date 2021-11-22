@@ -1,0 +1,23 @@
+.text-center{
+    text-align: center;
+}
+
+.text-left{
+    text-align: left;
+}
+
+.text-right{
+    text-align: right;
+}
+.margin-right-15{
+    margin-right: 15px;
+}
+
+:host ::ng-deep {
+    #myTable {
+      .p-datatable-header {
+        background-color: red;
+      }
+    }
+  }
+
