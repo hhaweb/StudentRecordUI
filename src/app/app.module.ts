@@ -43,6 +43,8 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
+import { UploadHistoryComponent } from './view/upload/upload-history.component';
+import {TableModule} from 'primeng/table';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,7 +55,8 @@ import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
     StudentListComponent,
     StudentProfileComponent,
     LoadingComponent,
-    ToastComponent
+    ToastComponent,
+    UploadHistoryComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +79,8 @@ import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
     MessagesModule,
     MessageModule,
     MenuModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    TableModule
   ],
   providers: [
     MessageService,

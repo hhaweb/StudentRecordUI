@@ -1,3 +1,4 @@
+import { UploadHistoryComponent } from './view/upload/upload-history.component';
 import { StudentListComponent } from './view/student-list/student-list.component';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { UploadComponent } from './view/upload/upload.component';
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: RoutesModel.Upload,
     component: UploadComponent
+  },
+  {
+    path: RoutesModel.UploadHistory,
+    component: UploadHistoryComponent
   },
   {
     path: RoutesModel.StudentProfile,

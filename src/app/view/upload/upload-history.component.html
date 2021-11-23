@@ -1,0 +1,88 @@
+<div class="grid col-12">
+    <p-card class="full-width">
+        <div class="grid">
+            <div class="col-12">
+                <p-table #dataTable rowHover="true" [responsive]="true" [value]="uploadHistoryList" dataKey="uploadHistory"
+                [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50, 100]"  [totalRecords]="totalRecords"
+                [loading]="tableLoading" [responsive]="true">
+                    <ng-template pTemplate="colgroup" let-columns>
+                      <colgroup>
+                        <col style="width: 80px" />
+                        <!-- Id -->
+                        <col style="width: 120px" />
+                        <!-- Upload File -->
+                        <col style="width: 90px" />
+                        <!-- Total Record -->
+                        <col style="width: 90px" />
+                        <!-- Success Record -->
+                        <col style="width: 90px" />
+                        <!-- Fail Record -->
+                        <col style="width: 120px" />
+                        <!-- Error File -->
+                        <col style="width: 120px" />
+                        <!-- Upload Date -->
+                        <col style="width: 120px" />
+                        <!-- Upload By -->
+                      </colgroup>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                      <tr>
+
+                        <th class="text-left" pSortableColumn="Id">
+                            Id
+                            <p-sortIcon field="Id"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="fileName">
+                            Upload File
+                            <p-sortIcon field="fileName"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="totalRecord">
+                            Total Records
+                            <p-sortIcon field="totalRecord"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="successRecord">
+                            Success Records
+                            <p-sortIcon field="successRecord"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="failRecord">
+                            Fail Records
+                            <p-sortIcon field="failRecord"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="errorFile">
+                            Error File
+                            <p-sortIcon field="errorFile"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="uploadDate">
+                            Upload Date
+                            <p-sortIcon field="uploadDate"></p-sortIcon>
+                        </th>
+                        <th class="text-left" pSortableColumn="uploadBy">
+                            Upload By
+                            <p-sortIcon field="uploadBy"></p-sortIcon>
+                        </th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-columns="columns">
+                      <tr>
+                        <td>{{ rowData.id }}</td>
+                        <td>{{ rowData.fileName }}</td>
+                        <td>{{ rowData.totalRecord }}</td>
+                        <td>{{ rowData.successRecord }}</td>
+                        <td>{{ rowData.failRecord }}</td>
+                        <td>{{ rowData.errorFileName }}</td>
+                        <td>{{ rowData.uploadDate || "" | date: "dd/MM/yyyy" }}</td>
+                        <td>{{ rowData.uploadBy }}</td>
+                      </tr>
+                    </ng-template>
+                  
+                    <ng-template pTemplate="emptymessage" let-columns>
+                      <tr>
+                        <td [attr.colspan]="8">No records found</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+            </div>
+        </div>
+
+    </p-card>
+</div>

@@ -62,6 +62,50 @@ body{
     padding-right: 10px;
   }
 
+  .full-width {
+    width: 100%;
+  }
+
+
+
+  
+  /// primeng overwride
+  .p-component, body, body .p-button, body .p-datatable .ui-table-scrollable-wrapper thead tr th, body .p-inputtext, body .ui-table thead tr th {
+    font-size: 13px;
+  }
+
+  .p-menubar .p-menuitem-link .p-menuitem-text {
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  body .p-datatable .p-datatable-tbody>tr:nth-child(2n) {
+    background-color: #f4f4f4;
+  }
+
+  .p-datatable .p-sortable-column .p-sortable-column-icon {
+    color: #ffffff;
+    font-size: 13px;
+  }
+
+  .p-datatable .p-sortable-column.p-highlight {
+    background: #fff !important;
+    color: #000001 !important;
+  }
+
+  .p-paginator .p-paginator-pages .p-paginator-page {
+    min-width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  .p-paginator .p-paginator-first, .p-paginator .p-paginator-prev, .p-paginator .p-paginator-next, .p-paginator .p-paginator-last  {
+    min-width: 2rem !important;
+    height: 2rem !important;
+  }
+  .p-paginator .p-dropdown {
+    height: auto !important;
+  }
+
   .p-menubar {
     background-color: #3f51b5de;
   }
@@ -75,5 +119,10 @@ body{
   }
 
   .p-menubar-root-list > li > a > .p-submenu-icon {
+    color: #ffffff !important;
+  }
+
+  .p-datatable .p-datatable-thead > tr > th{
+    background-color: #3f51b5de !important;
     color: #ffffff !important;
   }
