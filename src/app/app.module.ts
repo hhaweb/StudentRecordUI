@@ -34,6 +34,7 @@ import { StudentProfileComponent } from './view/student-profile/student-profile.
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {TableModule} from 'primeng/table';
+import {CalendarModule} from 'primeng/calendar';
 
 import { MessagesModule } from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -44,6 +45,7 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
+import { StudentDetailsComponent } from './view/student-details/student-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +56,8 @@ import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
     StudentListComponent,
     StudentProfileComponent,
     LoadingComponent,
-    ToastComponent
+    ToastComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +81,8 @@ import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
     MessageModule,
     MenuModule,
     FontAwesomeModule,
-    TableModule
+    TableModule,
+    CalendarModule
   ],
   providers: [
     MessageService,

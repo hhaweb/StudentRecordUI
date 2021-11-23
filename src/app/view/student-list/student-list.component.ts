@@ -5,6 +5,7 @@ import { StudentService } from 'src/app/service/controller-service/student.servi
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router } from '@angular/router';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
+import { RoutesModel } from 'src/app/model/config-model/route-model';
 
 @Component({
   selector: 'app-student-list',
@@ -13,9 +14,12 @@ import { HttpResponseData } from 'src/app/model/config-model/response.data';
 })
 export class StudentListComponent implements OnInit {
 
-  students: StudentOutput[]
-  studentInput: StudentFilter
+  students: StudentOutput[];
+  selectedStudent: StudentOutput;
+  studentInput: StudentFilter;
   totalStudents = 0;
+  selectedStudentID: string;
+  selectedCourseID: string;
 
   constructor(private studentService: StudentService,
               private utilService: UtilityService,
@@ -58,11 +62,15 @@ export class StudentListComponent implements OnInit {
   }
 
   viewStudent(){
-
+    void this.router.navigate([RoutesModel.StudentDetails]);
   }
 
   editStudent(){
     
+  }
+  
+  search(){
+
   }
 
 }

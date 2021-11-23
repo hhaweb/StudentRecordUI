@@ -26,6 +26,7 @@ export class StudentProfileComponent implements OnInit {
   ngOnInit() {
    this.student = new StudentInput();
    this.student.gender = "Male";
+   //this.student.dateOfBirth = new Date();
   }
 
   onPhotoUpload(event: any){

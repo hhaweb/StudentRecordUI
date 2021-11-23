@@ -13,11 +13,10 @@
     margin-right: 15px;
 }
 
-:host ::ng-deep {
-    #myTable {
-      .p-datatable-header {
-        background-color: red;
-      }
-    }
+th {
+    background-color:#3047c4 !important;
+    color:white !important;
   }
+
+
 

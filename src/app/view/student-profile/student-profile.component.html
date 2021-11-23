@@ -40,6 +40,12 @@
         <div class="col-5"></div>
     </div>
     <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="dob">Date of Birth</label> </div>
+        <div class="col-7"><p-calendar [(ngModel)]="student.dateOfBirth"
+            placeholder ="yy-mm-dd" dateFormat="yy-mm-dd" [monthNavigator]="true" [yearNavigator]="true"  yearRange="2000:2030" inputId="navigators"
+             [readonlyInput]="true" placeholde="yy-mm-dd" [showIcon]="true" inputId="icon"></p-calendar></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
         <div class="col-1">Photo</div>
         <div class="col-2">
             <p-fileUpload name="photo" accept="image/*" mode="advanced" style="border: none;" chooseLabel="Choose Photo"

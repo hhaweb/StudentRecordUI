@@ -1,14 +1,14 @@
-<div class="p-card" style="margin-top: 30px;">
-    <div class="grid col-12 justify-content-center">
-        <input class="margin-right-15" type="text" id="name" required="true" pInputText placeholder="Student ID" style="width:10%"/>
-        <input class="margin-right-15" type="text" id="name" required="true" pInputText placeholder="Course ID" style="width:10%"/>
+<div class="grid col-12 p-card" style="margin-top: 30px;">
+    <div class="grid col-12 justify-content-center" style="padding-top: 20px;">
+        <input class="margin-right-15" type="text" id="name" [(ngModel)] = "selectedStudentID" (onClick) ="search()" pInputText placeholder="Student ID" style="width:10%"/>
+        <input class="margin-right-15" type="text" id="name" [(ngModel)] = "selectedCourseID" (onClick) ="search()" pInputText placeholder="Course ID" style="width:10%"/>
         <button pButton type="button" label="Search" (click)="editStudent()"
-            style="background-color:#3047c4;color:white"></button>
+            style="background-color:#3047c4;color:white;width:8%"></button>
     </div>
-    <div class="p-col-12 " style="width: 100%; overflow-y: hidden;margin-top: 20px;">
-        <p-table #dt rowHover="true" [value]="students" [paginator]="true" [rows]="50"
+    <div class="col-12" style="width: 100%; margin-top: 5px;">
+        <p-table  #dt rowHover="true" styleClass="p-datatable-striped"  [value]="students" [paginator]="true" [rows]="50"
             [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalStudents" [lazy]="true" [lazyLoadOnInit]="false"
-            (onLazyLoad)="lazyLoadEvent($event)" [responsive]="true" id="myTable"> 
+            (onLazyLoad)="lazyLoadEvent($event)"  [(selection)]="selectedStudent" [responsive]="true"> 
             <ng-template pTemplate="colgroup" let-columns>
                 <colgroup>
                     <col style="width: 80px" />
@@ -31,53 +31,43 @@
                     <!-- Gender -->
                     <col style="width: 100px" />
                     <!-- Blood Type -->
-                    <col style="width: 150px" />
+                    <col style="width: 200px" />
                     <!-- Action -->
                 </colgroup>
             </ng-template>
             <ng-template pTemplate="header">
-                <tr>
-                    <th class="text-center" pSortableColumn="name">
+                <tr >
+                    <th class="text-left">
                         No
-                        <p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="name">
+                    <th class="text-left">
                         Student ID
-                        <p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="name">
+                    <th class="text-left">
                         Student Name
-                        <p-sortIcon field="name"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="cid">
+                    <th class="text-left" >
                         CID
-                        <p-sortIcon field="cid"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="did">
+                    <th class="text-left">
                         DID
-                        <p-sortIcon field="did"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="email">
+                    <th class="text-left">
                         Email
-                        <p-sortIcon field="email"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="dateOfBith">
+                    <th class="text-left">
                         Date of Birth
-                        <p-sortIcon field="dateOfBith"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="mobileNo">
+                    <th class="text-left" >
                         Phone Num
-                        <p-sortIcon field="mobileNo"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="gender">
+                    <th class="text-left">
                         Gender
-                        <p-sortIcon field="gender"></p-sortIcon>
                     </th>
-                    <th class="text-center" pSortableColumn="gender">
-                        BloodType
-                        <p-sortIcon field="gender"></p-sortIcon>
+                    <th class="text-left">
+                        Blood Type
                     </th>
-                    <th class="text-center">
+                    <th class="text-left">
                         Action
                     </th>
                 </tr>
@@ -87,40 +77,40 @@
                 <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
 
                     <td>
-
+                        {{ rowIndex+1 }}
                     </td>
                     <td>
 
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{ rowData.name }}
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{ rowData.cid }}
                     </td>
-                    <td>
+                    <td class="text-left"> 
                         {{ rowData.did }}
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{ rowData.email }}
                     </td>
-                    <td>
-                        {{ rowData.dateOfBith }}
+                    <td class="text-left">
+                        {{ rowData.dateOfBirth }}
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{ rowData.mobileNo }}
                     </td>
-                    <td>
+                    <td class="text-left">
                         {{ rowData.gender }}
                     </td>
-                    <td>
+                    <td class="text-left">
 
                     </td>
-                    <td>
-                        <div class="text-right">
-                            <button pButton type="button" label="View" (click)="viewStudent()"
+                    <td class="text-left">
+                        <div>
+                            <button pButton class="p-button-sm" type="button" label="View" (click)="viewStudent()"
                                 style="background-color:#3047c4;color:white;margin-right:10px"></button>
-                            <button pButton type="button" label="Edit" (click)="editStudent()"
+                            <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent()"
                                 style="background-color:#3047c4;color:white"></button>
                         </div>
                     </td>
