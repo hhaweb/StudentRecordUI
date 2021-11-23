@@ -1,0 +1,114 @@
+<div class="grid col-12">
+    <div class="col-12">
+        <p-card header="">
+            <div style="font-size: 20px;font-weight: bold;">Detalis Information of StudentA</div>
+            <div>
+                <ul>
+                    <li>
+                        <div>
+                            Profile
+                            <ul class="margin-top-10">
+                                <li>Student ID</li>
+                                <li>Student Name</li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="margin-top-30">Course Information
+                        <div class="col-12" style="width: 100%; margin-top: 5px;">
+                            <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="studentDetails"
+                                [responsive]="true">
+                                <ng-template pTemplate="colgroup" let-columns>
+                                    <colgroup>
+                                        <col style="width: 200px" />
+                                        <!-- Course Status -->
+                                        <col style="width: 200px" />
+                                        <!-- Course ID -->
+                                        <col style="width: 200px" />
+                                        <!-- Sector-->
+                                        <col style="width: 200px" />
+                                        <!-- Course Level -->
+                                        <col style="width: 200px" />
+                                        <!-- Duration -->
+                                        <col style="width: 200px" />
+                                        <!-- StartDate -->
+                                        <col style="width: 200px" />
+                                        <!-- EndDate -->
+                                    </colgroup>
+                                </ng-template>
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th class="text-left">
+                                            Course Status
+                                        </th>
+                                        <th class="text-left">
+                                            Course ID
+                                        </th>
+                                        <th class="text-left">
+                                            Sector
+                                        </th>
+                                        <th class="text-left">
+                                            Course Level
+                                        </th>
+                                        <th class="text-left">
+                                            Duration
+                                        </th>
+                                        <th class="text-left">
+                                            StartDate
+                                        </th>
+                                        <th class="text-left">
+                                            EndDate
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex"
+                                    let-expanded="expanded" let-columns="columns">
+                                    <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
+
+                                        <td>
+                                            {{ rowData.courseStatus }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.cid }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.sector }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.courseLevel }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.duration }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.startDate }}
+                                        </td>
+                                        <td class="text-left">
+                                            {{ rowData.endDate }}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage" let-columns>
+                                    <tr>
+                                        <td [attr.colspan]="11">No records found</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </li>
+                    <li class="margin-top-30">Recommend Course
+                        <ul class="margin-top-10">
+                            <li>Courser ID</li>
+                            <li>Course Name</li>
+                        </ul>
+                    </li>
+                    <li class="margin-top-30">Tracer Study
+                        <ul class="margin-top-10">
+                            <li style="list-style: none;">Employment Status</li>
+                            <li style="padding-top: 15px; list-style: none;">Employment Organization Type</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </p-card>
+    </div>
+</div>

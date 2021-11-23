@@ -1,44 +1,66 @@
-
-    <div class="grid col-12 p-card" style="padding:0;margin-top:5px" >
-        <div class="col-12" style="background-color: blue;height: 50px;margin-bottom: 20px;">
-            Add New Student
-        </div>
-        <div class="grid col-12" style="justify-content: center; ">
-            <div class="col-1"><label for="name">Name</label> </div>
-            <div class="col-7"><input type="text" id="name" pInputText style="width:100%" /></div>
-        </div>
-        <div class="grid col-12" style="justify-content: center;">
-            <div class="col-1"><label for="email">Email</label> </div>
-            <div class="col-7"><input type="email" id="email" pInputText style="width:100%" /></div>
-        </div>
-        <div class="grid col-12" style="justify-content: center;">
-            <div class="col-1"><label for="mobileno">Mobile No</label> </div>
-            <div class="col-7"><input type="number" id="mobileno" pInputText style="width:100%" /></div>
-        </div>
-        <div class="grid col-12" style="justify-content: center;">
-            <div class="col-1"><label for="gender">Gender</label> </div>
-            <div class="col-2">
-                <div>
-                    <p-radioButton name="groupname" value="Male" [(ngModel)]="selectedGender" inputId="gender1">
-                    </p-radioButton>
-                    <label for="gender1" style="padding-left: 5px;">Male</label>
-                </div>
-                <div style="padding-top:5px;">
-                    <p-radioButton name="groupname" value="Female" [(ngModel)]="selectedGender" inputId="gender2">
-                    </p-radioButton>
-                    <label for="gender2" style="padding-left: 5px;">Female</label>
-                </div>
-            </div>
-            <div class="col-5"></div>
-        </div>
-        <div class="grid col-12" style="justify-content: center;">
-            <div class="col-1"> </div>
-            
-            <div class="col-3">
-                <button pButton type="button" label="Submit" class="p-button-info"></button>
-                <button pButton type="button" label="Cancel" class="p-button-info" style="margin-left: 5px;"></button>
-            </div>
-            <div class="col-4"></div>
-        </div>
+<div class="grid col-12 p-card" style="padding:0;margin-top:5px">
+    <div class="col-12" style="font-size: 16px;background-color:#3047c4;height: 50px;margin-bottom: 20px; color:white;">
+        Add New Student
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="name">Name</label> </div>
+        <div class="col-7"><input type="text" id="name" required="true" [(ngModel)]="student.name" pInputText
+                style="width:100%" /></div>
 
     </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="cid">Cid</label> </div>
+        <div class="col-7"><input type="number" id="cid" required="true" [(ngModel)]="student.cid" pInputText
+                style="width:100%" /></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="email">Email</label> </div>
+        <div class="col-7"><input type="email" id="email" required="true" [(ngModel)]="student.email" pInputText
+                style="width:100%" /></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="mobileno">Mobile No</label> </div>
+        <div class="col-7"><input type="text" id="mobileno" required="true" [(ngModel)]="student.mobileNo" pInputText
+                style="width:100%" /></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="gender">Gender</label> </div>
+        <div class="col-2">
+            <div>
+                <p-radioButton name="groupname" value="Male" [(ngModel)]="student.gender" inputId="gender1">
+                </p-radioButton>
+                <label for="gender1" style="padding-left: 5px;">Male</label>
+            </div>
+            <div style="padding-top:5px;">
+                <p-radioButton name="groupname" value="Female" [(ngModel)]="student.gender" inputId="gender2">
+                </p-radioButton>
+                <label for="gender2" style="padding-left: 5px;">Female</label>
+            </div>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"><label for="dob">Date of Birth</label> </div>
+        <div class="col-7"><p-calendar [(ngModel)]="student.dateOfBirth"
+            placeholder ="yy-mm-dd" dateFormat="yy-mm-dd" [monthNavigator]="true" [yearNavigator]="true"  yearRange="2000:2030" inputId="navigators"
+             [readonlyInput]="true" placeholde="yy-mm-dd" [showIcon]="true" inputId="icon"></p-calendar></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1">Photo</div>
+        <div class="col-2">
+            <p-fileUpload name="photo" accept="image/*" mode="advanced" style="border: none;" chooseLabel="Choose Photo"
+            customUpload="true"  (uploadHandler)="onPhotoUpload($event)" [auto]="true"></p-fileUpload>
+        </div>
+        <div class="col-5"></div>
+    </div>
+    <div class="grid col-12 justify-content-center">
+        <div class="col-1"> </div>
+        <div class="col-3">
+            <button pButton type="button" label="Submit" (click)="addStudent()"
+                style="background-color:#3047c4;color:white"></button>
+            <button pButton type="button" label="Cancel" (click)="clear()"
+                style="margin-left: 5px;background-color:#3047c4;color:white"></button>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>

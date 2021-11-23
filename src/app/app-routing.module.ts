@@ -6,6 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
 import { StudentProfileComponent } from './view/student-profile/student-profile.component';
+import {StudentDetailsComponent} from "./view/student-details/student-details.component";
 
 const routes: Routes = [
   { path: '', redirectTo: RoutesModel.Home, pathMatch: 'full' },
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: RoutesModel.StudentProfile,
     component: StudentProfileComponent
+  },
+  {
+    path: RoutesModel.StudentDetails,
+    component: StudentDetailsComponent
   }
 ];
 
