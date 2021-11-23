@@ -1,0 +1,126 @@
+<div class="grid col-12 p-card" style="margin-top: 30px;">
+    <div class="grid col-12 justify-content-center" style="padding-top: 20px;">
+        <input class="margin-right-15" type="text" id="name" [(ngModel)] = "selectedStudentID" (onClick) ="search()" pInputText placeholder="Student ID" style="width:10%"/>
+        <input class="margin-right-15" type="text" id="name" [(ngModel)] = "selectedCourseID" (onClick) ="search()" pInputText placeholder="Course ID" style="width:10%"/>
+        <button pButton type="button" label="Search" (click)="editStudent()"
+            style="background-color:#3047c4;color:white;width:8%"></button>
+    </div>
+    <div class="col-12" style="width: 100%; margin-top: 5px;">
+        <p-table  #dt rowHover="true" styleClass="p-datatable-striped"  [value]="students" [paginator]="true" [rows]="50"
+            [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalStudents" [lazy]="true" [lazyLoadOnInit]="false"
+            (onLazyLoad)="lazyLoadEvent($event)"  [(selection)]="selectedStudent" [responsive]="true"> 
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col style="width: 80px" />
+                    <!-- No -->
+                    <col style="width: 100px" />
+                    <!-- StudentID -->
+                    <col style="width: 125px" />
+                    <!-- StudentName-->
+                    <col style="width: 100px" />
+                    <!-- Cid -->
+                    <col style="width: 100px" />
+                    <!-- Did -->
+                    <col style="width: 100px" />
+                    <!-- Email -->
+                    <col style="width: 100px" />
+                    <!-- DateOfBirth -->
+                    <col style="width: 100px" />
+                    <!-- Phone num -->
+                    <col style="width: 100px" />
+                    <!-- Gender -->
+                    <col style="width: 100px" />
+                    <!-- Blood Type -->
+                    <col style="width: 200px" />
+                    <!-- Action -->
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr >
+                    <th class="text-left">
+                        No
+                    </th>
+                    <th class="text-left">
+                        Student ID
+                    </th>
+                    <th class="text-left">
+                        Student Name
+                    </th>
+                    <th class="text-left" >
+                        CID
+                    </th>
+                    <th class="text-left">
+                        DID
+                    </th>
+                    <th class="text-left">
+                        Email
+                    </th>
+                    <th class="text-left">
+                        Date of Birth
+                    </th>
+                    <th class="text-left" >
+                        Phone Num
+                    </th>
+                    <th class="text-left">
+                        Gender
+                    </th>
+                    <th class="text-left">
+                        Blood Type
+                    </th>
+                    <th class="text-left">
+                        Action
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+                let-columns="columns">
+                <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
+
+                    <td>
+                        {{ rowIndex+1 }}
+                    </td>
+                    <td>
+
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.name }}
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.cid }}
+                    </td>
+                    <td class="text-left"> 
+                        {{ rowData.did }}
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.email }}
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.dateOfBirth }}
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.mobileNo }}
+                    </td>
+                    <td class="text-left">
+                        {{ rowData.gender }}
+                    </td>
+                    <td class="text-left">
+
+                    </td>
+                    <td class="text-left">
+                        <div>
+                            <button pButton class="p-button-sm" type="button" label="View" (click)="viewStudent()"
+                                style="background-color:#3047c4;color:white;margin-right:10px"></button>
+                            <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent()"
+                                style="background-color:#3047c4;color:white"></button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td [attr.colspan]="11">No records found</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

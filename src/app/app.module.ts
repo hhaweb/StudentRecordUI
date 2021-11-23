@@ -33,6 +33,8 @@ import {ToastModule} from 'primeng/toast';
 import { StudentProfileComponent } from './view/student-profile/student-profile.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {TableModule} from 'primeng/table';
+import {CalendarModule} from 'primeng/calendar';
 
 import { MessagesModule } from 'primeng/messages';
 import {MessageModule} from 'primeng/message';
@@ -44,7 +46,7 @@ import {
 } from '@fortawesome/angular-fontawesome';
 import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
-import {TableModule} from 'primeng/table';
+import { StudentDetailsComponent } from './view/student-details/student-details.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,7 +58,8 @@ import {TableModule} from 'primeng/table';
     StudentProfileComponent,
     LoadingComponent,
     ToastComponent,
-    UploadHistoryComponent
+    UploadHistoryComponent,
+    StudentDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +83,8 @@ import {TableModule} from 'primeng/table';
     MessageModule,
     MenuModule,
     FontAwesomeModule,
-    TableModule
+    TableModule,
+    CalendarModule
   ],
   providers: [
     MessageService,
