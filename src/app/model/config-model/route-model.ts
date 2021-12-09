@@ -7,5 +7,6 @@ export const RoutesModel = {
     Upload: 'upload/data-upload',
     UploadHistory: 'upload/data-upload-history',
     StudentProfile: 'student/student-profile',
-    StudentDetails: 'student/student-details'
+    StudentDetails: 'student/student-details',
+    CourseInfo: 'course/course-info'
 }
