@@ -46,11 +46,12 @@ export class UploadComponent implements OnInit {
       (response: HttpResponseData) => {
         if (response.status) {
           this.studentResult = response.payLoad;
+          this.utilityService.showSuccess('Success', 'Upload Successfully')
         } else {
-
+          this.utilityService.showError('Error', response.message);
         }
         
-        this.utilityService.showSuccess('Success', 'Upload Successfully')
+        
       },(error: any) => {
         this.utilityService.subscribeError(error, 'Unable to upload');
       },
@@ -77,7 +78,7 @@ export class UploadComponent implements OnInit {
   }
 
   downloadErrorFile() {
-    this.uploadService.downloadFile('').subscribe(
+    this.uploadService.downloadFile(this.studentResult.id.toString()).subscribe(
       (res: any) => {
         this.utilityService.hideLoading();
         if (res.body) {
