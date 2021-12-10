@@ -13,8 +13,15 @@ import { HttpResponseData } from 'src/app/model/config-model/response.data';
   styleUrls: ['./student-profile.component.scss']
 })
 
+
+
 export class StudentProfileComponent implements OnInit {
 
+  availableBatches: SelectItem[];
+  availableBloodGroups: SelectItem[];
+  availableMaritalStatues: SelectItem[];
+  availableTrainingYears: SelectItem[];
+  imageSrc: string;
   selectedGender: string;
   student: StudentInput;
   constructor(private studentService: StudentService,
@@ -24,15 +31,56 @@ export class StudentProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+   
+
+  this.availableTrainingYears = 
+  [{label:"2018",value: "2018"},
+  {label:"2019",value: "2019"},
+  {label:"2020",value: "2020"},
+  {label:"2021",value: "2021"},
+ ]
+  this.availableBatches =
+          [{label:"Batch 1",value: "Batch 1"},
+          {label:"Batch 2",value: "Batch 2"},
+          {label:"Batch 3",value: "Batch 3"},
+          {label:"Batch 4",value: "Batch 4"},
+          {label:"Batch 5",value: "Batch 5"}]
+
+  this.availableBloodGroups =
+  [{label:"A",value: "A"},
+  {label:"AB",value: "AB"},
+  {label:"B",value: "B"},
+  {label:"O",value: "O"},
+ ]
+
+ this.availableMaritalStatues =
+  [{label:"Single",value: "Single"},
+  {label:"Married",value: "Married"},
+  {label:"Divorced",value: "Divorced"},
+  {label:"Widowed",value: "Widowed"},
+ ]
+
+   
    this.student = new StudentInput();
    this.student.gender = "Male";
-   //this.student.dateOfBirth = new Date();
   }
 
   onPhotoUpload(event: any){
-    console.log(event.files);
-   //this.student.avatar = event.files
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = reader.result.toString();
+
+      reader.readAsDataURL(file);
+    }
   }
+  
+  removeImage(element) {
+    this.imageSrc = null;
+    element.value = '';
+  }
+
 
   addStudent(){
    console.log('call api', this.student);

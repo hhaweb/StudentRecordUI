@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SelectItem } from 'primeng/api';
 import { StudentFilter, StudentOutput } from 'src/app/model/student/student.model';
 import { StudentService } from 'src/app/service/controller-service/student.service';
@@ -6,6 +6,7 @@ import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router } from '@angular/router';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
+import { CourseInfoComponent } from '../course-info/course-info.component';
 
 @Component({
   selector: 'app-student-list',
@@ -14,13 +15,15 @@ import { RoutesModel } from 'src/app/model/config-model/route-model';
 })
 export class StudentListComponent implements OnInit {
 
+  @ViewChild('courseInfoComponent',{static:true})
+  courseInfoComponent:CourseInfoComponent;
   students: StudentOutput[];
   selectedStudent: StudentOutput;
   studentInput: StudentFilter;
   totalStudents = 0;
   selectedStudentID: string;
   selectedCourseID: string;
-
+  searchInfo: string = 'student';
   constructor(private studentService: StudentService,
               private utilService: UtilityService,
               private router: Router) { }
@@ -62,15 +65,16 @@ export class StudentListComponent implements OnInit {
   }
 
   viewStudent(){
-    void this.router.navigate([RoutesModel.StudentDetails]);
+    void this.router.navigate([RoutesModel.StudentDetails,{type:'view'}]);
   }
 
   editStudent(){
-    
+  void this.router.navigate([RoutesModel.StudentDetails,{type:'edit'}]);
   }
   
   search(){
-
+   if(this.selectedCourseID) this.searchInfo = 'course';
+    if(this.selectedStudentID) this.searchInfo = 'student';
   }
 
 }

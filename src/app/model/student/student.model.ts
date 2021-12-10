@@ -6,6 +6,11 @@ export class StudentInput {
     public avatar: string;
     public cid: number;
     public dateOfBirth: Date;
+    public batchNo: string;
+    public bloodGroup: string;
+    public did: string;
+    public maritalStatus: string;
+    public trainingYear: string;
 
 }
 
