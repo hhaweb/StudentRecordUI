@@ -45,8 +45,10 @@ import {
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
 import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
+import {AvatarModule} from 'primeng/avatar';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
 import { StudentDetailsComponent } from './view/student-details/student-details.component';
+import { CourseInfoComponent } from './view/course-info/course-info.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +61,8 @@ import { StudentDetailsComponent } from './view/student-details/student-details.
     LoadingComponent,
     ToastComponent,
     UploadHistoryComponent,
-    StudentDetailsComponent
+    StudentDetailsComponent,
+    CourseInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,8 @@ import { StudentDetailsComponent } from './view/student-details/student-details.
     MenuModule,
     FontAwesomeModule,
     TableModule,
-    CalendarModule
+    CalendarModule,
+    AvatarModule
   ],
   providers: [
     MessageService,
