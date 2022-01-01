@@ -7,5 +7,8 @@ export const AuthUrls = {
     SaveUser: baseUrl + 'save-user',
     GetCurrentUser: baseUrl + 'get-current-user',
     LogOut: baseUrl + 'logout',
-    GetSystemConfig: baseUrl + 'get-system-config'
+    GetSystemConfig: baseUrl + 'get-system-config',
+    GetUserList: baseUrl + 'get-user-list',
+    GetUser: baseUrl + 'get-user',
+    GetRoles: baseUrl + 'get-roles'
 }

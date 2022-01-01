@@ -1,7 +1,8 @@
+import { SelectItem } from 'primeng/api';
 import { ConfigData } from './../../model/system/system.model';
 import { AuthUrls } from './../../model/config-model/auth-url';
 import { APIUrls } from './../../model/config-model/api-url';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -10,6 +11,7 @@ import { CurrentUser, TokenResponse } from 'src/app/model/user/user.model';
 import { Observable, Subject } from 'rxjs';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
+import { SearchModel } from 'src/app/model/common/common.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -42,11 +44,9 @@ export class AuthenticationService {
     //     console.log(err);
     //   }
     // );
-    console.log('logout');
-    this.UserLoggedIn.next(false);
-    this.cookieService.delete('currentUser');
-    this.cookieService.delete('routePermissions');
     this.cookieService.delete('authorizationData');
+    this.cookieService.delete('routePermissions');
+    this.UserLoggedIn.next(false);
     void this.router.navigate(['/' + RoutesModel.Login]);
   }
 
@@ -111,7 +111,7 @@ export class AuthenticationService {
   //   );
   // }
 
-  getUserInfo(): Observable<CurrentUser> {
+  getCurrentLoginUser(): Observable<CurrentUser> {
     return this.httpClient.get<CurrentUser>(APIUrls.AuthUrls.GetCurrentUser);
   }
 
@@ -147,5 +147,31 @@ export class AuthenticationService {
 
   getPasswordChangeRemainingDays(passwordAge: number): number {
     return 60 - passwordAge;
+  }
+
+  getUserList(search: SearchModel): Observable<CurrentUser[]> {
+    return this.httpClient.post<CurrentUser[]>(APIUrls.AuthUrls.GetUserList, search);
+  }
+
+  
+
+  getUserById(userId: string): Observable<CurrentUser> {
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.httpClient.get<CurrentUser>(
+      APIUrls.AuthUrls.GetUser, { params }
+    );
+  }
+
+  getRoles(): Observable<SelectItem> {
+    return this.httpClient.get<SelectItem>(
+      APIUrls.AuthUrls.GetRoles
+    );
+  }
+
+  saveUser(input: CurrentUser): Observable<HttpResponseData> {
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.AuthUrls.SaveUser,input
+    );
   }
 }

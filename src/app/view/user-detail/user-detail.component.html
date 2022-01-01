@@ -1,0 +1,55 @@
+<div class="grid margin-top-30">
+    <div class="col-12 md:col-8 lg:col-6 align-items-center ">
+        <div class="grid col-12 align-items-center">
+            <div class="col-4">
+                Id
+            </div>
+            <div class="col-8">
+                <span *ngIf="user.id">
+                    {{user.id}}
+                </span>
+                <span *ngIf="!user.id">
+                    <strong>New</strong>
+                </span>
+            </div>
+        </div>
+
+        <div class="grid col-12 align-items-center">
+            <div class="col-4">
+                User Name
+            </div>
+            <div class="col-8">
+                <input type="text" id="name" [disabled]="!isEditable" [(ngModel)]="user.userName"    
+                                    placeholder="User Name" pInputText />
+            </div>
+        </div>
+
+        <div class="grid col-12 align-items-center">
+            <div class="col-4">
+                Password
+            </div>
+            <div class="col-8">
+                <input type="password" id="pass" [disabled]="!isEditable" [(ngModel)]="user.password"    
+                                    placeholder="Password" pInputText />
+            </div>
+        </div>
+
+        <div class="grid col-12 align-items-center">
+            <div class="col-4">
+                Role
+            </div>
+            <div class="col-8">
+                <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} " [options]="availableRoles" id="role" required="true"
+                    [(ngModel)]="user.roleId" placeholder="Select role"></p-dropdown>  
+            </div>
+        </div>
+
+        <div class="grid col-12 align-items-center justify-content-end">
+            <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Save" (click)="save()" class="p-button-success"></button>
+            <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
+        </div>
+    </div>
+</div>
+
+
+

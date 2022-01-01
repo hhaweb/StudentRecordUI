@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
+import { UploadHistory } from 'src/app/model/upload/upload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,18 @@ export class UploadService {
     private httpClient: HttpClient,
     private utilService: UtilityService) { }
 
-  uploadStudentFile(formData: FormData): Observable<HttpResponseData> {
+  uploadData(formData: FormData): Observable<HttpResponseData> {
     return this.httpClient.post<HttpResponseData>(
-      APIUrls.UploadUrls.UploadStudent,formData
+      APIUrls.UploadUrls.UploadData, formData
     );
   }
 
-  downloadFile(fileId: string): any {
+  downloadFile(fileId: string, type: string): Observable<any> {
     let params = new HttpParams();
     params = params.append('fileId', fileId);
-
+    params = params.append('type', type);
     return this.httpClient
-      .get(APIUrls.UploadUrls.DownloadStudentErrorFile,{
+      .get(APIUrls.UploadUrls.DownloadUploadFile,{
         responseType: 'blob',
         observe: 'response',
         params
@@ -36,5 +37,11 @@ export class UploadService {
           return this.utilService.convertBlobToText(res.error);
         })
       );
+  }
+
+  getUploadHistory(): Observable<UploadHistory[]> {
+    return this.httpClient.get<UploadHistory[]>(
+      APIUrls.UploadUrls.GetUploadHistory
+    );
   }
 }

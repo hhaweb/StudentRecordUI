@@ -2,59 +2,58 @@
     <div class="grid col-12">
         <div class="col-3" style="font-size: 18px;"><strong>Course Detail</strong></div>
         <div class="grid col-9 justify-content-end">
-            <button pButton class="p-button-sm margin-top-9" type="button" label="Edit Course" (click)="editCourse()"
-                style="background-color:#3047c4;color:white"></button>
+            <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button" label="Save" (click)="save()" class="p-button-success"></button>
+            <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
+
         </div>
     </div>
 
     <div class="grid col-12" style="align-items: left;">
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Course ID</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Course ID" pInputText /></div>
+            <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.id" type="text" placeholder="Course ID" pInputText /></div>
         </div>
         <div class="grid col-4">
-            <div class="col-4 mt-2"><strong>Course Name</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Course Name" pInputText /></div>
+            <div class="col-4 mt-2"><strong>Course Status</strong></div>
+            <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.status" type="text" placeholder="Course Name" pInputText /></div>
         </div>
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Sector</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Sector" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.sector" placeholder="Sector" pInputText /></div>
         </div>
     </div>
 
     <div class="grid col-12" style="align-items: left;">
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Course Level</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Course Level" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.courseLevel" placeholder="Course Level" pInputText /></div>
         </div>
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Duration</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Duration" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.duration" placeholder="Duration" pInputText /></div>
         </div>
-        <div class="grid col-4">
+        <!-- <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Number of Applicants</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Applicants" pInputText /></div>
-        </div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.numberOfApplicants" placeholder="Applicants" pInputText /></div>
+        </div> -->
     </div>
 
     <div class="grid col-12" style="align-items: left;">
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Trainer ID</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Trainer ID" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.trainerId" placeholder="Trainer ID" pInputText /></div>
         </div>
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Trainer Name</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Trainer Name" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable"  placeholder="Trainer Name" pInputText /></div>
         </div>
         <div class="grid col-4">
             <div class="col-4 mt-2"><strong>Trainer Nationality</strong></div>
-            <div class="col-8"> <input type="text" placeholder="Nationality" pInputText /></div>
+            <div class="col-8"> <input type="text" [disabled]="!isEditable" placeholder="Nationality" pInputText /></div>
         </div>
     </div>
     <div class="col-12" style="width: 100%; margin-top: 5px;">
-        <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="students" [paginator]="true" [rows]="50"
-            [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalStudents" [(selection)]="selectedStudent"
-            [responsive]="true">
+        <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="studentList" [responsive]="true">
             <ng-template pTemplate="colgroup" let-columns>
                 <colgroup>
                     <col style="width: 80px" />
@@ -154,9 +153,9 @@
                     </td>
                     <td class="text-left">
                         <div>
-                            <button pButton class="p-button-sm" type="button" label="View" (click)="viewStudent()"
+                            <button pButton class="p-button-sm" type="button" label="View" (click)="editStudent(rowData.studentId,'view')"
                                 style="background-color:#3047c4;color:white;margin-right:10px"></button>
-                            <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent()"
+                            <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent(rowData.studentId,'edit')"
                                 style="background-color:#3047c4;color:white"></button>
                         </div>
                     </td>

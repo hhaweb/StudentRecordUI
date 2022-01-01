@@ -61,9 +61,20 @@ body{
   .pr-10{
     padding-right: 10px;
   }
+  .margin-left-10 {
+    margin-left: 10px;
+  }
 
   .full-width {
-    width: 100%;
+    width: 100% !important;
+  }
+
+  .margin-top-30 {
+    margin-top: 30px !important;
+  }
+
+  .margin-top-20 {
+    margin-top: 20px !important;
   }
 
 
@@ -123,6 +134,103 @@ body{
   }
 
   .p-datatable .p-datatable-thead > tr > th{
-    background-color: #3f51b5de !important;
+    z-index: 1000 !important;
+    background-color: #3f51b5 !important;
     color: #ffffff !important;
   }
+
+//   .input-filled .p-inputtext {
+//     border-bottom-left-radius: 0;
+//     border-bottom-right-radius: 0;
+//     border: 1px solid transparent;
+//     background: transparent no-repeat;
+//     background-image: linear-gradient(
+// 180deg,#1e88e5,#1e88e5),linear-gradient(
+// 180deg,rgba(0,0,0,.38),rgba(0,0,0,.38));
+//     background-size: 0 2px,100% 1px;
+//     background-position: 50% 100%,50% 100%;
+//     background-origin: border-box;
+//   }
+  .p-inputtext{
+      border-top: 0 !important;
+      border-left: 0!important;
+      border-right: 0 !important;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding: 3px!important;
+      width: 95%;
+  }
+
+  .p-inputtext:enabled:focus {
+    box-shadow: none !important;
+  }
+  .p-inputtext:enabled:hover {
+    border-color: #3f51b5 ;
+  }
+
+  .p-dropdown {
+    border-top: 0 !important;
+    border-left: 0!important;
+    border-right: 0 !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none !important;
+  }
+
+  .p-calendar {
+    border-top: 0 !important;
+    border-left: 0!important;
+    border-right: 0 !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .p-disabled, .p-component:disabled {
+    opacity: 1;
+  }
+  .p-calendar-w-btn .p-inputtext:enabled:focus {
+    box-shadow: none !important;
+  }
+  .p-calendar-w-btn:not(.p-calendar-disabled).p-focus {
+    box-shadow: none !important;
+  }
+
+  .p-calendar-w-btn .p-datepicker-trigger.p-button {
+    padding: 0;
+  }
+  .p-calendar {
+    width: 95%;
+  }
+  .p-inputnumber {
+    width: 95% !important;
+  }
+
+ .text-left {
+   text-align: left !important;
+ }
+
+ .text-center {
+   text-align: center !important;
+ }
+
+ .text-right {
+   text-align: right !important;
+ }
+
+ .p-button.p-button-secondary
+ {
+  color: #000!important;
+  background: #fff!important;
+  box-shadow: 0 1px 2.5px 0 rgb(0 0 0 / 26%), 0 1px 5px 0 rgb(0 0 0 / 16%);
+ }
+
+ .p-button.p-button-secondary:enabled:hover {
+  background-color: #e8e8e8!important;
+  color: #000!important;
+ }
+
+ .p-menubar .p-submenu-list  {
+   z-index: 100 !important;
+ }

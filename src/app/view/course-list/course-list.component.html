@@ -1,0 +1,124 @@
+<div class="grid justify-content-center p-card" style="margin-top: 30px;">
+    <div class="col-6 text-right">
+            <input  type="text" id="name" [(ngModel)] = "searchKeyWord" (onClick) ="search()" pInputText placeholder="Search with id or name" style="width: 30%; margin-right: 10px;"/>
+            <button pButton  type="button" label="Search" (click)="search()" ></button>
+    </div>
+    <div class="col-6 text-right">
+        <button style="margin-right: 10px;" pButton pRipple  type="button" label="Show All" (click)="showAll()" ></button>
+        <span *ngIf="isEditable">
+            <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Trainer" (click)="create()" class="p-button-success"></button>
+        </span>
+    </div>
+    <div class="col-12">
+        <p-table  #dt rowHover="true" [value]="courseList" [paginator]="true" [rows]="50"
+        [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalRecord" [lazy]="true" [lazyLoadOnInit]="false"
+        (onLazyLoad)="lazyLoadEvent($event)"  scrollable="true" scrollHeight="600px" 
+        [loading] = "tableLoading"> 
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <th style="background-color: #ffffff !important; min-width: 200px;" class="justify-content-start"></th>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <!-- <th style="background-color: #ffffff !important; max-width: 100px;"></th>
+                <th style="background-color: #ffffff !important; max-width: 100px;"></th> -->
+
+                <th colspan="2" style="max-width: 200px;" class="justify-content-center">Cohort Size</th>
+                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
+                <th style="background-color: #ffffff !important; min-width: 200px;"></th>
+            </tr>
+            <tr >
+
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="courseId">
+                    Course ID
+                    <p-sortIcon field="courseId"></p-sortIcon>
+                </th>
+                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="courseName">
+                    Course Name
+                    <p-sortIcon field="courseName"></p-sortIcon>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start"  pSortableColumn="status">
+                    Course Status
+                    <p-sortIcon field="status"></p-sortIcon>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="courseLevel">
+                    Course Level
+                    <p-sortIcon field="courseLevel"></p-sortIcon>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="startDate">
+                    Start Date
+                    <p-sortIcon field="startDate"></p-sortIcon>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="endDate">
+                    End Date
+                    <p-sortIcon field="endDate"></p-sortIcon>
+                </th>
+                <th style="max-width: 100px;" class="justify-content-end" pSortableColumn="cohortSizeMale">
+                    Male
+                    <p-sortIcon field="cohortSizeMale"></p-sortIcon>
+                </th>
+                <th style="max-width: 100px;" class="justify-content-end" pSortableColumn="cohortSizeFemale">
+                    Female
+                    <p-sortIcon field="cohortSizeFemale"></p-sortIcon>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="batchNo">
+                    Batch Number
+                    <p-sortIcon field="batchNo"></p-sortIcon>
+                </th>
+                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="trainingLoaction">
+                    Training Location
+                    <p-sortIcon field="trainingLoaction"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+            let-columns="columns">
+            <tr #row [pSelectableRow]="rowData" id="{{ rowData.courseId }}">
+                <td style="max-width: 150px;">
+                    {{rowData.courseId}}
+                </td>
+                <td style="min-width: 200px;" class="justify-content-start" [pTooltip]="rowData.courseName">
+                    {{ rowData.courseName }}
+                </td>
+                <td style="max-width: 150px;" class="justify-content-start"  [pTooltip]="rowData.status">
+                    {{ rowData.status }}
+                </td>
+                <td style="max-width: 150px;" class="justify-content-start" [pTooltip]="rowData.courseLevel"> 
+                    {{ rowData.courseLevel }}
+                </td>
+                <td style="max-width: 150px;" class="justify-content-start">
+                   {{ rowData.startDate}}
+                </td>
+                <td style="max-width: 150px;" class="justify-content-start">
+                    {{ rowData.endDate}}
+                 </td>
+                 <td style="max-width: 100px;" class="justify-content-end">
+                    {{ rowData.cohortSizeMale}}
+                 </td>
+                 <td style="max-width: 100px;" class="justify-content-end">
+                    {{ rowData.cohortSizeFemale}}
+                 </td>
+                 <td style="max-width: 150px;" class="justify-content-start">
+                    {{ rowData.batchNo}}
+                 </td>
+                 <td style="min-width: 200px;" class="justify-content-start" [pTooltip]="rowData.trainingLoaction">
+                    {{ rowData.trainingLoaction}}
+                 </td>
+
+                <!-- <td style="max-width: 150px;" class="justify-content-center">
+                    <a style="margin-right: 10px;">
+                        <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
+                    </a>
+                </td> -->
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td [attr.colspan]="10">No records found</td>
+            </tr>
+        </ng-template>
+        </p-table>
+    </div>
+</div>

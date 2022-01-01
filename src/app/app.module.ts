@@ -1,3 +1,4 @@
+import { CourseService } from './service/controller-service/course.service';
 import { BroadcasterService } from 'src/app/service/utility/broadcaster.service';
 import { AuthorizationService } from './service/utility/authorization.service';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -49,6 +50,17 @@ import {AvatarModule} from 'primeng/avatar';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
 import { StudentDetailsComponent } from './view/student-details/student-details.component';
 import { CourseInfoComponent } from './view/course-info/course-info.component';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { StudentService } from './service/controller-service/student.service';
+import { TrainerListComponent } from './view/trainer-list/trainer-list.component';
+import { TrainerDetailComponent } from './view/trainer-detail/trainer-detail.component';
+import { UserListComponent } from './view/user-list/user-list.component';
+import { UserDetailComponent } from './view/user-detail/user-detail.component';
+import { CanActivateRoute } from './service/utility/can-activate-route.service';
+import { CookieService } from 'ngx-cookie-service';
+import { CourseListComponent } from './view/course-list/course-list.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +74,12 @@ import { CourseInfoComponent } from './view/course-info/course-info.component';
     ToastComponent,
     UploadHistoryComponent,
     StudentDetailsComponent,
-    CourseInfoComponent
+    CourseInfoComponent,
+    TrainerListComponent,
+    TrainerDetailComponent,
+    UserListComponent,
+    UserDetailComponent,
+    CourseListComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +99,7 @@ import { CourseInfoComponent } from './view/course-info/course-info.component';
     ConfirmDialogModule,
     DropdownModule,
     RadioButtonModule,
+    InputNumberModule,
     MessagesModule,
     MessageModule,
     MenuModule,
@@ -97,6 +115,10 @@ import { CourseInfoComponent } from './view/course-info/course-info.component';
     BroadcasterService, 
     AuthorizationService,
     AuthenticationService,
+    CourseService,
+    StudentService,
+    CanActivateRoute,
+    CookieService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpsAuthRequestInterceptor,

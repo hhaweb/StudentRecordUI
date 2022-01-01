@@ -19,18 +19,7 @@ th {
     color:white !important;
   }
 
-  input {
-    width: 90%;
-    position: relative;
-    border-bottom: 1px solid #a39e9e;
-    padding: 0;
-    border-top: 0px;
-    border-left: 0px;
-    border-right: 0px;
-    box-shadow: none;
-    height: 30px;
-    border-radius: 0px;
-}
+
 
 
 .p-inputtext:enabled:focus {
@@ -38,4 +27,8 @@ th {
   outline-offset: 0;
   box-shadow: none;
   border-color: #a39e9e;
+}
+
+.fw-500 {
+    font-weight: 500;
 }

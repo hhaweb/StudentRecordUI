@@ -7,6 +7,7 @@ import { ConfigData } from './model/system/system.model';
 import { FullScreenService } from './share/event/full-screen.service';
 import { AuthenticationService } from './service/utility/authentication.service';
 import { ConfigDataLoadedEvent } from './share/event/config-data-loaded.event';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-root',
@@ -22,8 +23,7 @@ export class AppComponent   {
     private router: Router,
     private fullScreenService: FullScreenService,
     private authenticationService: AuthenticationService,
-    private configDataLoadedEvent: ConfigDataLoadedEvent,
-  ) {
+    private configDataLoadedEvent: ConfigDataLoadedEvent  ) {
     this.fullScreenService.on().subscribe(() => {
       this.showFullScreen = true;
       console.log(' this.showFullScreen ' ,  this.showFullScreen );
@@ -43,6 +43,7 @@ export class AppComponent   {
       (response: ConfigData) => {
         this.configData = response;
         this.configDataLoadedEvent.fire(this.configData);
+     //   this.cookieService.set('routePermissions',JSON.stringify(this.configData.routeList));
       },
       (error: any) => {
 

@@ -1,0 +1,84 @@
+<div class="grid justify-content-center p-card" style="margin-top: 30px;">
+    <div class="col-6 text-right">
+            <input  type="text" id="name" [(ngModel)] = "searchKeyWord" (onClick) ="search()" pInputText placeholder="Search with id or name" style="width: 30%; margin-right: 10px;"/>
+            <button pButton  type="button" label="Search" (click)="search()" ></button>
+    </div>
+    <div class="col-6 text-right">
+        <button style="margin-right: 10px;" pButton pRipple  type="button" label="Show All" (click)="showAll()" ></button>
+        <span *ngIf="isEditable">
+            <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Trainer" (click)="create()" class="p-button-success"></button>
+        </span>
+    </div>
+    <div class="col-12">
+        <p-table  #dt rowHover="true" [value]="trainerList" [paginator]="true" [rows]="50"
+        [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalRecord" [lazy]="true" [lazyLoadOnInit]="false"
+        (onLazyLoad)="lazyLoadEvent($event)"  scrollable="true" scrollHeight="600px" 
+        [loading] = "tableLoading"> 
+        <ng-template pTemplate="header">
+            <tr >
+
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="id">
+                    Trainer ID
+                    <p-sortIcon field="id"></p-sortIcon>
+                </th>
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="trainerName">
+                    Trainer Name
+                    <p-sortIcon field="trainerName"></p-sortIcon>
+                </th>
+                <th style="min-width: 50px;" class="justify-content-start"  pSortableColumn="nationality">
+                    Nationality
+                    <p-sortIcon field="nationality"></p-sortIcon>
+                </th>
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="affiliation">
+                    Affiliation
+                    <p-sortIcon field="affiliation"></p-sortIcon>
+                </th>
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="createdDate">
+                    Created Date
+                    <p-sortIcon field="createdDate"></p-sortIcon>
+                </th>
+                <th style="min-width: 50px;" class="justify-content-center">
+                    Action
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+            let-columns="columns">
+            <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
+                <td style="min-width: 50px;">
+                    {{rowData.id}}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start">
+                    {{ rowData.trainerName }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start">
+                    {{ rowData.nationality }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start"> 
+                    {{ rowData.affiliation }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start">
+                   {{ rowData.createdDate}}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-center">
+                    <a style="margin-right: 10px;">
+                        <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
+                    </a>
+                    <a *ngIf="isEditable">
+                        <i class="pi pi-trash red" (click)="delete(rowData)"></i>
+                    </a>
+        
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+
+                <td [attr.colspan]="7">No records found</td>
+            </tr>
+        </ng-template>
+
+
+        </p-table>
+    </div>
+</div>

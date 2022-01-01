@@ -1,3 +1,4 @@
+import { UploadHistoryComponent } from './upload-history.component';
 import { HttpResponseData } from './../../model/config-model/response.data';
 import { UtilityService } from './../../service/utility/utility.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -16,88 +17,65 @@ import { UploadResult } from 'src/app/model/upload/upload.model';
 export class UploadComponent implements OnInit {
   @ViewChild('studentUplaodFile') studentFile: FileUpload;
   @ViewChild('courseUploadFile') courseFile: FileUpload;
-  courseUploadFile: any;
-  studentUplaodFile: any;
-  studentResult: UploadResult;
+  @ViewChild('trainerUploadFile') trainerFile: FileUpload;
+  @ViewChild('uploadHistory', { static: true })
+  uploadHistory: UploadHistoryComponent;
+
+  uploadResult: UploadResult;
   constructor(
     private uploadService: UploadService,
     private utilityService: UtilityService,
-    private router: Router ,
+    private router: Router,
     private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
-  onUploadEvent(event: any, type: string){
-    if(type === 'student') {
-      this.studentUplaodFile = event.files[0];
-      this.uploadStudentFile();
-    } else {
-      this.courseUploadFile = event.files[0];
-    }
-  }
+  onUploadEvent(event: any, type: string) {
+    const uploadFile = event.files[0]
+    if (uploadFile) {
+      const formData = new FormData();
+      formData.append('file', uploadFile, uploadFile.name);
+      formData.append('uploadType', type);
+      this.utilityService.showLoading('Uploading...')
+      this.uploadService.uploadData(formData).subscribe(
+        (response: HttpResponseData) => {
+          if (response.status) {
+            if(response?.payLoad) {
+              this.uploadResult = response.payLoad;
+            }
+            this.utilityService.showSuccess('Success', 'Upload Successfully')
+          } else {
+            this.utilityService.showError('Error', response.message);
+          }
+          this.uploadHistory.getUploadHistory();
 
-  uploadStudentFile() {
-    console.log('call upload api');
-    const formData = new FormData();
-    formData.append('file', this.studentUplaodFile,this.studentUplaodFile.name);
-    this.utilityService.showLoading('Uploading...')
-    this.uploadService.uploadStudentFile(formData).subscribe(
-      (response: HttpResponseData) => {
-        if (response.status) {
-          this.studentResult = response.payLoad;
-          this.utilityService.showSuccess('Success', 'Upload Successfully')
-        } else {
-          this.utilityService.showError('Error', response.message);
+        }, (error: any) => {
+          this.utilityService.subscribeError(error, 'Unable to upload');
+          this.clear();
+        },
+        () => {
+          setTimeout(() => {
+            this.utilityService.hideLoading()
+          });
+          this.clear();
         }
-        
-        
-      },(error: any) => {
-        this.utilityService.subscribeError(error, 'Unable to upload');
-      },
-      () => {
-        this.utilityService.hideLoading();
-      }
-    );
-    this.clear();
+      );
+    }
+
   }
 
-  goToStudentProfile(){
+  goToStudentProfile() {
     void this.router.navigate([RoutesModel.StudentProfile]);
   }
   goToStudentList() {
-  ////  this.utilityService.showLoading('Uploading...')
-
+    ////  this.utilityService.showLoading('Uploading...')
   }
 
   clear() {
     this.studentFile.clear();
     this.courseFile.clear();
-    this.studentUplaodFile = null;
-    this.courseUploadFile = null;
-  }
-
-  downloadErrorFile() {
-    this.uploadService.downloadFile(this.studentResult.id.toString()).subscribe(
-      (res: any) => {
-        this.utilityService.hideLoading();
-        if (res.body) {
-          this.utilityService.fileSaveAs(res);
-        } else {
-          this.utilityService.showWarning('Warning', 'File not found');
-        }
-      },
-      (error: any) => {
-        setTimeout(() => this.utilityService.hideLoading());
-        this.utilityService.subscribeError(
-          error,
-          'Unable to download file'
-        );
-      },
-      () => {
-        this.utilityService.hideLoading();
-      }
-    );
+    this.trainerFile.clear();
   }
 
 }

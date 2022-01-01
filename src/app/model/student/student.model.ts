@@ -1,47 +1,26 @@
-export class StudentInput {
+import { Course } from "./course.model";
+
+export class Student {
+    public id: number;
     public name: string;
+    public status: string;
     public email: string;
     public mobileNo: string;
     public gender: string;
-    public avatar: string;
-    public cid: number;
-    public dateOfBirth: Date;
-    public batchNo: string;
-    public bloodGroup: string;
+    public cid: string;
     public did: string;
+    public bloodGroup: string
+    public dateOfBirth: string;
+    public trainingYear: number;
+    public batchNo: number;
     public maritalStatus: string;
-    public trainingYear: string;
+    public totalRecord: number;
 
-}
-
-export class StudentOutput {
-    public name: string;
-    public email: string;
-    public mobileNo: string;
-    public gender: string;
-    public cid: string;
-    public did: string;
-    public dateOfBirth: Date;
-
-
-}
-
-export class StudentFilter {
-    public rowOffset: number;
-    public rowsPerPage: number;
-    public sortName: string;
-    public sortType: number;
-}
-
-export class StudentDetails{
-    public studentId: number;
-    public name: string;
-    public cid: string;
-    public courseName: string;
-    public courseStatus: string;
-    public courseLeve: string;
-    public sector: string;
-    public duration: string;
-    public startDate: string;
-    public endDate: string;
+    public createdDate: string;
+	public updatedDate: string;
+	public deletedDate: string;
+    public courseList: Course[];
+    constructor() {
+        this.courseList = [];
+    }
 }

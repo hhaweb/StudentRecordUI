@@ -8,23 +8,44 @@
                     <p-fileUpload #studentUplaodFile  chooseLabel="Upload Student" mode="basic" name="studentUploadFile"
                      auto='true' customUpload="true" multiple="false" accept=".csv"  (uploadHandler)="onUploadEvent($event,'student')">
                     </p-fileUpload>
-                   <div class="grid" *ngIf="studentResult">
-                       <div class="col-12 mt-15"><strong>Student Upload Result</strong></div>
-                       <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{studentResult.totalCount}}</div>
-                       <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{studentResult.successCount}}</div>
-                       <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{studentResult.failCount}}</div>
-                       <div class="col-12" style="padding: 0;"><p-button  (click)=downloadErrorFile() label="Download error file" styleClass="p-button-link"></p-button></div>
-                   </div>
+                    <div class="grid" *ngIf="uploadResult && uploadResult.uploadType === 'Student'">
+                        <div class="col-12 mt-15"><strong>Student Upload Result</strong></div>
+                        <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{uploadResult.totalCount}}</div>
+                        <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{uploadResult.successCount}}</div>
+                        <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{uploadResult.failCount}}</div>
+                        
+                    </div>
 
                 </div>
                 <div class="col-3">
                     <p-fileUpload #courseUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Course"
                      auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'course')">
                     </p-fileUpload>
+                    <div class="grid"  *ngIf="uploadResult && uploadResult.uploadType === 'Course'">
+                        <div class="col-12 mt-15"><strong>Course Upload Result</strong></div>
+                        <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{uploadResult.totalCount}}</div>
+                        <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{uploadResult.successCount}}</div>
+                        <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{uploadResult.failCount}}</div>
+                    </div>
                 </div>
-              
+                <div class="col-3">
+                    <p-fileUpload #trainerUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Trainer"
+                    auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'trainer')">
+                   </p-fileUpload>
+                   <div class="grid" *ngIf="uploadResult && uploadResult.uploadType === 'Trainer'">
+                    <div class="col-12 mt-15"><strong>Trainer Upload Result</strong></div>
+                    <div class="col-10 nopadding-tb">Total upload rows</div> <div class="col-2 nopadding-tb">{{uploadResult.totalCount}}</div>
+                    <div class="col-10 nopadding-tb" style="color: #689f38;">Total success rows </div><div style="color: #689f38;" class="col-2 nopadding-tb">{{uploadResult.successCount}}</div>
+                    <div class="col-10 nopadding-tb" style="color: red;">Total fail rows </div><div style="color: red;" class="col-2 nopadding-tb">{{uploadResult.failCount}}</div>
+                </div>
+                </div>
             </div>
         </p-card>
     </div>
+    <div class="col-10">
+        <app-upload-history #uploadHistory></app-upload-history>
+    </div>
 </div>
+
+
 

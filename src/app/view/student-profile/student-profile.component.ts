@@ -1,6 +1,7 @@
+import { saveAs } from 'file-saver';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
-import { StudentInput } from 'src/app/model/student/student.model';
+import { Student } from 'src/app/model/student/student.model';
 import { StudentService } from 'src/app/service/controller-service/student.service';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router } from '@angular/router';
@@ -23,7 +24,7 @@ export class StudentProfileComponent implements OnInit {
   availableTrainingYears: SelectItem[];
   imageSrc: string;
   selectedGender: string;
-  student: StudentInput;
+  student: Student;
   constructor(private studentService: StudentService,
               private utilityService: UtilityService,
               private router: Router) {
@@ -61,7 +62,7 @@ export class StudentProfileComponent implements OnInit {
  ]
 
    
-   this.student = new StudentInput();
+   this.student = new Student();
    this.student.gender = "Male";
   }
 
@@ -85,7 +86,7 @@ export class StudentProfileComponent implements OnInit {
   addStudent(){
    console.log('call api', this.student);
    this.utilityService.showLoading('Saving...')
-   this.studentService.createStudent(this.student).subscribe(
+   this.studentService.saveStudent(this.student).subscribe(
      (response: HttpResponseData) =>{
        if(response.status){
         this.utilityService.showSuccess('Success', 'Save Successfully')
@@ -103,7 +104,7 @@ export class StudentProfileComponent implements OnInit {
   }
 
   clear(){
-     this.student = new StudentInput();
+     this.student = new Student();
      this.student.gender = "Male";
   }
 

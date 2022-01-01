@@ -1,5 +1,6 @@
 export class UploadResult {
     public id: number;
+    public uploadType: string;
     public totalCount: number;
     public successCount: number;
     public failCount: number;
@@ -7,6 +8,7 @@ export class UploadResult {
 
 export class UploadHistory {
     public id: number;
+    public uploadType: string;
     public fileName: string;
     public errorFileName: string;
     public totalRecord: number;

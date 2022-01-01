@@ -1,0 +1,56 @@
+<div class="grid justify-content-center pt-30">
+    <div class="col-12">
+        <p-card>
+            <ng-template pTemplate="header">
+                <h3 style="margin-left: 10px;">Trainer</h3>
+            </ng-template>
+            <div class="grid col-12 justify-content-start align-items-center">
+                <div class="col-1">
+                    Id
+                </div>
+                <div class="col-3">
+                    <input type="text" [disabled]="true" [(ngModel)]="trainer.id" placeholder="Id" pInputText />
+                </div>
+            </div>
+            <div class="grid col-12 justify-content-start align-items-center">
+                <div class="col-1">
+                    Trainer Name
+                </div>
+                <div class="col-3">
+                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerName"
+                        placeholder="Trainer Name" pInputText />
+                </div>
+            </div>
+            <div class="grid col-12 justify-content-start align-items-center">
+                <div class="col-1">
+                    Nationality
+                </div>
+                <div class="col-3">
+                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.nationality"
+                        placeholder="Nationality" pInputText />
+                </div>
+            </div>
+            <div class="grid col-12 justify-content-start align-items-center">
+                <div class="col-1">
+                    Affiliation
+                </div>
+                <div class="col-3">
+                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.affiliation"
+                        placeholder="Affiliation" pInputText />
+                </div>
+            </div>
+
+            <div class="grid col-12 justify-content-start align-items-center">
+                <div class="col-4 text-right">
+                    
+                    <span *ngIf="isEditable">
+                        <p-button label="Save" [disabled]="!isEditable" icon="pi pi-check" (click)="saveTrainer()" styleClass="p-button-success"></p-button>
+                    </span>
+                    <p-button label="Cancel" (click)="cancel()" icon="pi pi-times" styleClass="p-button-secondary"
+                        [style]="{'margin-left': '.5em'}"></p-button>
+                </div>
+            </div>
+
+        </p-card>
+    </div>
+</div>

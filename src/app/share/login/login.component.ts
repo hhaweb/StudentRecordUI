@@ -1,7 +1,7 @@
 import { AuthorizationService } from './../../service/utility/authorization.service';
 import { UtilityService } from './../../service/utility/utility.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { TokenResponse } from 'src/app/model/user/user.model';
+import { LoginUser, TokenResponse } from 'src/app/model/user/user.model';
 import { AppComponent } from 'src/app/app.component';
 import { CookieService } from 'ngx-cookie-service';
 import { ConfigDataLoadedEvent } from '../event/config-data-loaded.event';
@@ -10,6 +10,7 @@ import { ConfigData } from 'src/app/model/system/system.model';
 import { Router } from '@angular/router';
 import { FullScreenService } from '../event/full-screen.service';
 import { forkJoin } from 'rxjs';
+import { AppConfigData } from 'src/app/model/config-model/config-data';
 
 @Component({
   selector: 'app-login',
@@ -29,12 +30,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private cookieService: CookieService,
     private configDataLoadedEvent: ConfigDataLoadedEvent,
     private fullScreenService: FullScreenService,
-    private router: Router) {  
-  this.userName = '';
-  this.password = ''; 
+    private router: Router) {
+    this.userName = '';
+    this.password = '';
   }
 
-  ngOnInit( ): void {}
+  ngOnInit(): void { }
 
   ngAfterViewInit() {
     this.fullScreenService.fire();
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           console.log('Invalid user name and password')
           return;
         }
+        console.log('login', response);
         that.utilityService.hideLoading();
         that.webApiToken = response;
         const today = new Date();
@@ -74,9 +76,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         that.cookieService.set(
           'authorizationData',
           JSON.stringify({
-            token: that.webApiToken.token,
-            userName: that.webApiToken.userName, 
-            email: that.webApiToken.email 
+            token: that.webApiToken.token
           }),
           expirationDate,
           '/'
@@ -87,30 +87,41 @@ export class LoginComponent implements OnInit, AfterViewInit {
           (data: any) => {
             console.log('get config data ', data[0]);
             this.app.configData = new ConfigData();
-            this.app.configData.menus = data[0].menus;
-            this.configDataLoadedEvent.fire(data[0]);
+            this.app.configData = data[0];
+            if (this.app.configData.routeList) {
+              this.cookieService.set('routePermissions', JSON.stringify(this.app.configData.routeList), expirationDate,
+                '/');
             }
+            const loginUser = new LoginUser();
+            loginUser.userId = this.app.configData.userId;
+            loginUser.studentId = this.app.configData.studentId ? this.app.configData.studentId : 0;
+            loginUser.userName = this.app.configData.userName;
+            loginUser.role = this.app.configData.role;
+            that.cookieService.set(
+              'currentUser',
+              JSON.stringify({loginUser}),
+              expirationDate,
+              '/'
+            );
+
+            if (this.app.configData.role === AppConfigData.SuperAdminRole) {
+              this.returnUrl = 'upload/data-upload'
+            } else if (this.app.configData.role === AppConfigData.AdminRole) {
+              this.returnUrl = 'student/student-list'
+            } else {
+              this.returnUrl = 'student/student-details/' + this.app.configData.studentId + '/view'
+            }
+            void this.router.navigate([this.returnUrl]);
+            this.configDataLoadedEvent.fire(data[0]);
+          }
           ,
           (error: any) => {
             this.utilityService.showErrorModal('Error', error);
           }
         );
-
-
-        const isSuperAdmin = response.roles.indexOf('ROLE_SUPER_ADMIN');
-        const isAdmin = response.roles.indexOf('ROLE_ADMIN');
-        const isStudent = response.roles.indexOf('ROLE_STUDENT');
-        if(isSuperAdmin != -1) {
-          this.returnUrl = 'upload/data-upload'
-        } else if(isAdmin != -1) {
-          this.returnUrl = 'student/student-list'
-        } else {
-          this.returnUrl = 'student/profile'
-        }
-        void this.router.navigate([this.returnUrl]);
       },
       (err) => {
-         console.log('error:::::',err.message);
+        console.log('error:::::', err.message);
         let errorMessage = err.error
           ? err.error.error_description
           : 'Login Failed';

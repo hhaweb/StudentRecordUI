@@ -1,14 +1,21 @@
+import { RoutesModel } from './model/config-model/route-model';
+import { UserListComponent } from './view/user-list/user-list.component';
+import { TrainerDetailComponent } from './view/trainer-detail/trainer-detail.component';
+import { TrainerListComponent } from './view/trainer-list/trainer-list.component';
+import { Trainer } from './model/student/trainer.model';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
 import { StudentListComponent } from './view/student-list/student-list.component';
-import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { UploadComponent } from './view/upload/upload.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
 import { StudentProfileComponent } from './view/student-profile/student-profile.component';
-import {StudentDetailsComponent} from "./view/student-details/student-details.component";
+import { StudentDetailsComponent } from "./view/student-details/student-details.component";
 import { CourseInfoComponent } from './view/course-info/course-info.component';
+import { UserDetailComponent } from './view/user-detail/user-detail.component';
+import { CanActivateRoute } from './service/utility/can-activate-route.service';
+import { CourseListComponent } from './view/course-list/course-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: RoutesModel.Home, pathMatch: 'full' },
@@ -22,15 +29,21 @@ const routes: Routes = [
   },
   {
     path: RoutesModel.StudentList,
-    component: StudentListComponent
+    component: StudentListComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.StudentList }
   },
   {
     path: RoutesModel.Upload,
-    component: UploadComponent
+    component: UploadComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.Upload }
   },
   {
     path: RoutesModel.UploadHistory,
-    component: UploadHistoryComponent
+    component: UploadHistoryComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.UploadHistory }
   },
   {
     path: RoutesModel.StudentProfile,
@@ -41,8 +54,57 @@ const routes: Routes = [
     component: StudentDetailsComponent
   },
   {
+    path: RoutesModel.StudentDetails + '/:id/:type',
+    component: StudentDetailsComponent
+  },
+  {
     path: RoutesModel.CourseInfo,
-    component: CourseInfoComponent
+    component: CourseInfoComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.CourseInfo }
+  },
+  {
+    path: RoutesModel.CourseInfo + '/:id',
+    component: CourseInfoComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.CourseInfo }
+  }, 
+  {
+    path: RoutesModel.CourseList,
+    component: CourseListComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.CourseList }
+  },
+  {
+    path: RoutesModel.TrainerList,
+    component: TrainerListComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.TrainerList }
+  }, {
+    path: RoutesModel.TrainerDetail,
+    component: TrainerDetailComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.TrainerDetail }
+  },
+  {
+    path: RoutesModel.TrainerDetail + '/:id',
+    component: TrainerDetailComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.TrainerDetail }
+  },
+  {
+    path: RoutesModel.UserList,
+    component: UserListComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.UserList }
+  },
+  {
+    path: RoutesModel.UserDetail,
+    component: UserDetailComponent
+  },
+  {
+    path: RoutesModel.UserDetail + '/:id',
+    component: UserDetailComponent
   }
 ];
 
