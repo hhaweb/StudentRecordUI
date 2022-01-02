@@ -36,6 +36,14 @@ export class StudentService {
     );
   }
 
+  getStudentsByCourseId(courseId: string): Observable<Student[]> {
+    let params = new HttpParams();
+    params = params.append('courseId', courseId);
+    return this.httpClient.get<Student[]>(
+      APIUrls.StudentUrls.GetStudentsByCourseId, { params }
+    );
+  }
+
 
   exportStudentList(inputParam: SearchModel): any {
     return this.httpClient

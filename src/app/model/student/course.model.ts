@@ -26,6 +26,6 @@ export class Course {
 	public numberOfCertifiedMale: number;
 	public numberOfCertifiedFemale: number;
 
-	public totalRecord: number;
+	public totalRecords: number;
 
 }

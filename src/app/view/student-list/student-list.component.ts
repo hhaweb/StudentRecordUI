@@ -1,6 +1,7 @@
+import { TrainerListComponent } from './../trainer-list/trainer-list.component';
 import { forkJoin } from 'rxjs';
 import { Student } from './../../model/student/student.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StudentService } from 'src/app/service/controller-service/student.service';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router } from '@angular/router';
@@ -8,6 +9,7 @@ import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { RouteModel, SearchModel } from 'src/app/model/common/common.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
+import { CourseListComponent } from '../course-list/course-list.component';
 
 @Component({
   selector: 'app-student-list',
@@ -15,15 +17,24 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
   styleUrls: ['./student-list.component.scss']
 })
 export class StudentListComponent implements OnInit {
+  @ViewChild('courseList', { static: true })
+  courseList: CourseListComponent;
+
+  @ViewChild('trainerList', { static: true })
+  trainerList: TrainerListComponent;
+
   students: Student[];
-  selectedStudent: Student;
   currentSearch: SearchModel;
   totalStudents = 0;
-  selectedStudentID: string;
+  studentSearchKeyWord: string;
+  courseSearchKeyWord: string;
+  trainerSearchKeyWord: string;
+
   selectedCourseID: string;
   searchInfo: string = 'student';
   tableLoading: boolean;
   isEditable: boolean;
+
   constructor(private studentService: StudentService,
     private utilService: UtilityService,
     private router: Router,
@@ -120,25 +131,40 @@ export class StudentListComponent implements OnInit {
     );
   }
 
-  search() {
-    if (this.selectedCourseID) {
-      console.log('search course id', this.selectedCourseID)
-      void this.router.navigate([`${RoutesModel.CourseInfo}/${this.selectedCourseID}`]);
-    }
-    if (this.selectedStudentID) {
+
+  search(searchType: string) {
+    
+    if(searchType === 'student' && this.studentSearchKeyWord) {
       this.searchInfo = 'student';
-      this.getStudentById(this.selectedStudentID);
-    } 
+      const inputModel = new SearchModel();
+      inputModel.rowOffset = 0;
+      inputModel.rowsPerPage = 50;
+      inputModel.sortName = 'name';
+      inputModel.sortType = 1;
+      inputModel.searchKeyword = this.studentSearchKeyWord;
+      this.getStudentList(inputModel);
+
+    } else if(searchType === 'course' && this.courseSearchKeyWord) {
+      this.searchInfo = 'course';
+      this.courseList.searchFromStudentList(this.courseSearchKeyWord);
+
+    } else if(searchType === 'trainer'){
+      this.searchInfo = 'trainer';
+      this.trainerList.searchFromStudent(this.trainerSearchKeyWord);
+    }
+
   }
   showAll() {
-    this.currentSearch = null;
-    this.selectedStudentID = null;
+    this.studentSearchKeyWord = null;
+    this.courseSearchKeyWord = null;
+    this.trainerSearchKeyWord = null;
+    this.searchInfo = 'student'
     this.DefaultSearch();
   }
   export() {
     this.utilityService.showLoading('Exporting');
-    if(this.selectedStudentID) {
-      this.currentSearch.searchKeyword = this.selectedStudentID;
+    if(this.studentSearchKeyWord) {
+      this.currentSearch.searchKeyword = this.studentSearchKeyWord;
     }
     this.studentService.exportStudentList(this.currentSearch).subscribe(
       (res: any) => {

@@ -51,6 +51,22 @@ export class CourseService {
     );
   }
 
+  getCourseByCid(cId: string): Observable<Course[]> {
+    let params = new HttpParams();
+    params = params.append('cId', cId);
+    return this.httpClient.get<Course[]>(
+      APIUrls.CourseUrls.GetCoursesByCid, { params }
+    );
+  }
+
+  getRecommendedCourses(cid: string): Observable<Course[]> {
+    let params = new HttpParams();
+    params = params.append('cid', cid);
+    return this.httpClient.get<Course[]>(
+      APIUrls.CourseUrls.GetRecommendCourse, { params }
+    );
+  }
+  
   
   saveTrainer(input: Trainer): Observable<HttpResponseData> {
     return this.httpClient.post<HttpResponseData>(

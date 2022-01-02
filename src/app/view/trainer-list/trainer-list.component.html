@@ -1,9 +1,9 @@
 <div class="grid justify-content-center p-card" style="margin-top: 30px;">
-    <div class="col-6 text-right">
+    <div class="col-6 text-right" *ngIf="isShowAll">
             <input  type="text" id="name" [(ngModel)] = "searchKeyWord" (onClick) ="search()" pInputText placeholder="Search with id or name" style="width: 30%; margin-right: 10px;"/>
             <button pButton  type="button" label="Search" (click)="search()" ></button>
     </div>
-    <div class="col-6 text-right">
+    <div class="col-6 text-right" *ngIf="isShowAll">
         <button style="margin-right: 10px;" pButton pRipple  type="button" label="Show All" (click)="showAll()" ></button>
         <span *ngIf="isEditable">
             <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Trainer" (click)="create()" class="p-button-success"></button>

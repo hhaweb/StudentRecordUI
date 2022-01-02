@@ -10,4 +10,6 @@ export const CourseUrls = {
     GetTrainerById: baseUrl + 'get-trainer-by-id',
     SaveTrainer: baseUrl + 'save-trainer',
     DeleteTrainer: baseUrl + 'delete-trainer',
+    GetCoursesByCid: baseUrl + 'get-courses-by-cid',
+    GetRecommendCourse: baseUrl + 'get-recommend-courses',
 }

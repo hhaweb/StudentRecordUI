@@ -3,7 +3,7 @@ import { SearchModel } from './../../model/common/common.model';
 import { forkJoin } from 'rxjs';
 import { UtilityService } from './../../service/utility/utility.service';
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Course } from 'src/app/model/student/course.model';
 import { CourseService } from 'src/app/service/controller-service/course.service';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
@@ -16,6 +16,8 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
 })
 export class CourseListComponent implements OnInit {
 
+  @Input()
+  isShowAll: boolean = true;
 
   courseList: Course[];
   tableLoading: boolean;
@@ -37,7 +39,9 @@ export class CourseListComponent implements OnInit {
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
       });
     this.courseList = [];
-    this.DefaultSearch();
+    if(this.isShowAll) {
+      this.DefaultSearch();
+    }
   }
 
   DefaultSearch() {
@@ -53,7 +57,7 @@ export class CourseListComponent implements OnInit {
     const inputModel = new SearchModel();
     inputModel.rowsPerPage = event.rows;
     inputModel.rowOffset = event.first / event.rows;
-    inputModel.sortName = event.sortField ? event.sortField : 'trainerName';
+    inputModel.sortName = event.sortField ? event.sortField : 'courseName';
     inputModel.sortType = event.sortOrder ? event.sortOrder : 1;
     this.getCourseList(inputModel);
   }
@@ -65,7 +69,7 @@ export class CourseListComponent implements OnInit {
       (response: Course[]) => {
         if (response && response.length > 0) {
           this.courseList = response;
-          this.totalRecord = response[0].totalRecord;
+          this.totalRecord = response[0].totalRecords;
         }
       }, (error: any) => {
         this.tableLoading = false;
@@ -94,11 +98,22 @@ export class CourseListComponent implements OnInit {
       const inputModel = new SearchModel();
       inputModel.rowOffset = 0;
       inputModel.rowsPerPage = 50;
-      inputModel.sortName = 'trainerName';
+      inputModel.sortName = 'courseName';
       inputModel.sortType = 1;
       inputModel.searchKeyword = this.searchKeyWord.trim();
       this.getCourseList(inputModel);
     }
+  }
+
+  searchFromStudentList(key: string) {
+    this
+    const inputModel = new SearchModel();
+    inputModel.rowOffset = 0;
+    inputModel.rowsPerPage = 50;
+    inputModel.sortName = 'courseName';
+    inputModel.sortType = 1;
+    inputModel.searchKeyword = key.trim();
+    this.getCourseList(inputModel);
   }
 
   showAll() {

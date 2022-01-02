@@ -3,7 +3,7 @@ import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { Router } from '@angular/router';
 import { CourseService } from './../../service/controller-service/course.service';
 import { Trainer } from './../../model/student/trainer.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { SearchModel } from 'src/app/model/common/common.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
@@ -15,6 +15,8 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
   styleUrls: ['./trainer-list.component.scss']
 })
 export class TrainerListComponent implements OnInit {
+  @Input()
+  isShowAll: boolean = true;
   trainerList: Trainer[];
   tableLoading: boolean;
   totalRecord: number;
@@ -35,7 +37,9 @@ export class TrainerListComponent implements OnInit {
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
       });
     this.trainerList = [];
-    this.DefaultSearch();
+    if(this.isShowAll) {
+      this.DefaultSearch();
+    }
   }
 
   DefaultSearch() {
@@ -44,6 +48,16 @@ export class TrainerListComponent implements OnInit {
     inputModel.rowsPerPage = 50;
     inputModel.sortName = 'trainerName';
     inputModel.sortType = 1;
+    this.getTrainerList(inputModel);
+  }
+
+  searchFromStudent(key: string) {
+    const inputModel = new SearchModel();
+    inputModel.rowOffset = 0;
+    inputModel.rowsPerPage = 50;
+    inputModel.sortName = 'trainerName';
+    inputModel.sortType = 1;
+    inputModel.searchKeyword = key;
     this.getTrainerList(inputModel);
   }
 

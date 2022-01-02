@@ -23,6 +23,8 @@ export class CourseInfoComponent implements OnInit {
 
   studentList: Student[];
   isEditable: boolean;
+  tableLoading: boolean;
+  totalStudents: number;
 
 
   constructor(
@@ -55,6 +57,8 @@ export class CourseInfoComponent implements OnInit {
         (res: Course) => {
           if (res) {
             this.course = res;
+            console.log('course detail ', res);
+            this.getStudentByCourseId(res.courseId);
           //  this.studentList = res.studentList ? res.studentList : [];
           }
         }, (error: any) => {
@@ -70,12 +74,24 @@ export class CourseInfoComponent implements OnInit {
     }
   }
 
-  lazyLoadEvent(event: any) {
-    /*this.studentService.getStudentList().subscribe(
- 
-    )*/
+  getStudentByCourseId(courseId: string) {
+    this.studentList = [];
+    this.tableLoading = true;
+    this.studentService.getStudentsByCourseId(courseId).subscribe(
+      (response: Student[]) => {
+        if(response?.length > 0) {
+          this.studentList = response;
+          this.totalStudents = response.length;
+        }
+      }, (error: any) => {
+        this.utilityService.subscribeError(error, 'Unable to load student')
+      }, () => {
+        this.tableLoading = false;
+      }
+    );
   }
 
+  
   save() {
     this.courseService.saveCourse(this.course).subscribe(
       (response: HttpResponseData) => {
@@ -100,9 +116,12 @@ export class CourseInfoComponent implements OnInit {
     );
   }
 
-  editStudent(studentId: number, type: string) {
-    void this.router.navigate([`${RoutesModel.StudentDetails}/${studentId}/${type}`]);
- 
+  editStudent(id: number) {
+    void this.router.navigate([`${RoutesModel.StudentDetails}/${id}/edit`]);
+  }
+
+  viewStudent(id: number) {
+    void this.router.navigate([`${RoutesModel.StudentDetails}/${id}/view`]);
   }
 
   back() {

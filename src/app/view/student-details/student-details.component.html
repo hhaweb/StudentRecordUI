@@ -165,12 +165,12 @@
     <div class="col-12">
         <p-card>
             <div class="grid">
-                <div class="col-12 pb-0">
+                <div class="col-12">
                     <h3>Course Information</h3>
                 </div>
                 <div class="col-12 md:col-10 lg:col-8 ">
                     <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="courseList"
-                        [scrollable]="true" scrollHeight="400px">
+                        [scrollable]="true" scrollHeight="flex">
                         <ng-template pTemplate="header">
                             <tr>
                                 <th>
@@ -204,7 +204,7 @@
                                     {{ rowData.status }}
                                 </td>
                                 <td class="text-left">
-                                    {{ rowData.id }}
+                                    {{ rowData.courseId }}
                                 </td>
                                 <td class="text-left">
                                     {{ rowData.sector }}
@@ -226,6 +226,73 @@
                         <ng-template pTemplate="emptymessage" let-columns>
                             <tr>
                                 <td [attr.colspan]="11">No records found</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </p-card>
+    </div>
+
+    <!-- Recommended Course -->
+    <div class="col-12">
+        <p-card>
+            <div class="grid">
+                <div class="col-12">
+                    <h3>Recommended Courses</h3>
+                </div>
+                <div class="col-12 md:col-10 lg:col-8 ">
+                    <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="recommendedCourseList"
+                        [scrollable]="true" scrollHeight="flex">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="max-width: 150px;">
+                                    Course ID
+                                </th>
+                                <th style="min-width: 200px;">
+                                    Course Name
+                                </th>
+                                <th style="max-width: 150px;">
+                                    Course Level
+                                </th>
+                                <th style="max-width: 150px;">
+                                    Duration
+                                </th>
+                                <th style="max-width: 150px;">
+                                    StartDate
+                                </th>
+                                <th style="max-width: 150px;">
+                                    EndDate
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+                            let-columns="columns">
+                            <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
+
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.courseId }}
+                                </td>
+                                <td style="min-width: 200px;" class="justify-content-start">
+                                    {{ rowData.courseName }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.courseLevel }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.duration }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.startDate || "" | date: "dd/MM/yy"  }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.endDate || "" | date: "dd/MM/yy"  }}
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="6">No records found</td>
                             </tr>
                         </ng-template>
                     </p-table>

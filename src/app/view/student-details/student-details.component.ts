@@ -1,3 +1,4 @@
+import { CourseService } from './../../service/controller-service/course.service';
 import { forkJoin } from 'rxjs';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
@@ -20,6 +21,7 @@ export class StudentDetailsComponent implements OnInit {
   isEditable: boolean;
   student: Student;
   courseList: Course[];
+  recommendedCourseList: Course[];
   yearRange: string;
   isNew: boolean;
   dateOfBirth: Date;
@@ -33,6 +35,7 @@ export class StudentDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private studentService: StudentService,
+    private courseService: CourseService,
     private utilityService: UtilityService,
     private router: Router,
     private authorizationService: AuthorizationService) { }
@@ -103,6 +106,7 @@ export class StudentDetailsComponent implements OnInit {
   initializeForm() {
     this.student = new Student();
     this.courseList = [];
+    this.recommendedCourseList = [];
     this.yearRange = '1920:'+new Date().getFullYear().toString();
     this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
     this.availableMartialStatus = [{label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
@@ -119,7 +123,8 @@ export class StudentDetailsComponent implements OnInit {
             if(res.dateOfBirth) {
               this.dateOfBirth = new Date(res.dateOfBirth);
             }
-            this.courseList = res.courseList ? res.courseList: [];
+            this.getCoursesByCid(res.cid);
+            this.getRecommendedCourses(res.cid);
            this.utilityService.hideLoading();
          }
        },(error: any) => {
@@ -134,4 +139,36 @@ export class StudentDetailsComponent implements OnInit {
        }
      );
    }
+   
+   getCoursesByCid(cid: string) {
+     this.courseList = [];
+     this.courseService.getCourseByCid(cid).subscribe(
+       (response: Course[]) => {
+         if(response.length > 0) {
+           this.courseList = response;
+         }
+       }, (error: any) => {
+         this.utilityService.subscribeError(error, 'Unable to load course');
+       }, () => {
+
+       }
+     );
+   }
+
+   getRecommendedCourses(cid: string) {
+    this.courseList = [];
+    this.courseService.getRecommendedCourses(cid).subscribe(
+      (response: Course[]) => {
+        if(response.length > 0) {
+          this.recommendedCourseList = response;
+          console.log('recommend =>',this.recommendedCourseList)
+
+        }
+      }, (error: any) => {
+        this.utilityService.subscribeError(error, 'Unable to load recommend');
+      }, () => {
+
+      }
+    );
+  }
 }
