@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/service/utility/authentication.se
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { repeat } from 'lodash';
+import { AuthorizationService } from 'src/app/service/utility/authorization.service';
+import { AppConfigData } from 'src/app/model/config-model/config-data';
 
 @Component({
   selector: 'app-user-detail',
@@ -25,15 +27,18 @@ export class UserDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenService: AuthenticationService,
+    private authorizationService: AuthorizationService,
     private utilityService: UtilityService,
   ) { }
 
   ngOnInit(): void {
-    this.isEditable = true;
     const getRoles = this.authenService.getRoles();
-    forkJoin([getRoles]).subscribe(
+    const loadCurrentCuser = this.authorizationService.currentUser();
+    forkJoin([getRoles,loadCurrentCuser]).subscribe(
       (data: any) => {
         this.availableRoles = data[0];
+        const currentUser = data[2];
+        this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
       });
     this.route.params.subscribe((params) => {
       if (params.id) {

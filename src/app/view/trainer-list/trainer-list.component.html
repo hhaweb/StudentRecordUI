@@ -1,4 +1,4 @@
-<div class="grid justify-content-center p-card" style="margin-top: 30px;">
+<div class="grid justify-content-center" style="margin-top: 30px;">
     <div class="col-6 text-right" *ngIf="isShowAll">
             <input  type="text" id="name" [(ngModel)] = "searchKeyWord" (onClick) ="search()" pInputText placeholder="Search with id or name" style="width: 30%; margin-right: 10px;"/>
             <button pButton  type="button" label="Search" (click)="search()" ></button>
@@ -16,8 +16,7 @@
         [loading] = "tableLoading"> 
         <ng-template pTemplate="header">
             <tr >
-
-                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="id">
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="trainerId">
                     Trainer ID
                     <p-sortIcon field="id"></p-sortIcon>
                 </th>
@@ -25,18 +24,37 @@
                     Trainer Name
                     <p-sortIcon field="trainerName"></p-sortIcon>
                 </th>
+                <th style="max-width: 150px;" class="justify-content-start"  pSortableColumn="gender">
+                    Gender
+                    <p-sortIcon field="gender"></p-sortIcon>
+                </th>
                 <th style="min-width: 50px;" class="justify-content-start"  pSortableColumn="nationality">
-                    Nationality
+                    Country
                     <p-sortIcon field="nationality"></p-sortIcon>
                 </th>
-                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="affiliation">
-                    Affiliation
-                    <p-sortIcon field="affiliation"></p-sortIcon>
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="joinDate">
+                    Date of Joining
+                    <p-sortIcon field="joinDate"></p-sortIcon>
                 </th>
-                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="createdDate">
-                    Created Date
-                    <p-sortIcon field="createdDate"></p-sortIcon>
+
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="designation">
+                   Designation
+                    <p-sortIcon field="designation"></p-sortIcon>
                 </th>
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="department">
+                    Department
+                     <p-sortIcon field="department"></p-sortIcon>
+                 </th>
+                
+                 <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="branch">
+                    Branch/ Area of Expertise
+                     <p-sortIcon field="branch"></p-sortIcon>
+                 </th>
+                 <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="dspCenter">
+                    DSP Centre
+                     <p-sortIcon field="dspCenter"></p-sortIcon>
+                 </th>
+
                 <th style="min-width: 50px;" class="justify-content-center">
                     Action
                 </th>
@@ -44,21 +62,33 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
             let-columns="columns">
-            <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
-                <td style="min-width: 50px;">
-                    {{rowData.id}}
+            <tr #row [pSelectableRow]="rowData" id="{{ rowData.trainerId }}">
+                <td style="max-width: 150px;">
+                    {{rowData.trainerId}}
                 </td>
-                <td style="min-width: 50px;" class="justify-content-start">
+                <td style="min-width: 50px;" class="justify-content-start" >
                     {{ rowData.trainerName }}
                 </td>
-                <td style="min-width: 50px;" class="justify-content-start">
+                <td style="max-width: 150px;" class="justify-content-start" >
+                    {{ rowData.gender }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.dspCenter"> 
                     {{ rowData.nationality }}
                 </td>
-                <td style="min-width: 50px;" class="justify-content-start"> 
-                    {{ rowData.affiliation }}
-                </td>
                 <td style="min-width: 50px;" class="justify-content-start">
-                   {{ rowData.createdDate}}
+                    {{ rowData.joinDate}}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.designation"> 
+                    {{ rowData.designation }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.department"> 
+                    {{ rowData.department }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.branch"> 
+                    {{ rowData.branch }}
+                </td>
+                <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.dspCenter"> 
+                    {{ rowData.dspCenter }}
                 </td>
                 <td style="min-width: 50px;" class="justify-content-center">
                     <a style="margin-right: 10px;">
@@ -67,14 +97,13 @@
                     <a *ngIf="isEditable">
                         <i class="pi pi-trash red" (click)="delete(rowData)"></i>
                     </a>
-        
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
             <tr>
 
-                <td [attr.colspan]="7">No records found</td>
+                <td [attr.colspan]="10">No records found</td>
             </tr>
         </ng-template>
 

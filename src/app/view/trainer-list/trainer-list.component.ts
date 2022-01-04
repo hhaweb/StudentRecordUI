@@ -3,11 +3,12 @@ import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { Router } from '@angular/router';
 import { CourseService } from './../../service/controller-service/course.service';
 import { Trainer } from './../../model/student/trainer.model';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { SearchModel } from 'src/app/model/common/common.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-trainer-list',
@@ -15,6 +16,7 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
   styleUrls: ['./trainer-list.component.scss']
 })
 export class TrainerListComponent implements OnInit {
+  @ViewChild('dt', { static: true }) dataTable: Table;
   @Input()
   isShowAll: boolean = true;
   trainerList: Trainer[];
@@ -45,7 +47,7 @@ export class TrainerListComponent implements OnInit {
   DefaultSearch() {
     const inputModel = new SearchModel();
     inputModel.rowOffset = 0;
-    inputModel.rowsPerPage = 50;
+    inputModel.rowsPerPage = 100;
     inputModel.sortName = 'trainerName';
     inputModel.sortType = 1;
     this.getTrainerList(inputModel);
@@ -78,6 +80,7 @@ export class TrainerListComponent implements OnInit {
         if (response && response.length > 0) {
           this.trainerList = response;
           this.totalRecord = response[0].totalRecords;
+          console.log('trainerList', this.trainerList);
         }
       }, (error: any) => {
         this.tableLoading = false;
@@ -114,6 +117,7 @@ export class TrainerListComponent implements OnInit {
   }
 
   showAll() {
+    this.dataTable.reset();
     this.searchKeyWord = null;
     this.DefaultSearch();
   }
