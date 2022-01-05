@@ -12,6 +12,7 @@ import { Course } from 'src/app/model/student/course.model';
 import * as moment from 'moment';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
+import { Employment } from 'src/app/model/student/employment.model';
 @Component({
   selector: 'app-student-details',
   templateUrl: './student-details.component.html',
@@ -22,15 +23,20 @@ export class StudentDetailsComponent implements OnInit {
   student: Student;
   courseList: Course[];
   recommendedCourseList: Course[];
+  employment: Employment;
   yearRange: string;
   isNew: boolean;
   dateOfBirth: Date;
   studentId: string;
   isStudent: boolean;
 
+
   availableGender: SelectItem[] = [];
   availableMartialStatus: SelectItem[] = [];
   availableStatus: SelectItem[] = [];
+  availableEmploymentStatus: SelectItem[] =[];
+  availableOrganizationType: SelectItem[] =[];
+
 
 
   constructor(private route: ActivatedRoute,
@@ -58,6 +64,7 @@ export class StudentDetailsComponent implements OnInit {
         this.isNew = true;
       } 
     });
+    console.log('oninit',this.student)
   }
 
   back() {
@@ -81,8 +88,12 @@ export class StudentDetailsComponent implements OnInit {
 
     this.utilityService.showLoading('Saving');
     if(this.dateOfBirth) {
-      this.student.dateOfBirth = moment(this.dateOfBirth).format('d/MM/yyyy');
+      this.student.dateOfBirth = moment(this.dateOfBirth).format('DD/MM/yyyy');
     }
+    this.student.inDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
+ 
+    this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
+   
     this.studentService.saveStudent(this.student).subscribe(
       (res: HttpResponseData) => {
         if(res.status) {
@@ -105,6 +116,7 @@ export class StudentDetailsComponent implements OnInit {
 
   initializeForm() {
     this.student = new Student();
+    this.employment = new Employment();
     this.courseList = [];
     this.recommendedCourseList = [];
     this.yearRange = '1920:'+new Date().getFullYear().toString();
@@ -112,6 +124,8 @@ export class StudentDetailsComponent implements OnInit {
     this.availableMartialStatus = [{label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
     {label: 'Select', value: 'Select'},{label: 'Divorced', value: 'Divorced'},{label: 'Widowed', value: 'Widowed'}];
     this.availableStatus = [{label: 'Active', value: '1'}];
+    this.availableEmploymentStatus = [{label: 'FT',value: 'FT'},{label: 'PT',value: 'PT'},{label: 'Intern',value: 'Intern'},{label: 'OJT',value: 'OJT'}]
+    this.availableOrganizationType = [{label: 'Gov',value: 'Gov'},{label: 'Private',value: 'Private'}]
   }
 
   getStudentById(studentId: string) {
@@ -120,9 +134,12 @@ export class StudentDetailsComponent implements OnInit {
        (res: Student) => {
          if(res) {
             this.student = res;
+            if(res.employment)
+            this.employment  = res.employment
             if(res.dateOfBirth) {
-              this.dateOfBirth = new Date(res.dateOfBirth);
+             this.dateOfBirth = new Date(res.dateOfBirth);
             }
+            
             this.getCoursesByCid(res.cid);
             this.getRecommendedCourses(res.cid);
            this.utilityService.hideLoading();
@@ -168,6 +185,29 @@ export class StudentDetailsComponent implements OnInit {
         this.utilityService.subscribeError(error, 'Unable to load recommend');
       }, () => {
 
+      }
+    );
+  }
+  saveEmployment(){
+    this.utilityService.showLoading('Saving');
+    this.student.employment = this.employment;
+    this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
+    this.studentService.saveStudent(this.student).subscribe(
+      (res: HttpResponseData) => {
+        if(res.status) {
+          this.utilityService.showSuccess('Success', res.message)
+          this.getStudentById(res.id);
+        } else {
+          this.utilityService.subscribeError('Save Fail', res.message);
+        }
+      },(error: any) => {
+        this.utilityService.subscribeError(
+        error,
+        'Unable to save employment'
+      );
+    },
+      () => {
+        this.utilityService.hideLoading();
       }
     );
   }
