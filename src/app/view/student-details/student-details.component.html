@@ -7,26 +7,27 @@
                 <h3 *ngIf="isNew">Create New Student</h3>
             </div>
             <div class="grid align-items-center">
-               
+
                 <div class="grid justify-content-between col-12">
                     <h3>Profile</h3>
-                     <span *ngIf="!isStudent">
-                         <span *ngIf="isEditable">
-                            <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Save" (click)="save()" class="p-button-success"></button>
-                         </span>
+                    <span *ngIf="!isStudent">
+                        <span *ngIf="isEditable">
+                            <button style="margin-right: 10px;" pButton pRipple [disabled]="!isEditable" type="button"
+                                label="Save" (click)="save()" class="p-button-success"></button>
+                        </span>
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
-                     </span>
+                    </span>
                 </div>
 
-                 <!-- Left -->
-                <div class="col-12 md:col-6 lg:col-5 align-items-center">
-                   <div class="grid align-items-center">
+                <!-- Left -->
+                <div class="col-12 md:col-4 lg:col-4 align-items-center">
+                    <div class="grid align-items-center">
                         <div class="col-12 md:col-6 lg:col-8 align-items-center">
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Id</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.id" placeholder="StudentID" pInputText />
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.id"
+                                        placeholder="StudentID" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -34,8 +35,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Name</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.name"    
-                                    placeholder="Name" pInputText />
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.name"
+                                        placeholder="Name" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -43,11 +44,12 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Date Of Birth</div>
                                 <div class="col-8">
-                                   <span *ngIf="isEditable">
-                                    <p-calendar [(ngModel)]="dateOfBirth" placeholder="dd/MM/yy" dateFormat="dd/mm/yy"
-                                    [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange" inputId="dob" [showButtonBar] ="true"
-                                    [readonlyInput]="true" [showIcon]="true" inputId="icon" ></p-calendar>
-                                   </span>
+                                    <span *ngIf="isEditable">
+                                        <p-calendar [(ngModel)]="dateOfBirth" placeholder="dd/MM/yy"
+                                            dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true"
+                                            [yearRange]="yearRange" inputId="dob" [showButtonBar]="true"
+                                            [readonlyInput]="true" [showIcon]="true" inputId="icon"></p-calendar>
+                                    </span>
 
                                     <span *ngIf="!isEditable"> {{ dateOfBirth || "" | date: "dd/MM/yy" }}</span>
                                 </div>
@@ -57,8 +59,9 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Gender</div>
                                 <div class="col-8">
-                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} " [options]="availableGender" id="trainingYear" required="true"
-                                    [(ngModel)]="student.gender" placeholder="Select Training Year "></p-dropdown>  
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                        [options]="availableGender" id="trainingYear" required="true"
+                                        [(ngModel)]="student.gender" placeholder="Select gender "></p-dropdown>
                                 </div>
                             </div>
                         </div>
@@ -66,8 +69,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">CId</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.cid" placeholder="CID" pInputText /> 
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.cid"
+                                        placeholder="CID" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -75,8 +78,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Mobile</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.mobileNo" placeholder="Mobile" pInputText /> 
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.mobileNo"
+                                        placeholder="Mobile" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -84,24 +87,27 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Batch No</div>
                                 <div class="col-8">
-                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"  inputId="batchNo" [disabled]="!isEditable" [(ngModel)]="student.batchNo" placeholder="Batch No">
+                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                        inputId="batchNo" [disabled]="!isEditable" [(ngModel)]="student.batchNo"
+                                        placeholder="Batch No">
                                     </p-inputNumber>
                                 </div>
                             </div>
                         </div>
-                        
-                   </div>
+
+                    </div>
                 </div>
-                <!-- Right -->
-                <div class="col-12 md:col-6 lg:col-5">
+                <!-- Center -->
+                <div class="col-12 md:col-4 lg:col-4">
                     <div class="grid align-items-center">
-    
+
                         <div class="col-12  md:col-10 lg:col-8">
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Status</div>
                                 <div class="col-8">
-                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} " [options]="availableStatus" id="martialStatus" required="true"
-                                    [(ngModel)]="student.status" placeholder="Select Martial Status"></p-dropdown> 
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                        [options]="availableStatus" id="martialStatus" required="true"
+                                        [(ngModel)]="student.status" placeholder="Select Martial Status"></p-dropdown>
                                 </div>
                             </div>
                         </div>
@@ -110,8 +116,10 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Martial Status</div>
                                 <div class="col-8">
-                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} " [options]="availableMartialStatus" id="martialStatus" required="true"
-                                    [(ngModel)]="student.maritalStatus" placeholder="Select Martial Status"></p-dropdown> 
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                        [options]="availableMartialStatus" id="martialStatus" required="true"
+                                        [(ngModel)]="student.maritalStatus" placeholder="Select Martial Status">
+                                    </p-dropdown>
                                 </div>
                             </div>
                         </div>
@@ -120,8 +128,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Blood Group</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.bloodGroup" placeholder="Blood Group" pInputText /> 
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.bloodGroup"
+                                        placeholder="Blood Group" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -130,8 +138,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">DId</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.did" placeholder="DID" pInputText /> 
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.did"
+                                        placeholder="DID" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -139,8 +147,8 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Email</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable"
-                                        [(ngModel)]="student.email" placeholder="Email" pInputText /> 
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.email"
+                                        placeholder="Email" pInputText />
                                 </div>
                             </div>
                         </div>
@@ -148,11 +156,54 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Training Year</div>
                                 <div class="col-8">
-                                        <p-inputNumber [useGrouping]="false" style="width: 100% !important;"  inputId="trainingYear" [disabled]="!isEditable" [(ngModel)]="student.trainingYear" placeholder="Training Year">
-                                        </p-inputNumber>
+                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                        inputId="trainingYear" [disabled]="!isEditable"
+                                        [(ngModel)]="student.trainingYear" placeholder="Training Year">
+                                    </p-inputNumber>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12  md:col-10 lg:col-8" style="color: #fff;">.</div>
+                    </div>
+
+                </div>
+                <!-- Right -->
+                <div class="col-12 md:col-4 lg:col-4">
+                    <div class="grid align-items-center">
+                        <div class="col-12 md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-5 fw-500">UserId</div>
+                                <div class="col-7">
+                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.userId"
+                                        placeholder="UserId" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-5 fw-500">Training Center Id</div>
+                                <div class="col-7">
+                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                        inputId="trainingCenterId" [disabled]="!isEditable"
+                                        [(ngModel)]="student.trainingCenterId" placeholder="Training Center Id">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-5 fw-500">Employment Type Id</div>
+                                <div class="col-7">
+                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                        inputId="employmentTypeId" [disabled]="!isEditable"
+                                        [(ngModel)]="student.employmentTypeId" placeholder="Employment Type Id">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12  md:col-10 lg:col-8" style="color: #fff;">.</div>
+                        <div class="col-12  md:col-10 lg:col-8" style="color: #fff;">.</div>
                         <div class="col-12  md:col-10 lg:col-8" style="color: #fff;">.</div>
                     </div>
 
@@ -283,10 +334,10 @@
                                     {{ rowData.duration }}
                                 </td>
                                 <td style="max-width: 150px;" class="justify-content-start">
-                                    {{ rowData.startDate || "" | date: "dd/MM/yy"  }}
+                                    {{ rowData.startDate || "" | date: "dd/MM/yy" }}
                                 </td>
                                 <td style="max-width: 150px;" class="justify-content-start">
-                                    {{ rowData.endDate || "" | date: "dd/MM/yy"  }}
+                                    {{ rowData.endDate || "" | date: "dd/MM/yy" }}
                                 </td>
                             </tr>
                         </ng-template>
@@ -300,4 +351,142 @@
             </div>
         </p-card>
     </div>
+    <div class="col-12">
+        <p-card>
+            <div>
+                <h3 *ngIf="!isNew">Detalis Information of {{student.name}}</h3>
+                <h3 *ngIf="isNew">Edit Employment</h3>
+            </div>
+            <div class="grid align-items-center">
+
+                <div class="grid justify-content-between col-12">
+                    <h3>Employment</h3>
+                    <span *ngIf="!isStudent">
+                        <span *ngIf="isEditable">
+                            <button style="margin-right: 10px;" pButton pRipple [disabled]="!isEditable" type="button"
+                                label="Save" (click)="saveEmployment()" class="p-button-success"></button>
+                        </span>
+                        <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
+                    </span>
+                </div>
+                <!-- Left -->
+                <div class="col-12 md:col-6 lg:col-6 align-items-center">
+                    <div class="grid align-items-center">
+                        <div class="col-12 md:col-6 lg:col-8 align-items-center">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Employment Status</div>
+                                <div class="col-8">
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                    [(ngModel)]="employment.status" [options]="availableEmploymentStatus" id="status" required="true"
+                                        placeholder="Select Employment Status ">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Employment Organization Type</div>
+                                <div class="col-8">
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                        [options]="availableOrganizationType" id="organizationType" required="true"
+                                        [(ngModel)]="employment.organizationType"
+                                        placeholder="Select Employment Organization Type "></p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Current Salary</div>
+                                <div class="col-8">
+                                    <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                        inputId="currentSalary" [disabled]="!isEditable"
+                                        [(ngModel)]="employment.currentSalary" placeholder="Current Salary">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Organization Name</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                        [(ngModel)]="employment.organizationName"
+                                        placeholder="Organization Name" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Place Of Work</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                        [(ngModel)]="employment.placeOfWork" placeholder="Place Of Work"
+                                        pInputText />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Right -->
+                <div class="col-12 md:col-6 lg:col-6">
+                    <div class="grid align-items-center">
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Expected Working Year</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                        [(ngModel)]="employment.expectedWorkingYear"
+                                        placeholder="Expected Working Year" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Expected Coutinue To Work</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                        [(ngModel)]="employment.expectedCoutinueToWork"
+                                        placeholder="Expected Coutinue To Work" pInputText />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">Job Specification</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                    [(ngModel)]="employment.jobSpecification" placeholder="Job Specification" pInputText /> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">To Join Another Training</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                    [(ngModel)]="employment.toJoinAnotherTraining" placeholder="To Join Another Training" pInputText /> 
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12  md:col-10 lg:col-8">
+                            <div class="grid align-items-center">
+                                <div class="col-4 fw-500">DSP Related To Current Job</div>
+                                <div class="col-8">
+                                    <input type="text" [disabled]="!isEditable"
+                                    [(ngModel)]="employment.dspRelatedToCurrentJob" placeholder="DSP Related To Current Job" pInputText /> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </p-card>
+    </div>
+
 </div>
