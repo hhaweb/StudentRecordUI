@@ -161,6 +161,7 @@ export class StudentListComponent implements OnInit {
     this.searchInfo = 'student'
     this.DefaultSearch();
   }
+
   export() {
     this.utilityService.showLoading('Exporting');
     if(this.studentSearchKeyWord) {

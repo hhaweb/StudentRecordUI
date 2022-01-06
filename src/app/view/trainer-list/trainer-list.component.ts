@@ -1,3 +1,4 @@
+import { SearchModel } from './../../model/common/common.model';
 import { forkJoin } from 'rxjs';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { Router } from '@angular/router';
@@ -5,7 +6,6 @@ import { CourseService } from './../../service/controller-service/course.service
 import { Trainer } from './../../model/student/trainer.model';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UtilityService } from 'src/app/service/utility/utility.service';
-import { SearchModel } from 'src/app/model/common/common.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { Table } from 'primeng/table';
@@ -24,6 +24,7 @@ export class TrainerListComponent implements OnInit {
   totalRecord: number;
   searchKeyWord: string;
   isEditable: boolean;
+  currentSearch: SearchModel;
   constructor(
     private courseService: CourseService,
     private router: Router,
@@ -73,6 +74,7 @@ export class TrainerListComponent implements OnInit {
   }
 
   getTrainerList(inputModel: SearchModel) {
+    this.currentSearch = inputModel;
     this.tableLoading = true;
     this.trainerList = []
     this.courseService.getTrainerList(inputModel).subscribe(
@@ -122,4 +124,32 @@ export class TrainerListComponent implements OnInit {
     this.DefaultSearch();
   }
 
+  export() {
+    this.utilityService.showLoading('Exporting');
+    if(this.searchKeyWord) {
+      this.currentSearch.searchKeyword = this.searchKeyWord;
+    }
+    this.courseService.exportTrainerList(this.currentSearch).subscribe(
+      (res: any) => {
+        this.utilityService.hideLoading();
+        if(!res.headers.get('content-disposition')) {
+          this.utilityService.subscribeError(
+            'Error',
+            'File not found'
+          );  
+        }
+        this.utilityService.fileSaveAs(res);
+      },
+      (error: any) => {
+        this.utilityService.subscribeError(
+          error,
+          'Unable to download attachment'
+        );
+        setTimeout(() => this.utilityService.hideLoading(),1000);
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
+  }
 }

@@ -24,6 +24,7 @@ export class CourseListComponent implements OnInit {
   totalRecord: number;
   searchKeyWord: string;
   isEditable: boolean;
+  currentSearch: SearchModel;
   constructor(
     private courseService: CourseService,
     private router: Router,
@@ -63,6 +64,7 @@ export class CourseListComponent implements OnInit {
   }
 
   getCourseList(inputModel: SearchModel) {
+    this.currentSearch = inputModel;
     this.tableLoading = true;
     this.courseList = []
     this.courseService.getCourseList(inputModel).subscribe(
@@ -119,5 +121,34 @@ export class CourseListComponent implements OnInit {
   showAll() {
     this.searchKeyWord = null;
     this.DefaultSearch();
+  }
+
+  export() {
+    this.utilityService.showLoading('Exporting');
+    if(this.searchKeyWord) {
+      this.currentSearch.searchKeyword = this.searchKeyWord;
+    }
+    this.courseService.exportCourseList(this.currentSearch).subscribe(
+      (res: any) => {
+        this.utilityService.hideLoading();
+        if(!res.headers.get('content-disposition')) {
+          this.utilityService.subscribeError(
+            'Error',
+            'File not found'
+          );  
+        }
+        this.utilityService.fileSaveAs(res);
+      },
+      (error: any) => {
+        this.utilityService.subscribeError(
+          error,
+          'Unable to download attachment'
+        );
+        setTimeout(() => this.utilityService.hideLoading(),1000);
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
   }
 }

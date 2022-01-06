@@ -57,4 +57,20 @@ export class StudentService {
         })
       );
   }
+
+  exportStudentDetail(studentId: number): any {
+    let params = new HttpParams();
+    params = params.append('studentId', studentId.toString());
+    return this.httpClient
+      .get(APIUrls.StudentUrls.ExportStudentDetail, {
+        responseType: 'blob',
+        observe: 'response',
+        params
+      })
+      .pipe(
+        catchError((res: any) => {
+          return this.utilService.convertBlobToText(res.error);
+        })
+      );
+  }
 }

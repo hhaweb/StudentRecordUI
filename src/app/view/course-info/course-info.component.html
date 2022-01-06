@@ -6,6 +6,7 @@
                     <div class="col-3" style="font-size: 18px;"><strong>Course Detail</strong></div>
                     <div class="grid col-9 justify-content-end">
                         <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button" label="Save" (click)="save()" class="p-button-success"></button>
+                        <button pButton style="margin-right: 10px;"  type="button" class="p-button-success" label="Export Course Detail" (click)="export()" ></button>  
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
             
                     </div>

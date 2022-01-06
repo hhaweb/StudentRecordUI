@@ -171,4 +171,33 @@ export class StudentDetailsComponent implements OnInit {
       }
     );
   }
+
+  export() {
+    this.utilityService.showLoading('Exporting');
+    if(this.student) {
+      this.studentService.exportStudentDetail(this.student.id).subscribe(
+        (res: any) => {
+          this.utilityService.hideLoading();
+          if(!res.headers.get('content-disposition')) {
+            this.utilityService.subscribeError(
+              'Error',
+              'File not found'
+            );  
+          }
+          this.utilityService.fileSaveAs(res);
+        },
+        (error: any) => {
+          this.utilityService.subscribeError(
+            error,
+            'Unable to download attachment'
+          );
+          setTimeout(() => this.utilityService.hideLoading(),1000);
+        },
+        () => {
+          this.utilityService.hideLoading();
+        }
+      );
+    }
+ 
+  }
 }
