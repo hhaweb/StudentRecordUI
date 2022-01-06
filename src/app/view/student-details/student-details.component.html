@@ -10,11 +10,11 @@
 
                 <div class="grid justify-content-between col-12">
                     <h3>Profile</h3>
-                    <span *ngIf="!isStudent">
-                        <span *ngIf="isEditable">
-                            <button style="margin-right: 10px;" pButton pRipple [disabled]="!isEditable" type="button"
-                                label="Save" (click)="save()" class="p-button-success"></button>
-                        </span>
+                     <span *ngIf="!isStudent">
+                         <span *ngIf="isEditable">
+                            <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Save" (click)="save()" class="p-button-success"></button>
+                         </span>
+                         <button pButton style="margin-right: 10px;"  type="button" class="p-button-success" label="Export Student Detail" (click)="export()" ></button>  
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
                     </span>
                 </div>

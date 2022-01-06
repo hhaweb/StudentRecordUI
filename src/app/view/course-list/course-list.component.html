@@ -6,8 +6,9 @@
     <div class="col-6 text-right" *ngIf="isShowAll">
         <button style="margin-right: 10px;" pButton pRipple  type="button" label="Show All" (click)="showAll()" ></button>
         <span *ngIf="isEditable">
-            <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Trainer" (click)="create()" class="p-button-success"></button>
+            <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Course" (click)="create()" class="p-button-success"></button>
         </span>
+        <button pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
     <div class="col-12">
         <p-table  #dt rowHover="true" [value]="courseList" [paginator]="true" [rows]="50"

@@ -46,6 +46,8 @@ export class CourseInfoComponent implements OnInit {
       if (params.id) {
         this.courseId = params.id;
         this.getCourseDetail(params.id);
+      } else {
+        this.course = new Course();
       }      
     });
   }
@@ -126,5 +128,34 @@ export class CourseInfoComponent implements OnInit {
 
   back() {
     void this.router.navigate([RoutesModel.StudentList]);
+  }
+
+  export() {
+    this.utilityService.showLoading('Exporting');
+    if(this.course) {
+      this.courseService.exportCourseDetail(this.course.id).subscribe(
+        (res: any) => {
+          this.utilityService.hideLoading();
+          if(!res.headers.get('content-disposition')) {
+            this.utilityService.subscribeError(
+              'Error',
+              'File not found'
+            );  
+          }
+          this.utilityService.fileSaveAs(res);
+        },
+        (error: any) => {
+          this.utilityService.subscribeError(
+            error,
+            'Unable to download attachment'
+          );
+          setTimeout(() => this.utilityService.hideLoading(),1000);
+        },
+        () => {
+          this.utilityService.hideLoading();
+        }
+      );
+    }
+ 
   }
 }

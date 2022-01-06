@@ -1,3 +1,4 @@
+import { catchError } from 'rxjs/operators';
 import { HttpResponseData } from './../../model/config-model/response.data';
 import { APIUrls } from './../../model/config-model/api-url';
 import { Observable } from 'rxjs';
@@ -72,5 +73,47 @@ export class CourseService {
     return this.httpClient.post<HttpResponseData>(
       APIUrls.CourseUrls.SaveTrainer,input
     );
+  }
+
+  exportCourseDetail(courseId: number): any {
+    let params = new HttpParams();
+    params = params.append('courseId', courseId.toString());
+    return this.httpClient
+      .get(APIUrls.CourseUrls.ExportCourseDetail, {
+        responseType: 'blob',
+        observe: 'response',
+        params
+      })
+      .pipe(
+        catchError((res: any) => {
+          return this.utilService.convertBlobToText(res.error);
+        })
+      );
+  }
+
+  exportCourseList(inputParam: SearchModel): any {
+    return this.httpClient
+      .post(APIUrls.CourseUrls.ExportCourseList, inputParam, {
+        responseType: 'blob',
+        observe: 'response',
+      })
+      .pipe(
+        catchError((res: any) => {
+          return this.utilService.convertBlobToText(res.error);
+        })
+      );
+  }
+
+  exportTrainerList(inputParam: SearchModel): any {
+    return this.httpClient
+      .post(APIUrls.CourseUrls.ExportTrainerList, inputParam, {
+        responseType: 'blob',
+        observe: 'response',
+      })
+      .pipe(
+        catchError((res: any) => {
+          return this.utilService.convertBlobToText(res.error);
+        })
+      );
   }
 }
