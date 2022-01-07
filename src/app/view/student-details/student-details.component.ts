@@ -26,7 +26,6 @@ export class StudentDetailsComponent implements OnInit {
   employment: Employment;
   yearRange: string;
   isNew: boolean;
-  dateOfBirth: Date;
   studentId: string;
   isStudent: boolean;
 
@@ -87,11 +86,8 @@ export class StudentDetailsComponent implements OnInit {
     }
 
     this.utilityService.showLoading('Saving');
-    if(this.dateOfBirth) {
-      this.student.dateOfBirth = moment(this.dateOfBirth).format('DD/MM/yyyy');
-    }
+    this.student.dateOfBirth = moment(this.student.dateOfBirth).format('DD/MM/yyyy');
     this.student.inDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
- 
     this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
    
     this.studentService.saveStudent(this.student).subscribe(
@@ -136,9 +132,6 @@ export class StudentDetailsComponent implements OnInit {
             this.student = res;
             if(res.employment)
             this.employment  = res.employment
-            if(res.dateOfBirth) {
-             this.dateOfBirth = new Date(res.dateOfBirth);
-            }
             
             this.getCoursesByCid(res.cid);
             this.getRecommendedCourses(res.cid);

@@ -5,57 +5,167 @@
                 <div class="grid col-12">
                     <div class="col-3" style="font-size: 18px;"><strong>Course Detail</strong></div>
                     <div class="grid col-9 justify-content-end">
-                        <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button" label="Save" (click)="save()" class="p-button-success"></button>
-                        <button pButton style="margin-right: 10px;"  type="button" class="p-button-success" label="Export Course Detail" (click)="export()" ></button>  
+                        <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                            label="Save" (click)="save()" class="p-button-success"></button>
+                        <button pButton style="margin-right: 10px;" type="button" class="p-button-success"
+                            label="Export Course Detail" (click)="export()"></button>
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
-            
+
                     </div>
                 </div>
-            
+
                 <div class="grid col-12" style="align-items: left;">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course ID</strong></div>
-                        <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.id" type="text" placeholder="Course ID" pInputText /></div>
+                        <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.courseId" type="text"
+                                placeholder="Course ID" pInputText /></div>
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Status</strong></div>
-                        <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.status" type="text" placeholder="Course Name" pInputText /></div>
+                        <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.status" type="text"
+                                placeholder="Course Name" pInputText /></div>
+
                     </div>
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Sector</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.sector" placeholder="Sector" pInputText /></div>
+                        <div class="col-4 mt-2"><strong>Course Name</strong></div>
+                        <div class="col-8">
+                            <textarea style="width: 90% !important;font-family: inherit" [rows]="2"
+                                [(ngModel)]="course.courseName" autoResize="autoResize" placeholder="Course Name"
+                                pInputTextarea></textarea>
+                        </div>
                     </div>
                 </div>
-            
                 <div class="grid col-12" style="align-items: left;">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Level</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.courseLevel" placeholder="Course Level" pInputText /></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.courseLevel"
+                                placeholder="Course Level" pInputText /></div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Sector</strong></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.sector"
+                                placeholder="Sector" pInputText /></div>
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Duration</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.duration" placeholder="Duration" pInputText /></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.duration"
+                                placeholder="Duration" pInputText /></div>
                     </div>
-                    <!-- <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Number of Applicants</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.numberOfApplicants" placeholder="Applicants" pInputText /></div>
-                    </div> -->
                 </div>
-            
+
                 <div class="grid col-12" style="align-items: left;">
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Trainer ID</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.trainerId" placeholder="Trainer ID" pInputText /></div>
+                        <div class="col-4 mt-2"><strong>CId</strong></div>
+                        <div class="col-8"> <input type="text"  [(ngModel)]="course.cid"
+                                placeholder="CID" pInputText /></div>
                     </div>
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Trainer Name</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable"  placeholder="Trainer Name" pInputText /></div>
+                        <div class="col-4 mt-2"><strong>DId</strong></div>
+                        <div class="col-8"> <input type="text"  [(ngModel)]="course.did"
+                                placeholder="DID" pInputText /></div>
                     </div>
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Trainer Nationality</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" placeholder="Nationality" pInputText /></div>
+                        <div class="col-4 mt-2"><strong>Batch No</strong></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.batchNo"
+                                placeholder="Batch No" pInputText /></div>
                     </div>
                 </div>
+                <div class="grid col-12" style="align-items: left;">
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Start Date</strong></div>
+                        <div class="col-8">
+                            <p-calendar [(ngModel)]="course.startDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
+                                dateFormat="dd/mm/yy" inputId="startDate" [showButtonBar]="true" [readonlyInput]="true"
+                                [showIcon]="true">
+                            </p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>End Date</strong></div>
+                        <div class="col-8">
+                            <p-calendar [(ngModel)]="course.endDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
+                                dateFormat="dd/mm/yy" inputId="endDate" [showButtonBar]="true" [readonlyInput]="true"
+                                [showIcon]="true">
+                            </p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Trainer ID</strong></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.trainerId"
+                                placeholder="Trainer ID" pInputText /></div>
+                    </div>
+                </div>
+
+                <div class="grid col-12" style="align-items: left;">
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Trainer Name</strong></div>
+                        <div class="col-8"> <p-dropdown [style]="{'width': '95%'} " [options]="availableTrainerList" id="trainerName"
+                            required="true" [(ngModel)]="course.trainerName" (onChange)="setTrainerId()" placeholder="Select Trainer Name ">
+                        </p-dropdown></div>
+                    </div>
+
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Cohort Size Male</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="cohortSizeMale" [disabled]="!isEditable" [(ngModel)]="course.cohortSizeMale"
+                                placeholder="Cohort Size Male">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Cohort Size Female</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="cohortSizeFemale" [disabled]="!isEditable"
+                                [(ngModel)]="course.cohortSizeFemale" placeholder="Cohort Size Female">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="grid col-12" style="align-items: left;">
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Number Of Applicants Male</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="numberOfApplicantsMale" [disabled]="!isEditable"
+                                [(ngModel)]="course.numberOfApplicantsMale" placeholder="Number Of Applicants Male">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Number Of Applicants Female</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="numberOfApplicantsFemale" [disabled]="!isEditable"
+                                [(ngModel)]="course.numberOfApplicantsFemale" placeholder="Number Of Applicants Female">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Number Of Certified Male</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="numberOfCertifiedMale" [disabled]="!isEditable"
+                                [(ngModel)]="course.numberOfCertifiedMale" placeholder="Number Of Certified Male">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid col-12" style="align-items: left;">
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Number Of Certified Female</strong></div>
+                        <div class="col-8">
+                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                                inputId="numberOfCertifiedFemale" [disabled]="!isEditable"
+                                [(ngModel)]="course.numberOfCertifiedFemale" placeholder="Number Of Certified Female">
+                            </p-inputNumber>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </p-card>
     </div>
@@ -65,98 +175,102 @@
         <p-card style="margin-top: 20px;">
             <div class="grid">
                 <div class="col-12" style="width: 100%; margin-top: 5px;">
-                    <p-table  #dt rowHover="true" styleClass="p-datatable-striped"  [value]="studentList" [paginator]="true" [rows]="50"
-                    [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalStudents" scrollable="true" 
-                    scrollHeight="400px"  [loading] = "tableLoading"> 
-              
-                    <ng-template pTemplate="header">
-                        <tr >
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="id">
-                                Student ID
-                                <p-sortIcon field="id"></p-sortIcon>
-                            </th>
-                            <th  style="min-width: 200px;" class="justify-content-start" pSortableColumn="name">
-                                Student Name
-                                <p-sortIcon field="name"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start"  pSortableColumn="cid">
-                                CID
-                                <p-sortIcon field="cid"></p-sortIcon>
-                            </th>
-                            <th  style="max-width: 150px;" class="justify-content-start" pSortableColumn="did">
-                                DID
-                                <p-sortIcon field="did"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="email">
-                                Email
-                                <p-sortIcon field="email"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="dateOfBirth">
-                                Date of Birth
-                                <p-sortIcon field="dateOfBirth"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="mobileNo">
-                                Phone 
-                                <p-sortIcon field="mobileNo"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="gender">
-                                Gender
-                                <p-sortIcon field="gender"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="bloodGroup">
-                               Batch No
-                                <p-sortIcon field="bloodGroup"></p-sortIcon>
-                            </th>
-                            <th style="max-width: 150px;" class="justify-content-start">
-                                Action
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
-                        let-columns="columns">
-                        <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
-                            <td style="max-width: 150px;">
-                                {{rowData.id}}
-                            </td>
-                            <td style="min-width: 200px;" class="justify-content-start">
-                                {{ rowData.name }}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                                {{ rowData.cid }}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start"> 
-                                {{ rowData.did }}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                                {{ rowData.email }}
-                            </td>
-                            <td style="max-width: 150px;"  class="justify-content-start">
-                                {{rowData.dateOfBirth || "" | date: "dd/MM/yyyy"}}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                                {{ rowData.mobileNo }}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                                {{ rowData.gender }}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                                {{rowData.batchNo}}
-                            </td>
-                            <td style="max-width: 150px;" class="justify-content-start">
-                               
-                                    <button style="margin-right: 10px;" pButton class="p-button-sm" type="button" label="View" (click)="viewStudent(rowData.id)"></button>
+                    <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="studentList"
+                        [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]"
+                        [totalRecords]="totalStudents" scrollable="true" scrollHeight="400px" [loading]="tableLoading">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="id">
+                                    Student ID
+                                    <p-sortIcon field="id"></p-sortIcon>
+                                </th>
+                                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="name">
+                                    Student Name
+                                    <p-sortIcon field="name"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="cid">
+                                    CID
+                                    <p-sortIcon field="cid"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="did">
+                                    DID
+                                    <p-sortIcon field="did"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="email">
+                                    Email
+                                    <p-sortIcon field="email"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start"
+                                    pSortableColumn="dateOfBirth">
+                                    Date of Birth
+                                    <p-sortIcon field="dateOfBirth"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="mobileNo">
+                                    Phone
+                                    <p-sortIcon field="mobileNo"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="gender">
+                                    Gender
+                                    <p-sortIcon field="gender"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start"
+                                    pSortableColumn="bloodGroup">
+                                    Batch No
+                                    <p-sortIcon field="bloodGroup"></p-sortIcon>
+                                </th>
+                                <th style="max-width: 150px;" class="justify-content-start">
+                                    Action
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+                            let-columns="columns">
+                            <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
+                                <td style="max-width: 150px;">
+                                    {{rowData.id}}
+                                </td>
+                                <td style="min-width: 200px;" class="justify-content-start">
+                                    {{ rowData.name }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.cid }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.did }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.email }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{rowData.dateOfBirth || "" | date: "dd/MM/yyyy"}}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.mobileNo }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{ rowData.gender }}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+                                    {{rowData.batchNo}}
+                                </td>
+                                <td style="max-width: 150px;" class="justify-content-start">
+
+                                    <button style="margin-right: 10px;" pButton class="p-button-sm" type="button"
+                                        label="View" (click)="viewStudent(rowData.id)"></button>
                                     <span *ngIf="isEditable">
-                                        <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent(rowData.id)"></button>
-                                    </span>      
-                            </td>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="emptymessage" let-columns>
-                        <tr>
-                            <td [attr.colspan]="11">No records found</td>
-                        </tr>
-                    </ng-template>
-                </p-table>
+                                        <button pButton class="p-button-sm" type="button" label="Edit"
+                                            (click)="editStudent(rowData.id)"></button>
+                                    </span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="11">No records found</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
             </div>
         </p-card>

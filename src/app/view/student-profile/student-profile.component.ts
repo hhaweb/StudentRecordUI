@@ -6,6 +6,7 @@ import { StudentService } from 'src/app/service/controller-service/student.servi
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router } from '@angular/router';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
+import * as moment from 'moment';
 
 
 @Component({
@@ -25,89 +26,88 @@ export class StudentProfileComponent implements OnInit {
   imageSrc: string;
   selectedGender: string;
   student: Student;
+  yearRange: string;
   constructor(private studentService: StudentService,
-              private utilityService: UtilityService,
-              private router: Router) {
-     
+    private utilityService: UtilityService,
+    private router: Router) {
+
   }
 
   ngOnInit() {
-   
 
-  this.availableTrainingYears = 
-  [{label:"2018",value: "2018"},
-  {label:"2019",value: "2019"},
-  {label:"2020",value: "2020"},
-  {label:"2021",value: "2021"},
- ]
-  this.availableBatches =
-          [{label:"Batch 1",value: "Batch 1"},
-          {label:"Batch 2",value: "Batch 2"},
-          {label:"Batch 3",value: "Batch 3"},
-          {label:"Batch 4",value: "Batch 4"},
-          {label:"Batch 5",value: "Batch 5"}]
+    this.yearRange = '1920:' + new Date().getFullYear().toString();
+    this.availableBloodGroups =
+      [
+        { label: "A-", value: "A-" },
+        { label: "AB-", value: "AB-" },
+        { label: "B-", value: "B-" },
+        { label: "O-", value: "O-" },
 
-  this.availableBloodGroups =
-  [{label:"A",value: "A"},
-  {label:"AB",value: "AB"},
-  {label:"B",value: "B"},
-  {label:"O",value: "O"},
- ]
+        { label: "A+", value: "A+" },
+        { label: "AB+", value: "AB+" },
+        { label: "B+", value: "B+" },
+        { label: "O+", value: "O+" }
+      ]
 
- this.availableMaritalStatues =
-  [{label:"Single",value: "Single"},
-  {label:"Married",value: "Married"},
-  {label:"Divorced",value: "Divorced"},
-  {label:"Widowed",value: "Widowed"},
- ]
+    this.availableMaritalStatues =
+      [{ label: "Single", value: "Single" },
+      { label: "Married", value: "Married" },
+      { label: "Divorced", value: "Divorced" },
+      { label: "Widowed", value: "Widowed" },
+      ]
 
-   
-   this.student = new Student();
-   this.student.gender = "Male";
+
+    this.student = new Student();
+    this.student.gender = "Male";
   }
 
-  onPhotoUpload(event: any){
+  onPhotoUpload(event: any) {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-
       const reader = new FileReader();
-      reader.onload = e => this.imageSrc = reader.result.toString();
-
       reader.readAsDataURL(file);
+      reader.onload = () => {
+      this.imageSrc = reader.result.toString();
+      this.student.avatar = this.imageSrc;
     }
   }
-  
+  }
+
   removeImage(element) {
     this.imageSrc = null;
     element.value = '';
   }
 
 
-  addStudent(){
-   console.log('call api', this.student);
-   this.utilityService.showLoading('Saving...')
-   this.studentService.saveStudent(this.student).subscribe(
-     (response: HttpResponseData) =>{
-       if(response.status){
-        this.utilityService.showSuccess('Success', 'Save Successfully')
-       }
-       else{
+  addStudent() {
+    console.log('call api', this.student);
+    this.utilityService.showLoading('Saving...')
+    console.log("dateofbirth before", this.student.dateOfBirth)
+    if (this.student.dateOfBirth)
+      this.student.dateOfBirth = moment(new Date(this.student.dateOfBirth)).format('DD/MM/yyyy');
+    console.log("dateofbirth after", this.student.dateOfBirth)
+    this.studentService.saveStudent(this.student).subscribe(
+      (response: HttpResponseData) => {
+        if (response.status) {
+          this.utilityService.showSuccess('Success', 'Save Successfully')
+        }
+        else {
 
-       }
-     },(error: any) => {
-      this.utilityService.showError(error,'Unable to Save')
-     },
-     () => {
-       this.utilityService.hideLoading();
-     }
-   );
+        }
+      }, (error: any) => {
+        this.utilityService.showError(error, 'Unable to Save')
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
   }
 
-  clear(){
-     this.student = new Student();
-     this.student.gender = "Male";
+  clear() {
+    this.student = new Student();
+    this.student.gender = "Male";
   }
 
- 
+
 
 }

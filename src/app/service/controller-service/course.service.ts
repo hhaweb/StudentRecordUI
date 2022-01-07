@@ -9,6 +9,7 @@ import { Course } from 'src/app/model/student/course.model';
 import { Student } from 'src/app/model/student/student.model';
 import { SearchModel } from 'src/app/model/common/common.model';
 import { Trainer } from 'src/app/model/student/trainer.model';
+import { SelectItem } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
@@ -44,12 +45,17 @@ export class CourseService {
     );
   }
 
+
   getTrainerById(trainerId: string): Observable<Trainer> {
     let params = new HttpParams();
     params = params.append('trainerId', trainerId);
     return this.httpClient.get<Trainer>(
       APIUrls.CourseUrls.GetTrainerById, { params }
     );
+  }
+
+  getTrainerItems():Observable<SelectItem[]>{
+   return this.httpClient.get<SelectItem[]>(APIUrls.CourseUrls.GetTrainerItem)
   }
 
   getCourseByCid(cId: string): Observable<Course[]> {
