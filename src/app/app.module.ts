@@ -59,6 +59,7 @@ import { UserDetailComponent } from './view/user-detail/user-detail.component';
 import { CanActivateRoute } from './service/utility/can-activate-route.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseListComponent } from './view/course-list/course-list.component';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -106,7 +107,8 @@ import { CourseListComponent } from './view/course-list/course-list.component';
     FontAwesomeModule,
     TableModule,
     CalendarModule,
-    AvatarModule
+    AvatarModule,
+    InputTextareaModule
   ],
   providers: [
     MessageService,
