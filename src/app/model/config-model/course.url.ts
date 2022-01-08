@@ -14,6 +14,6 @@ export const CourseUrls = {
     GetRecommendCourse: baseUrl + 'get-recommend-courses',
     ExportCourseDetail: baseUrl + 'export-course-detail',
     ExportCourseList: baseUrl + 'export-course-list',
-    ExportTrainerList: baseUrl + 'export-trainer-list'
- 
+    ExportTrainerList: baseUrl + 'export-trainer-list',
+    GetTrainerItem: baseUrl + 'get-trainer-item'
 }

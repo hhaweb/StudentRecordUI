@@ -45,13 +45,13 @@
                                 <div class="col-4 fw-500">Date Of Birth</div>
                                 <div class="col-8">
                                     <span *ngIf="isEditable">
-                                        <p-calendar [(ngModel)]="dateOfBirth" placeholder="dd/MM/yy"
+                                        <p-calendar [(ngModel)]="student.dateOfBirth" placeholder="dd/MM/yy"
                                             dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true"
                                             [yearRange]="yearRange" inputId="dob" [showButtonBar]="true"
                                             [readonlyInput]="true" [showIcon]="true" inputId="icon"></p-calendar>
                                     </span>
 
-                                    <span *ngIf="!isEditable"> {{ dateOfBirth || "" | date: "dd/MM/yy" }}</span>
+                                    <span *ngIf="!isEditable"> {{ student.dateOfBirth || "" | date: "dd/MM/yy" }}</span>
                                 </div>
                             </div>
                         </div>
