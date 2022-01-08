@@ -10,6 +10,7 @@ export class Student {
     public gender: string;
     public cid: string;
     public did: string;
+    public avatar: string;
     public bloodGroup: string
     public dateOfBirth: string;
     public trainingYear: number;

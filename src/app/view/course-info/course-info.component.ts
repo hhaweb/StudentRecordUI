@@ -11,6 +11,7 @@ import { StudentService } from 'src/app/service/controller-service/student.servi
 import { Course } from 'src/app/model/student/course.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-course-info',
@@ -20,12 +21,14 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
 export class CourseInfoComponent implements OnInit {
   courseId: string;
   course: Course;
+  trainerName: string;
 
   studentList: Student[];
   isEditable: boolean;
   tableLoading: boolean;
   totalStudents: number;
 
+  availableTrainerList: SelectItem[] =[];
 
   constructor(
     private route: ActivatedRoute,
@@ -37,10 +40,12 @@ export class CourseInfoComponent implements OnInit {
 
   ngOnInit(): void {
     const loadCurrentCuser = this.authorizationService.currentUser();
-    forkJoin([loadCurrentCuser]).subscribe(
+    const loadTrainerItems = this.courseService.getTrainerItems();
+    forkJoin([loadCurrentCuser,loadTrainerItems]).subscribe(
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
+        this.availableTrainerList = data[1];
       });
     this.route.params.subscribe((params) => {
       if (params.id) {
@@ -59,7 +64,9 @@ export class CourseInfoComponent implements OnInit {
         (res: Course) => {
           if (res) {
             this.course = res;
-            console.log('course detail ', res);
+            this.course.trainerName =this.availableTrainerList[this.availableTrainerList.findIndex(c =>c.value === this.course.trainerId)].label
+            console.log('trainer name',this.course.trainerName)
+            console.log('course detail ', this.course);
             this.getStudentByCourseId(res.courseId);
           //  this.studentList = res.studentList ? res.studentList : [];
           }
@@ -91,6 +98,11 @@ export class CourseInfoComponent implements OnInit {
         this.tableLoading = false;
       }
     );
+  }
+
+  setTrainerId(){
+    this.course.trainerId= this.course.trainerName;
+
   }
 
   
@@ -127,7 +139,7 @@ export class CourseInfoComponent implements OnInit {
   }
 
   back() {
-    void this.router.navigate([RoutesModel.StudentList]);
+    void this.router.navigate([RoutesModel.CourseList]);
   }
 
   export() {
