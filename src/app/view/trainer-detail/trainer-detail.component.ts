@@ -1,3 +1,5 @@
+import { SelectItem } from 'primeng/api';
+import { repeat } from 'lodash';
 import { forkJoin } from 'rxjs';
 import { CourseService } from './../../service/controller-service/course.service';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
@@ -8,6 +10,7 @@ import { UtilityService } from 'src/app/service/utility/utility.service';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-trainer-detail',
@@ -18,7 +21,8 @@ export class TrainerDetailComponent implements OnInit {
   trainer: Trainer;
   isEditable: boolean;
   trainerId: string;
-
+  selectedJoinDate: Date;
+  availableGender: SelectItem[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -28,6 +32,7 @@ export class TrainerDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.availableGender = [{label: 'Male', value: 'Male'}, {label: 'Female', value: 'Female'}];
     this.trainer = new Trainer();
     const loadCurrentCuser = this.authorizationService.currentUser();
     forkJoin([loadCurrentCuser]).subscribe(
@@ -50,6 +55,10 @@ export class TrainerDetailComponent implements OnInit {
     this.courseService.getTrainerById(id).subscribe(
       (response: Trainer) => {
         if(response) {
+          console.log('join date',response.joinDate);
+          if(response.joinDate) {
+            this.selectedJoinDate = moment(response.joinDate, "DD/MM/yyyy").toDate();
+          }
           this.trainer = response;
         }
       }, (error: any) => {
@@ -66,6 +75,9 @@ export class TrainerDetailComponent implements OnInit {
       return;
     }
     this.utilityService.showLoading('Saving');
+    if(this.selectedJoinDate) {
+      this.trainer.joinDate = moment(this.selectedJoinDate).format('DD/MM/yyyy');
+    }
     this.courseService.saveTrainer(this.trainer).subscribe(
       (res: HttpResponseData) => {
         if(res.status) {

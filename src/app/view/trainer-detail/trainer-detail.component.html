@@ -4,45 +4,121 @@
             <ng-template pTemplate="header">
                 <h3 style="margin-left: 10px;">Trainer</h3>
             </ng-template>
-            <div class="grid col-12 justify-content-start align-items-center">
-                <div class="col-1">
-                    Id
+            <div class="grid">
+                <div class="col-6">
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Trainer Id
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="true" [(ngModel)]="trainer.trainerId" placeholder="Id" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Trainer Name
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerName" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Nationality
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.nationality" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Affiliation
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.affiliation" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Designation
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.designation" pInputText />
+                        </div>
+                    </div>
+        
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Department
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.department" pInputText />
+                        </div>
+                    </div>
                 </div>
-                <div class="col-3">
-                    <input type="text" [disabled]="true" [(ngModel)]="trainer.id" placeholder="Id" pInputText />
-                </div>
-            </div>
-            <div class="grid col-12 justify-content-start align-items-center">
-                <div class="col-1">
-                    Trainer Name
-                </div>
-                <div class="col-3">
-                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerName"
-                        placeholder="Trainer Name" pInputText />
-                </div>
-            </div>
-            <div class="grid col-12 justify-content-start align-items-center">
-                <div class="col-1">
-                    Nationality
-                </div>
-                <div class="col-3">
-                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.nationality"
-                        placeholder="Nationality" pInputText />
-                </div>
-            </div>
-            <div class="grid col-12 justify-content-start align-items-center">
-                <div class="col-1">
-                    Affiliation
-                </div>
-                <div class="col-3">
-                    <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.affiliation"
-                        placeholder="Affiliation" pInputText />
+                <div class="col-6">
+
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Gender
+                        </div>
+                        <div class="col-6">
+                            <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                            [options]="availableGender" id="trainingYear" required="true"
+                            [(ngModel)]="trainer.gender" placeholder="Select gender "></p-dropdown>
+
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Join Date
+                        </div>
+                        <div class="col-6">
+                            <p-calendar [(ngModel)]="selectedJoinDate" placeholder="dd/MM/yy"
+                                            dateFormat="dd/mm/yy" 
+                                            inputId="dob" [showButtonBar]="true"
+                                            [readonlyInput]="true" [showIcon]="true" inputId="icon"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            DSP Center
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.dspCenter" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Training Programming
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainingProgramme" pInputText />
+                        </div>
+                    </div>
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Qualification
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.qualification"  pInputText />
+                        </div>
+                    </div>
+        
+                    <div class="grid col-12 justify-content-start align-items-center">
+                        <div class="col-4">
+                            Branch/ Area of Expertise
+                        </div>
+                        <div class="col-6">
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.branch"
+                                pInputText />
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="grid col-12 justify-content-start align-items-center">
+            <div class="grid col-12 justify-content-end align-items-center">
                 <div class="col-4 text-right">
-                    
                     <span *ngIf="isEditable">
                         <p-button label="Save" [disabled]="!isEditable" icon="pi pi-check" (click)="saveTrainer()" styleClass="p-button-success"></p-button>
                     </span>
