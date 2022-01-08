@@ -1,7 +1,8 @@
+import { repeat } from 'lodash';
 import { forkJoin } from 'rxjs';
 
 import { CourseService } from './../../service/controller-service/course.service';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Student } from 'src/app/model/student/student.model';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -18,10 +19,10 @@ import { SelectItem } from 'primeng/api';
   templateUrl: './course-info.component.html',
   styleUrls: ['./course-info.component.scss']
 })
-export class CourseInfoComponent implements OnInit {
+export class CourseInfoComponent implements OnInit, OnDestroy {
   courseId: string;
   course: Course;
-  trainerName: string;
+
 
   studentList: Student[];
   isEditable: boolean;
@@ -41,11 +42,13 @@ export class CourseInfoComponent implements OnInit {
   ngOnInit(): void {
     const loadCurrentCuser = this.authorizationService.currentUser();
     const loadTrainerItems = this.courseService.getTrainerItems();
+    this.studentList = [];
     forkJoin([loadCurrentCuser,loadTrainerItems]).subscribe(
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.availableTrainerList = data[1];
+        this.availableTrainerList.unshift({label: 'Blank', value: null, disabled: false})
       });
     this.route.params.subscribe((params) => {
       if (params.id) {
@@ -56,6 +59,14 @@ export class CourseInfoComponent implements OnInit {
       }      
     });
   }
+  
+  ngOnDestroy(): void {
+    this.course = new Course();
+    this.courseId = null;
+    this.studentList = [];
+    this.tableLoading = false;
+    this.availableTrainerList = []
+  }
 
   getCourseDetail(courseID: string) {
     if (courseID) {
@@ -64,11 +75,7 @@ export class CourseInfoComponent implements OnInit {
         (res: Course) => {
           if (res) {
             this.course = res;
-            this.course.trainerName =this.availableTrainerList[this.availableTrainerList.findIndex(c =>c.value === this.course.trainerId)].label
-            console.log('trainer name',this.course.trainerName)
-            console.log('course detail ', this.course);
             this.getStudentByCourseId(res.courseId);
-          //  this.studentList = res.studentList ? res.studentList : [];
           }
         }, (error: any) => {
           this.utilityService.subscribeError(
@@ -89,6 +96,7 @@ export class CourseInfoComponent implements OnInit {
     this.studentService.getStudentsByCourseId(courseId).subscribe(
       (response: Student[]) => {
         if(response?.length > 0) {
+          console.log('student list ',response);
           this.studentList = response;
           this.totalStudents = response.length;
         }

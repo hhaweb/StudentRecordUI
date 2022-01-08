@@ -3,5 +3,4 @@ export class AppConfigData {
     public static AdminRole = "ROLE_ADMIN";
     public static SuperAdminRole = "ROLE_SUPER_ADMIN";
 
-    
 }

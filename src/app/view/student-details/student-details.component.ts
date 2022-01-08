@@ -35,7 +35,9 @@ export class StudentDetailsComponent implements OnInit {
   availableStatus: SelectItem[] = [];
   availableEmploymentStatus: SelectItem[] =[];
   availableOrganizationType: SelectItem[] =[];
-
+  availableBloodGroups: SelectItem[];
+  availableMaritalStatues: SelectItem[];
+  title: string = "Create New Student";
 
 
   constructor(private route: ActivatedRoute,
@@ -46,6 +48,25 @@ export class StudentDetailsComponent implements OnInit {
     private authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
+    this.availableBloodGroups =
+    [
+      { label: "A-", value: "A-" },
+      { label: "AB-", value: "AB-" },
+      { label: "B-", value: "B-" },
+      { label: "O-", value: "O-" },
+
+      { label: "A+", value: "A+" },
+      { label: "AB+", value: "AB+" },
+      { label: "B+", value: "B+" },
+      { label: "O+", value: "O+" }
+    ]
+
+  this.availableMaritalStatues =
+    [{ label: "Single", value: "Single" },
+    { label: "Married", value: "Married" },
+    { label: "Divorced", value: "Divorced" },
+    { label: "Widowed", value: "Widowed" },
+    ]
     const loadCurrentCuser = this.authorizationService.currentUser();
     forkJoin([loadCurrentCuser]).subscribe(
       (data: any) => {
@@ -84,6 +105,13 @@ export class StudentDetailsComponent implements OnInit {
       this.utilityService.showWarning('Warning','Please add DID');
       return;
     }
+
+    if(this.employment.status || this.employment.organizationType || this.employment.organizationName) {
+      this.employment.cid = this.student.cid;
+      this.student.employment = this.employment;
+      this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
+    }
+ 
 
     this.utilityService.showLoading('Saving');
     this.student.dateOfBirth = moment(this.student.dateOfBirth).format('DD/MM/yyyy');
@@ -129,6 +157,7 @@ export class StudentDetailsComponent implements OnInit {
      this.studentService.getStudentById(studentId).subscribe(
        (res: Student) => {
          if(res) {
+           this.title = 'Detalis Information of ' +res.name; 
             this.student = res;
             if(res.employment)
             this.employment  = res.employment

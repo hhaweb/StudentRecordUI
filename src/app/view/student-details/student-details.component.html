@@ -1,15 +1,9 @@
 <div class="grid">
     <!-- Student Information -->
     <div class="col-12">
-        <p-card>
-            <div>
-                <h3 *ngIf="!isNew">Detalis Information of {{student.name}}</h3>
-                <h3 *ngIf="isNew">Create New Student</h3>
-            </div>
+        <p-card [header]="title">
             <div class="grid align-items-center">
-
-                <div class="grid justify-content-between col-12">
-                    <h3>Profile</h3>
+                <div class="grid justify-content-end col-12">
                      <span *ngIf="!isStudent">
                          <span *ngIf="isEditable">
                             <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Save" (click)="save()" class="p-button-success"></button>
@@ -128,8 +122,10 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Blood Group</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.bloodGroup"
-                                        placeholder="Blood Group" pInputText />
+                                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                                        [options]="availableBloodGroups" id="bloodGroup" required="true"
+                                        [(ngModel)]="student.bloodGroup" placeholder="Select Blood Group">
+                                    </p-dropdown>  
                                 </div>
                             </div>
                         </div>
@@ -214,12 +210,9 @@
 
     <!-- Course Information -->
     <div class="col-12">
-        <p-card>
+        <p-card header="Course Information">
             <div class="grid">
-                <div class="col-12">
-                    <h3>Course Information</h3>
-                </div>
-                <div class="col-12 md:col-10 lg:col-8 ">
+                <div class="col-12 md:col-10 lg:col-10 ">
                     <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="courseList"
                         [scrollable]="true" scrollHeight="flex">
                         <ng-template pTemplate="header">
@@ -287,12 +280,9 @@
 
     <!-- Recommended Course -->
     <div class="col-12">
-        <p-card>
+        <p-card header="Recommended Courses">
             <div class="grid">
-                <div class="col-12">
-                    <h3>Recommended Courses</h3>
-                </div>
-                <div class="col-12 md:col-10 lg:col-8 ">
+                <div class="col-12 md:col-10 lg:col-10 ">
                     <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="recommendedCourseList"
                         [scrollable]="true" scrollHeight="flex">
                         <ng-template pTemplate="header">
@@ -351,15 +341,13 @@
             </div>
         </p-card>
     </div>
+
+    <!-- Employment -->
     <div class="col-12">
-        <p-card>
-            <div>
-                <h3 *ngIf="!isNew">Detalis Information of {{student.name}}</h3>
-                <h3 *ngIf="isNew">Edit Employment</h3>
-            </div>
+        <p-card  header="Employment">            
             <div class="grid align-items-center">
 
-                <div class="grid justify-content-between col-12">
+                <!-- <div class="grid justify-content-between col-12">
                     <h3>Employment</h3>
                     <span *ngIf="!isStudent">
                         <span *ngIf="isEditable">
@@ -368,8 +356,9 @@
                         </span>
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
                     </span>
-                </div>
+                </div> -->
                 <!-- Left -->
+
                 <div class="col-12 md:col-6 lg:col-6 align-items-center">
                     <div class="grid align-items-center">
                         <div class="col-12 md:col-6 lg:col-8 align-items-center">

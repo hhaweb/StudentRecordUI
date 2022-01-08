@@ -7,14 +7,14 @@
                     <div class="grid col-9 justify-content-end">
                         <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
                             label="Save" (click)="save()" class="p-button-success"></button>
-                        <button pButton style="margin-right: 10px;" type="button" class="p-button-success"
-                            label="Export Course Detail" (click)="export()"></button>
+                        <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                            label="Export Course Detail" (click)="export()" class="p-button-success"></button>
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
 
                     </div>
                 </div>
 
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course ID</strong></div>
                         <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.courseId" type="text"
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Level</strong></div>
                         <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.courseLevel"
@@ -53,7 +53,7 @@
                     </div>
                 </div>
 
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>CId</strong></div>
                         <div class="col-8"> <input type="text"  [(ngModel)]="course.cid"
@@ -70,7 +70,7 @@
                                 placeholder="Batch No" pInputText /></div>
                     </div>
                 </div>
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Start Date</strong></div>
                         <div class="col-8">
@@ -91,23 +91,22 @@
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Trainer ID</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.trainerId"
-                                placeholder="Trainer ID" pInputText /></div>
+                        <div class="col-8"> {{course.trainerId}}</div>
                     </div>
                 </div>
 
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Trainer Name</strong></div>
                         <div class="col-8"> <p-dropdown [style]="{'width': '95%'} " [options]="availableTrainerList" id="trainerName"
-                            required="true" [(ngModel)]="course.trainerName" (onChange)="setTrainerId()" placeholder="Select Trainer Name ">
+                            required="true" [(ngModel)]="course.trainerId"  placeholder="Select Trainer Name ">
                         </p-dropdown></div>
                     </div>
 
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Cohort Size Male</strong></div>
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber [useGrouping]="false" 
                                 inputId="cohortSizeMale" [disabled]="!isEditable" [(ngModel)]="course.cohortSizeMale"
                                 placeholder="Cohort Size Male">
                             </p-inputNumber>
@@ -116,7 +115,7 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Cohort Size Female</strong></div>
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber [useGrouping]="false" 
                                 inputId="cohortSizeFemale" [disabled]="!isEditable"
                                 [(ngModel)]="course.cohortSizeFemale" placeholder="Cohort Size Female">
                             </p-inputNumber>
@@ -125,11 +124,14 @@
 
                 </div>
 
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12">
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Number Of Applicants Male</strong></div>
+                        <div class="col-4 mt-2"><strong>Number Of Applicants Male </strong>
+                      
+                        </div>
+                        
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber [useGrouping]="false"
                                 inputId="numberOfApplicantsMale" [disabled]="!isEditable"
                                 [(ngModel)]="course.numberOfApplicantsMale" placeholder="Number Of Applicants Male">
                             </p-inputNumber>
@@ -138,7 +140,7 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Number Of Applicants Female</strong></div>
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber [useGrouping]="false" 
                                 inputId="numberOfApplicantsFemale" [disabled]="!isEditable"
                                 [(ngModel)]="course.numberOfApplicantsFemale" placeholder="Number Of Applicants Female">
                             </p-inputNumber>
@@ -147,18 +149,18 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Number Of Certified Male</strong></div>
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber [useGrouping]="false" 
                                 inputId="numberOfCertifiedMale" [disabled]="!isEditable"
                                 [(ngModel)]="course.numberOfCertifiedMale" placeholder="Number Of Certified Male">
                             </p-inputNumber>
                         </div>
                     </div>
                 </div>
-                <div class="grid col-12" style="align-items: left;">
+                <div class="grid col-12" >
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Number Of Certified Female</strong></div>
                         <div class="col-8">
-                            <p-inputNumber [useGrouping]="false" style="width: 100% !important;"
+                            <p-inputNumber  
                                 inputId="numberOfCertifiedFemale" [disabled]="!isEditable"
                                 [(ngModel)]="course.numberOfCertifiedFemale" placeholder="Number Of Certified Female">
                             </p-inputNumber>
@@ -171,11 +173,11 @@
     </div>
 
     <!-- Student that attended to course -->
-    <div class="col-12">
+    <div class="col-12" >
         <p-card style="margin-top: 20px;">
             <div class="grid">
-                <div class="col-12" style="width: 100%; margin-top: 5px;">
-                    <p-table #dt rowHover="true" styleClass="p-datatable-striped" [value]="studentList"
+                <div class="col-12">
+                    <p-table #dt rowHover="true"  [value]="studentList"
                         [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]"
                         [totalRecords]="totalStudents" scrollable="true" scrollHeight="400px" [loading]="tableLoading">
 
@@ -224,7 +226,7 @@
                                 </th>
                             </tr>
                         </ng-template>
-                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" 
                             let-columns="columns">
                             <tr #row [pSelectableRow]="rowData" id="{{ rowData.Id }}">
                                 <td style="max-width: 150px;">
