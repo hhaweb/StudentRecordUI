@@ -1,3 +1,4 @@
+import { DropdwonSetupComponent } from './view/dropdown/dropdwon-setup.component';
 import { RoutesModel } from './model/config-model/route-model';
 import { UserListComponent } from './view/user-list/user-list.component';
 import { TrainerDetailComponent } from './view/trainer-detail/trainer-detail.component';
@@ -105,7 +106,15 @@ const routes: Routes = [
   {
     path: RoutesModel.UserDetail + '/:id',
     component: UserDetailComponent
+  },
+  {
+    path: RoutesModel.DropDownSetup,
+    component: DropdwonSetupComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.DropDownSetup }
+
   }
+
 ];
 
 @NgModule({

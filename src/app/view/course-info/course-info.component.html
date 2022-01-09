@@ -22,10 +22,13 @@
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Status</strong></div>
-                        <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.status" type="text"
-                                placeholder="Course Name" pInputText /></div>
+                        <div class="col-8">
+                            <p-dropdown [style]="{'width': '95%'} " [disabled]="!isEditable" [options]="availableCourseStatus" id="status"
+                                required="true" [(ngModel)]="course.status"  placeholder="Select Course Status ">
+                            </p-dropdown>
+                        </div>
 
-                    </div>
+                    </div> 
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Name</strong></div>
                         <div class="col-8">
@@ -38,13 +41,19 @@
                 <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Course Level</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.courseLevel"
-                                placeholder="Course Level" pInputText /></div>
+                        <div class="col-8"> 
+                            <p-dropdown [style]="{'width': '95%'} " [disabled]="!isEditable" [options]="availableCourseLevel" id="courseLevel"
+                                required="true" [(ngModel)]="course.courseLevel"  placeholder="Select Course Level ">
+                            </p-dropdown>
+                        </div>
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Sector</strong></div>
-                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.sector"
-                                placeholder="Sector" pInputText /></div>
+                        <div class="col-8"> 
+                            <p-dropdown [style]="{'width': '95%'} " [disabled]="!isEditable" [options]="availableCoursesector" id="sector"
+                                required="true" [(ngModel)]="course.sector"  placeholder="Select Course Sector ">
+                            </p-dropdown>                
+                        </div>
                     </div>
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Duration</strong></div>
@@ -74,7 +83,7 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Start Date</strong></div>
                         <div class="col-8">
-                            <p-calendar [(ngModel)]="course.startDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
+                            <p-calendar [(ngModel)]="selectedStartDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
                                 dateFormat="dd/mm/yy" inputId="startDate" [showButtonBar]="true" [readonlyInput]="true"
                                 [showIcon]="true">
                             </p-calendar>
@@ -83,7 +92,7 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>End Date</strong></div>
                         <div class="col-8">
-                            <p-calendar [(ngModel)]="course.endDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
+                            <p-calendar [(ngModel)]="selectedEndDate" [disabled]="!isEditable" placeholder="dd/MM/yy"
                                 dateFormat="dd/mm/yy" inputId="endDate" [showButtonBar]="true" [readonlyInput]="true"
                                 [showIcon]="true">
                             </p-calendar>

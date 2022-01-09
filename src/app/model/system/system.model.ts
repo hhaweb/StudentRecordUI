@@ -16,4 +16,5 @@ export class ConfigData {
     public userId: number;
     public studentId: number;
     public userName: string;
+    public profileImage: string;
 }

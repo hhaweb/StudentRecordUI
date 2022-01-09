@@ -1,3 +1,4 @@
+import { CommonService } from './../../service/controller-service/common.service';
 import { UploadHistoryComponent } from './upload-history.component';
 import { HttpResponseData } from './../../model/config-model/response.data';
 import { UtilityService } from './../../service/utility/utility.service';
@@ -26,7 +27,8 @@ export class UploadComponent implements OnInit {
     private uploadService: UploadService,
     private utilityService: UtilityService,
     private router: Router,
-    private messageService: MessageService) { }
+    private messageService: MessageService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
   }
@@ -78,5 +80,30 @@ export class UploadComponent implements OnInit {
     this.trainerFile.clear();
   }
 
+
+  downloadSimple(name: string) {
+    this.commonService.downloadSimpleUploadFile(name).subscribe(
+      (res: any) => {
+        this.utilityService.hideLoading();
+        if(!res.headers.get('content-disposition')) {
+          this.utilityService.subscribeError(
+            'Error',
+            'File not found'
+          );  
+        }
+        this.utilityService.fileSaveAs(res);
+      },
+      (error: any) => {
+        this.utilityService.subscribeError(
+          error,
+          'Unable to download attachment'
+        );
+        setTimeout(() => this.utilityService.hideLoading(),1000);
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
+  }
 }
 // test

@@ -8,18 +8,18 @@
                 <div class="col-6">
                     <div class="grid col-12 justify-content-start align-items-center">
                         <div class="col-4">
-                            Trainer Id
+                            Trainer Id <span style="color: red;">*</span>
                         </div>
                         <div class="col-6">
-                            <input type="text" [disabled]="true" [(ngModel)]="trainer.trainerId" placeholder="Id" pInputText />
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerId" placeholder="Require" pInputText />
                         </div>
                     </div>
                     <div class="grid col-12 justify-content-start align-items-center">
                         <div class="col-4">
-                            Trainer Name
+                            Trainer Name <span style="color: red;">*</span>
                         </div>
                         <div class="col-6">
-                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerName" pInputText />
+                            <input type="text" [disabled]="!isEditable" [(ngModel)]="trainer.trainerName" placeholder="Require"  pInputText />
                         </div>
                     </div>
                     <div class="grid col-12 justify-content-start align-items-center">

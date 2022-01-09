@@ -1,140 +1,129 @@
 <div class="grid col-12 p-card" style="padding:0;margin-top:5px">
-    <div class="col-12" style="font-size: 16px;background-color:#3047c4;height: 50px;margin-bottom: 20px; color:white;">
-        Add New Student
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="name">Name</label> </div>
-            <div class="col-6"><input type="text" id="name" required="true" [(ngModel)]="student.name" placeholder="Name" pInputText />
-            </div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="email">Email</label> </div>
-            <div class="col-6"><input type="email" id="email" required="true" [(ngModel)]="student.email" placeholder="Email" pInputText />
-            </div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="mobileno">Mobile No</label> </div>
-            <div class="col-6"><input type="text" id="mobileno" required="true" [(ngModel)]="student.mobileNo"
-                placeholder="Mobile No"     pInputText /></div>
-        </div>
-
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="cid">CId</label> </div>
-            <div class="col-6">
-                <p-inputNumber [useGrouping]="false"  inputId="cid"
-                    [(ngModel)]="student.cid" placeholder="CId">
-                </p-inputNumber>
-            </div>
-        </div>
-
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="did">DId</label> </div>
-            <div class="col-6"><input type="text" id="did" required="true" [(ngModel)]="student.did" placeholder="DId" pInputText /></div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="maritalStatus">Matrial Status</label> </div>
-            <div class="col-6">
-                <p-dropdown [style]="{'width': '95%'} " [options]="availableMaritalStatues" id="maritalStatus"
-                    required="true" [(ngModel)]="student.maritalStatus" placeholder="Select Marital Status ">
-                </p-dropdown>
-            </div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="batchno">Batch No</label> </div>
-            <div class="col-6">
-                <p-inputNumber [useGrouping]="false"  inputId="batchNo"
-                    [(ngModel)]="student.batchNo" placeholder="Batch No">
-                </p-inputNumber>
-            </div>
-        </div>
-
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="bloodGroup">Blood Group</label> </div>
-            <div class="col-6">
-                <p-dropdown [style]="{'width': '95%'} " [options]="availableBloodGroups" id="bloodGroup" required="true"
-                    [(ngModel)]="student.bloodGroup" placeholder="Select Blood Group "></p-dropdown>
-            </div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="trainingYear">Training Year</label> </div>
-            <div class="col-6">
-                <p-inputNumber [useGrouping]="false"  inputId="trainingYear"
-                    [(ngModel)]="student.trainingYear" placeholder="Training Year">
-                </p-inputNumber>
-
-            </div>
-        </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="gender">Gender</label> </div>
-            <div class="col-2">
-                <div>
-                    <p-radioButton name="groupname" value="Male" [(ngModel)]="student.gender" inputId="gender1">
-                    </p-radioButton>
-                    <label for="gender1" style="padding-left: 5px;">Male</label>
-                </div>
-                <div style="padding-top:5px;">
-                    <p-radioButton name="groupname" value="Female" [(ngModel)]="student.gender" inputId="gender2">
-                    </p-radioButton>
-                    <label for="gender2" style="padding-left: 5px;">Female</label>
+    <p-card [header]="title" style="width: 100%;">
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="name">Name</label><span style="color: red;">*</span> </div>
+                <div class="col-8"><input type="text" id="name" required="true" [(ngModel)]="student.name" pInputText />
                 </div>
             </div>
-            <div class="col-4"></div>
         </div>
-
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2"><label for="dob">Date of Birth</label> </div>
-            <div class="col-6">
-                <p-calendar [(ngModel)]="student.dateOfBirth" style="width:60% !important" placeholder="dd/MM/yy"
-                    dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
-                    inputId="dob" [showButtonBar]="true" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="email">Email</label> </div>
+                <div class="col-8"><input type="email" id="email" required="true" [(ngModel)]="student.email" pInputText />
+                </div>
             </div>
         </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class="grid col-8">
-            <div class="col-2" label for="image">Choose Profile Photo</div>
-            <div class="col-3">
-                <input #fileInput type="file" accept="image/*" name="image" id="image" (change)="onPhotoUpload($event)"
-                    style="padding-bottom: 15px;" />
-                <img [src]="imageSrc" style="height:200px" />
-                <br /> <br />
-                <button *ngIf="imageSrc !== null && imageSrc !== undefined" type="button"
-                    class="p-button-danger btn-margin" pButton label="Remove" (click)="removeImage(fileInput)"></button>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="mobileno">Mobile No</label> </div>
+                <div class="col-8"><input type="text" id="mobileno" required="true" [(ngModel)]="student.mobileNo"   pInputText /></div>
             </div>
-            <div class="col-3"></div>
+    
         </div>
-    </div>
-    <div class="grid col-12 justify-content-center">
-        <div class=" grid col-8">
-            <div class="col-2"> </div>
-            <div class="col-4">
-                <button pButton type="button" label="Submit" (click)="addStudent()"
-                    style="background-color:#3047c4;color:white"></button>
-                <button pButton type="button" label="Cancel" (click)="clear()"
-                    style="margin-left: 5px;background-color:#3047c4;color:white"></button>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="cid">CId</label> <span style="color: red;">*</span> </div>
+                <div class="col-8">
+                    <input type="text" id="CID"  [(ngModel)]="student.cid" pInputText required />
+                </div>
             </div>
-            <div class="col-3"></div>
+    
         </div>
-    </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="did">DId</label><span style="color: red;">*</span></div>
+                <div class="col-8">
+                    <input type="text" id="did"  [(ngModel)]="student.did"  pInputText required />
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="maritalStatus">Matrial Status</label> </div>
+                <div class="col-8">
+                    <p-dropdown [style]="{'width': '95%'} " [options]="availableMaritalStatues" id="maritalStatus"
+                        required="true" [(ngModel)]="student.maritalStatus">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="batchno">Batch No</label> </div>
+                <div class="col-8">
+                    <p-inputNumber [useGrouping]="false"  inputId="batchNo"
+                        [(ngModel)]="student.batchNo" >
+                    </p-inputNumber>
+                </div>
+            </div>
+    
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="bloodGroup">Blood Group</label> </div>
+                <div class="col-8">
+                    <p-dropdown [style]="{'width': '95%'} " [options]="availableBloodGroups" id="bloodGroup" required="true"
+                        [(ngModel)]="student.bloodGroup" ></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="trainingYear">Training Year</label> </div>
+                <div class="col-8">
+                    <p-inputNumber [useGrouping]="false"  inputId="trainingYear"
+                        [(ngModel)]="student.trainingYear">
+                    </p-inputNumber>
+    
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="gender">Gender</label> </div>
+                <div class="col-8">
+                    <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} "
+                    [options]="availableGender" id="trainingYear" required="true"
+                    [(ngModel)]="student.gender" placeholder="Select gender "></p-dropdown>
+                </div>
+                
+            </div>
+    
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4"><label for="dob">Date of Birth</label> </div>
+                <div class="col-8">
+                    <p-calendar [(ngModel)]="selectedDateOfBirth" style="width:60% !important" placeholder="dd/MM/yy"
+                        dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true" [yearRange]="yearRange"
+                        inputId="dob" [showButtonBar]="true" [readonlyInput]="true" [showIcon]="true"></p-calendar>
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-center">
+            <div class="grid col-6">
+                <div class="col-4" label for="image">Choose Profile Photo</div>
+                <div class="col-8">
+                    <input #fileInput type="file" accept="image/*" name="image" id="image" (change)="onPhotoUpload($event)"
+                        style="padding-bottom: 15px;" />
+                    <img [src]="imageSrc" style="height:200px" />
+                    <br /> <br />
+                    <button *ngIf="imageSrc !== null && imageSrc !== undefined" type="button"
+                        class="p-button-danger btn-margin" pButton label="Remove" (click)="removeImage(fileInput)"></button>
+                </div>
+            </div>
+        </div>
+        <div class="grid col-12 justify-content-end">
+            <div class=" grid col-6">
+                <div class="col-4"> </div>
+                <div class="col-8">
+          
+                    <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                        label="Create" (click)="create()" class="p-button-success"></button>
+                    <p-button label="Cancel" (click)="clear()" styleClass="p-button-secondary"></p-button>
+                </div>
+            </div>
+        </div>
+    </p-card>
 </div>

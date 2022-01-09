@@ -1,3 +1,6 @@
+import { AppConfigData } from './../../model/config-model/config-data';
+import { forkJoin } from 'rxjs';
+import { AuthorizationService } from './../../service/utility/authorization.service';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { CurrentUser } from 'src/app/model/user/user.model';
 import { Router } from '@angular/router';
@@ -21,10 +24,17 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService: AuthenticationService,
     private router: Router,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private authorizationService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
+    const loadCurrentCuser = this.authorizationService.currentUser();
+    forkJoin([loadCurrentCuser]).subscribe(
+      (data: any) => {
+        const currentUser = data[0];
+        this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
+      });
     this.userList = [];
     this.DefaultSearch();
   }

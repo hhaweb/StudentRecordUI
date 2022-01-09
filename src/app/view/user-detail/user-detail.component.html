@@ -19,8 +19,7 @@
                 User Name
             </div>
             <div class="col-8">
-                <input type="text" id="name" [disabled]="!isEditable" [(ngModel)]="user.userName"    
-                                    placeholder="User Name" pInputText />
+                <input type="text" id="name" [disabled]="!isEditable" [(ngModel)]="user.userName"  pInputText />
             </div>
         </div>
 
@@ -29,8 +28,7 @@
                 Password
             </div>
             <div class="col-8">
-                <input type="password" id="pass" [disabled]="!isEditable" [(ngModel)]="user.password"    
-                                    placeholder="Password" pInputText />
+                <input type="password" id="pass" [disabled]="!isEditable" [(ngModel)]="user.password" pInputText />
             </div>
         </div>
 
@@ -40,7 +38,7 @@
             </div>
             <div class="col-8">
                 <p-dropdown [disabled]="!isEditable" [style]="{'width': '95%'} " [options]="availableRoles" id="role" required="true"
-                    [(ngModel)]="user.roleId" placeholder="Select role"></p-dropdown>  
+                    [(ngModel)]="selectedRoleId" placeholder="Select role"></p-dropdown>  
             </div>
         </div>
 

@@ -1,3 +1,4 @@
+import { CommonService } from './../../service/controller-service/common.service';
 import { CourseService } from './../../service/controller-service/course.service';
 import { forkJoin } from 'rxjs';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
@@ -28,7 +29,8 @@ export class StudentDetailsComponent implements OnInit {
   isNew: boolean;
   studentId: string;
   isStudent: boolean;
-
+  selectedDateOfBirth: Date;
+  imageSrc: any;
 
   availableGender: SelectItem[] = [];
   availableMartialStatus: SelectItem[] = [];
@@ -45,32 +47,22 @@ export class StudentDetailsComponent implements OnInit {
     private courseService: CourseService,
     private utilityService: UtilityService,
     private router: Router,
-    private authorizationService: AuthorizationService) { }
+    private authorizationService: AuthorizationService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
-    this.availableBloodGroups =
-    [
-      { label: "A-", value: "A-" },
-      { label: "AB-", value: "AB-" },
-      { label: "B-", value: "B-" },
-      { label: "O-", value: "O-" },
 
-      { label: "A+", value: "A+" },
-      { label: "AB+", value: "AB+" },
-      { label: "B+", value: "B+" },
-      { label: "O+", value: "O+" }
-    ]
-
-  this.availableMaritalStatues =
-    [{ label: "Single", value: "Single" },
-    { label: "Married", value: "Married" },
-    { label: "Divorced", value: "Divorced" },
-    { label: "Widowed", value: "Widowed" },
-    ]
     const loadCurrentCuser = this.authorizationService.currentUser();
-    forkJoin([loadCurrentCuser]).subscribe(
+    const studentStatus = this.studentService.getStudentStatus();
+    const loadEmploymentStatus = this.commonService.getDropDownItem("Employment Status");
+    const loadOrganizationType = this.commonService.getDropDownItem("Organization Type");
+
+    forkJoin([loadCurrentCuser,studentStatus, loadEmploymentStatus, loadOrganizationType]).subscribe(
       (data: any) => {
         const currentUser = data[0];
+        this.availableStatus = data[1];
+        this.availableEmploymentStatus = data[2];
+        this.availableOrganizationType = data[3];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.isStudent = currentUser.roleName === AppConfigData.StudentRole ? true : false;
       });
@@ -112,12 +104,9 @@ export class StudentDetailsComponent implements OnInit {
       this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
     }
  
+    this.student.dateOfBirth = this.selectedDateOfBirth ?  moment(this.selectedDateOfBirth ).format('DD/MM/yyyy') : null; 
 
     this.utilityService.showLoading('Saving');
-    this.student.dateOfBirth = moment(this.student.dateOfBirth).format('DD/MM/yyyy');
-    this.student.inDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
-    this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
-   
     this.studentService.saveStudent(this.student).subscribe(
       (res: HttpResponseData) => {
         if(res.status) {
@@ -145,11 +134,30 @@ export class StudentDetailsComponent implements OnInit {
     this.recommendedCourseList = [];
     this.yearRange = '1920:'+new Date().getFullYear().toString();
     this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
-    this.availableMartialStatus = [{label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
+    this.availableMartialStatus = [{label: 'Male', value: 'M'},{label: '-', value: null}, {label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
     {label: 'Select', value: 'Select'},{label: 'Divorced', value: 'Divorced'},{label: 'Widowed', value: 'Widowed'}];
-    this.availableStatus = [{label: 'Active', value: '1'}];
-    this.availableEmploymentStatus = [{label: 'FT',value: 'FT'},{label: 'PT',value: 'PT'},{label: 'Intern',value: 'Intern'},{label: 'OJT',value: 'OJT'}]
-    this.availableOrganizationType = [{label: 'Gov',value: 'Gov'},{label: 'Private',value: 'Private'}]
+   // this.availableEmploymentStatus = [{label: 'FT',value: 'FT'},{label: 'PT',value: 'PT'},{label: 'Intern',value: 'Intern'},{label: 'OJT',value: 'OJT'}]
+   // this.availableOrganizationType = [{label: 'Gov',value: 'Gov'},{label: 'Private',value: 'Private'}]
+    this.availableBloodGroups =
+    [
+      { label: "A-", value: "A-" },
+      { label: "AB-", value: "AB-" },
+      { label: "B-", value: "B-" },
+      { label: "O-", value: "O-" },
+
+      { label: "A+", value: "A+" },
+      { label: "AB+", value: "AB+" },
+      { label: "B+", value: "B+" },
+      { label: "O+", value: "O+" }
+    ]
+
+  this.availableMaritalStatues =
+    [{ label: "Single", value: "Single" },
+    { label: "Married", value: "Married" },
+    { label: "Divorced", value: "Divorced" },
+    { label: "Widowed", value: "Widowed" },
+    ]
+ 
   }
 
   getStudentById(studentId: string) {
@@ -161,7 +169,10 @@ export class StudentDetailsComponent implements OnInit {
             this.student = res;
             if(res.employment)
             this.employment  = res.employment
-            
+            this.imageSrc = res.base64Image ? res.base64Image : res.avatar ? res.avatar : null;
+            if(res.dateOfBirth) {
+              this.selectedDateOfBirth = moment(this.student.dateOfBirth, 'DD/MM/yyyy').toDate();
+            }
             this.getCoursesByCid(res.cid);
             this.getRecommendedCourses(res.cid);
            this.utilityService.hideLoading();
@@ -239,27 +250,22 @@ export class StudentDetailsComponent implements OnInit {
     }
   }
  
-  saveEmployment(){
-    this.utilityService.showLoading('Saving');
-    this.student.employment = this.employment;
-    this.student.updatedDate = moment(new Date()).format('DD/MM/yyyy HH:mm');
-    this.studentService.saveStudent(this.student).subscribe(
-      (res: HttpResponseData) => {
-        if(res.status) {
-          this.utilityService.showSuccess('Success', res.message)
-          this.getStudentById(res.id);
-        } else {
-          this.utilityService.subscribeError('Save Fail', res.message);
-        }
-      },(error: any) => {
-        this.utilityService.subscribeError(
-        error,
-        'Unable to save employment'
-      );
-    },
-      () => {
-        this.utilityService.hideLoading();
-      }
-    );
+  onPhotoUpload(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+      this.imageSrc = reader.result.toString();
+      this.student.base64Image = this.imageSrc;
+    }
   }
+  }
+
+  removeImage(element) {
+    this.imageSrc = null;
+    element.value = '';
+    this.student.base64Image = null;
+  }
+
 }

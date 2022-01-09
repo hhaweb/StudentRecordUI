@@ -1,3 +1,4 @@
+import { CommonService } from './service/controller-service/common.service';
 import { CourseService } from './service/controller-service/course.service';
 import { BroadcasterService } from 'src/app/service/utility/broadcaster.service';
 import { AuthorizationService } from './service/utility/authorization.service';
@@ -60,6 +61,9 @@ import { CanActivateRoute } from './service/utility/can-activate-route.service';
 import { CookieService } from 'ngx-cookie-service';
 import { CourseListComponent } from './view/course-list/course-list.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import { DropdwonSetupComponent } from './view/dropdown/dropdwon-setup.component';
+import { DropdwonListComponent } from './view/dropdown/dropdwon-list.component';
+import {AvatarGroupModule} from 'primeng/avatargroup';
 
 
 @NgModule({
@@ -80,7 +84,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     TrainerDetailComponent,
     UserListComponent,
     UserDetailComponent,
-    CourseListComponent
+    CourseListComponent,
+    DropdwonSetupComponent,
+    DropdwonListComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +114,8 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     TableModule,
     CalendarModule,
     AvatarModule,
-    InputTextareaModule
+    InputTextareaModule,
+    AvatarGroupModule
   ],
   providers: [
     MessageService,
@@ -117,6 +124,7 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     BroadcasterService, 
     AuthorizationService,
     AuthenticationService,
+    CommonService,
     CourseService,
     StudentService,
     CanActivateRoute,

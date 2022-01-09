@@ -81,6 +81,14 @@ export class CourseService {
     );
   }
 
+  deleteTrainerById(trainerId: string): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    params = params.append('trainerId', trainerId);
+    return this.httpClient.get<HttpResponseData>(
+      APIUrls.CourseUrls.DeleteTrainer, { params }
+    );
+  }
+
   exportCourseDetail(courseId: number): any {
     let params = new HttpParams();
     params = params.append('courseId', courseId.toString());
@@ -122,4 +130,11 @@ export class CourseService {
         })
       );
   }
+
+  getCourseLevel(): Observable<SelectItem[]> {
+    return this.httpClient.get<SelectItem[]>(
+      APIUrls.CourseUrls.GetCourseLevel);
+  }
+
+
 }

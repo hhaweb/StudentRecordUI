@@ -1,3 +1,5 @@
+import { HttpResponseData } from './../../model/config-model/response.data';
+import { ConfirmationService } from 'primeng/api';
 import { TrainerListComponent } from './../trainer-list/trainer-list.component';
 import { forkJoin } from 'rxjs';
 import { Student } from './../../model/student/student.model';
@@ -39,7 +41,8 @@ export class StudentListComponent implements OnInit {
     private utilService: UtilityService,
     private router: Router,
     private utilityService: UtilityService,
-    private authorizationService: AuthorizationService) { }
+    private authorizationService: AuthorizationService,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.tableLoading = false;
@@ -57,7 +60,7 @@ export class StudentListComponent implements OnInit {
     const inputModel = new SearchModel();
     inputModel.rowOffset = 0;
     inputModel.rowsPerPage = 50;
-    inputModel.sortName = 'name';
+    inputModel.sortName = 'inDate';
     inputModel.sortType = 1;
     this.getStudentList(inputModel);
   }
@@ -67,7 +70,7 @@ export class StudentListComponent implements OnInit {
     const inputModel = new SearchModel();
     inputModel.rowsPerPage = event.rows;
     inputModel.rowOffset = event.first / event.rows;
-    inputModel.sortName = event.sortField ? event.sortField : 'name';
+    inputModel.sortName = event.sortField ? event.sortField : 'inDate';
     inputModel.sortType = event.sortOrder ? event.sortOrder : 1;
     this.getStudentList(inputModel);
   }
@@ -139,7 +142,7 @@ export class StudentListComponent implements OnInit {
       const inputModel = new SearchModel();
       inputModel.rowOffset = 0;
       inputModel.rowsPerPage = 50;
-      inputModel.sortName = 'name';
+      inputModel.sortName = 'inDate';
       inputModel.sortType = 1;
       inputModel.searchKeyword = this.studentSearchKeyWord;
       this.getStudentList(inputModel);
@@ -189,6 +192,33 @@ export class StudentListComponent implements OnInit {
         this.utilityService.hideLoading();
       }
     );
+  }
+
+  delete(student: Student) {
+    this.confirmationService.confirm({
+      key: 'globalConfirm',
+      message:
+        'Are you sure that you want to delete (' +student.name+')?',
+      header: 'Confirmation',
+      icon: 'pi pi-question-circle',
+      accept: () => {
+        this.studentService.deleteStudentById(student.id.toString()).subscribe(
+          (response: HttpResponseData) => {
+            if(response.status) {
+              this.utilityService.showSuccess('Success','Delete Successfully');
+              this.showAll();
+            } else {
+              this.utilityService.showError('Error', response.message)
+            }
+          }, (error: any) => {
+            this.utilityService.subscribeError(error, 'Unable to delete')
+
+          }, () => {
+            this.utilityService.hideLoading();
+          }
+        );
+      },
+    });
   }
 
 }

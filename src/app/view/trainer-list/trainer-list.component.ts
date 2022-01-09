@@ -1,3 +1,5 @@
+import { HttpResponseData } from './../../model/config-model/response.data';
+import { ConfirmationService } from 'primeng/api';
 import { SearchModel } from './../../model/common/common.model';
 import { forkJoin } from 'rxjs';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
@@ -29,7 +31,8 @@ export class TrainerListComponent implements OnInit {
     private courseService: CourseService,
     private router: Router,
     private utilityService: UtilityService,
-    private authorizationService: AuthorizationService
+    private authorizationService: AuthorizationService,
+    private confirmationService: ConfirmationService,
   ) { }
 
   ngOnInit(): void {
@@ -95,7 +98,30 @@ export class TrainerListComponent implements OnInit {
   }
 
   delete(trainer: Trainer) {
+    this.confirmationService.confirm({
+      key: 'globalConfirm',
+      message:
+        'Are you sure that you want to delete (' +trainer.trainerName+')?',
+      header: 'Confirmation',
+      icon: 'pi pi-question-circle',
+      accept: () => {
+        this.courseService.deleteTrainerById(trainer.id.toString()).subscribe(
+          (response: HttpResponseData) => {
+            if(response.status) {
+              this.utilityService.showSuccess('Success','Delete Successfully');
+              this.showAll();
+            } else {
+              this.utilityService.showError('Error', response.message)
+            }
+          }, (error: any) => {
+            this.utilityService.subscribeError(error, 'Unable to delete')
 
+          }, () => {
+            this.utilityService.hideLoading();
+          }
+        );
+      },
+    });
   }
 
   create() {

@@ -101,11 +101,18 @@
                         {{rowData.batchNo}}
                     </td>
                     <td style="max-width: 150px;" class="justify-content-start">
-                       
-                            <button style="margin-right: 10px;" pButton class="p-button-sm" type="button" label="View" (click)="viewStudent(rowData.id)"></button>
-                            <span *ngIf="isEditable">
-                                <button pButton class="p-button-sm" type="button" label="Edit" (click)="editStudent(rowData.id)"></button>
-                            </span>      
+                            
+                            <a pTooltip="View" style="margin-right: 15px;">
+                                <i class="pi pi-eye" (click)="viewStudent(rowData.id)"></i>
+                            </a>
+
+                            <a pTooltip="Edit"  style="margin-right: 15px;" *ngIf="isEditable">
+                                <i class="pi pi-pencil" (click)="editStudent(rowData.id)"></i>
+                            </a>   
+                            
+                            <a pTooltip="Delete"  *ngIf="isEditable" style="color: red;">
+                                <i class="pi pi-trash" (click)="delete(rowData)"></i>
+                            </a>  
                     </td>
                 </tr>
             </ng-template>

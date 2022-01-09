@@ -1,6 +1,3 @@
-import { Menu } from "../system/system.model";
-
-
 export class CurrentUser {
     public id: string;
     public userName: string;
@@ -9,6 +6,18 @@ export class CurrentUser {
     public roleId: number;
     public role: string[];
     public totalRecord: number;
+}
+
+export class User {
+    public id: string;
+    public userName: string;
+    public password: string;
+    public roleId: number;
+    public role: string[];
+    constructor(password: string, userName: string) {
+        this.password = password;
+        this.userName = userName;
+    }
 }
 
 export class Roles{

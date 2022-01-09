@@ -1,0 +1,49 @@
+
+<div class="grid">
+    <div class="col-12">
+        <div class="grid">
+            <div class="col-2">
+                <input class="width-full" placeholder="Dropdown Name"  pInputText type="text" [(ngModel)]="dropDownName" name="dropDownName" />
+            </div>
+        </div>
+        <div class="grid" style="padding-top: 10px;">
+            <div class="col-8">
+                <div class="grid col-12 table-header">
+                    <div class="col-5">
+                        <strong>Label</strong>
+                      </div>
+                      <div class="col-5">
+                        <strong>Value</strong>
+                      </div>
+                      <div class="col-2">
+                      </div>
+                </div>
+                <div class="grid col-12" *ngFor="let option of dropDownItem; let i = index">
+                        <div class="col-5">
+                            <input class="width-full" pInputText type="text" [(ngModel)]="option.label" name="Label-{{ i }}" />
+                        </div>
+                        <div class="col-5"> <input class="width-full" pInputText type="text" [(ngModel)]="option.value"
+                          name="Value-{{ i }}" />
+                        </div>
+                        <div class="col-2">
+
+                            <span style="margin-right: 10px; color: red !important;" pTooltip="remove  item" class="icon-donwload" (click)="remove(i)"> 
+                                <i class="pi pi-trash"></i>
+                            </span>
+
+                            <span class="icon-donwload" pTooltip="add new item"   (click)="add()">
+                                <i class="pi pi-plus-circle"></i>
+                            </span>
+                        </div>
+                </div>
+            </div>
+            <div class="col-12" style="text-align: left;">
+                <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                label="Save" (click)="save()" class="p-button-success"></button>
+
+                <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                label="Delete" (click)="delete()" class="p-button-danger"></button>
+            </div>
+        </div>
+    </div>
+</div>

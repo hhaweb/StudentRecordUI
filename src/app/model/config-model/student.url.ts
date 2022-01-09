@@ -8,6 +8,8 @@ export const StudentUrls = {
     GetStudentById: baseUrl + 'get-student-by-id',
     ExportStudentList: baseUrl + 'export-student-list',
     GetStudentsByCourseId: baseUrl + 'get-student-by-courseId',
-    ExportStudentDetail: baseUrl + 'export-student-detail'
+    ExportStudentDetail: baseUrl + 'export-student-detail',
+    GetStudentStatus: baseUrl + 'student-status',
+    DeleteStudent: baseUrl + 'delete-student'
 
 }

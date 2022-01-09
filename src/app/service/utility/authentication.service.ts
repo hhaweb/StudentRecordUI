@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { CurrentUser, TokenResponse } from 'src/app/model/user/user.model';
+import { CurrentUser, TokenResponse, User } from 'src/app/model/user/user.model';
 
 import { Observable, Subject } from 'rxjs';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
@@ -169,7 +169,7 @@ export class AuthenticationService {
     );
   }
 
-  saveUser(input: CurrentUser): Observable<HttpResponseData> {
+  saveUser(input: User): Observable<HttpResponseData> {
     return this.httpClient.post<HttpResponseData>(
       APIUrls.AuthUrls.SaveUser,input
     );

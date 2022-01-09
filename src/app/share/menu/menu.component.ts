@@ -17,6 +17,8 @@ import { AppConfigData } from 'src/app/model/config-model/config-data';
 export class MenuComponent implements OnInit {
   items: MenuItem[] = [];
   rightMenuItem: MenuItem[] = [];
+  profileImage: any;
+  userName: string;
   constructor( 
     public app: AppComponent,
     private configDataLoadedEvent: ConfigDataLoadedEvent,
@@ -33,6 +35,9 @@ export class MenuComponent implements OnInit {
     }
   }
     this.configDataLoadedEvent.on().subscribe((data: ConfigData) => {
+      that.profileImage = data.profileImage ? data.profileImage: null;
+      that.userName = data.userName;
+      console.log('user name', that.userName);
       that.items = data.menus;
       if(data.role === AppConfigData.AdminRole || data.role === AppConfigData.SuperAdminRole) {
         this.rightMenuItem = [
@@ -49,6 +54,13 @@ export class MenuComponent implements OnInit {
               icon: 'pi pi-fw pi-list',
               command: () => {
                 this.goToUserList();
+            }
+            },
+            {
+              label: 'DropDown Setup',
+              icon: 'pi pi-fw pi-list',
+              command: () => {
+                this.goToDropDownSetup();
             }
             },
             {
@@ -103,6 +115,10 @@ export class MenuComponent implements OnInit {
 
   goToUserList() {
     void this.router.navigate([`${RoutesModel.UserList}`]);
+  }
+
+  goToDropDownSetup() {
+    void this.router.navigate([`${RoutesModel.DropDownSetup}`]);
   }
 
 }

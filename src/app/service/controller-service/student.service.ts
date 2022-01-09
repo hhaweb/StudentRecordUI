@@ -1,3 +1,4 @@
+import { SelectItem } from 'primeng/api';
 import { catchError } from 'rxjs/operators';
 import { UtilityService } from './../utility/utility.service';
 import { APIUrls } from 'src/app/model/config-model/api-url';
@@ -19,6 +20,15 @@ export class StudentService {
   saveStudent(input: Student): Observable<HttpResponseData> {
     return this.httpClient.post<HttpResponseData>(
       APIUrls.StudentUrls.SaveStudent, input
+    );
+  }
+
+ 
+  deleteStudentById(studentId: string): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    params = params.append('studentId', studentId);
+    return this.httpClient.get<HttpResponseData>(
+      APIUrls.StudentUrls.DeleteStudent, { params }
     );
   }
 
@@ -72,5 +82,10 @@ export class StudentService {
           return this.utilService.convertBlobToText(res.error);
         })
       );
+  }
+
+  getStudentStatus(): Observable<SelectItem[]> {
+    return this.httpClient.get<SelectItem[]>(
+      APIUrls.StudentUrls.GetStudentStatus);
   }
 }

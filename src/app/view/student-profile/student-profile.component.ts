@@ -1,3 +1,6 @@
+import { AppConfigData } from 'src/app/model/config-model/config-data';
+import { forkJoin } from 'rxjs';
+import { AuthorizationService } from './../../service/utility/authorization.service';
 import { saveAs } from 'file-saver';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
@@ -23,18 +26,33 @@ export class StudentProfileComponent implements OnInit {
   availableBloodGroups: SelectItem[];
   availableMaritalStatues: SelectItem[];
   availableTrainingYears: SelectItem[];
+  availableGender: SelectItem[];
+
   imageSrc: string;
   selectedGender: string;
   student: Student;
   yearRange: string;
+  isEditable: boolean;
+  selectedDateOfBirth: Date;
+  title: string = "Create new student";
   constructor(private studentService: StudentService,
     private utilityService: UtilityService,
+    private authorizationService: AuthorizationService,
     private router: Router) {
 
   }
 
   ngOnInit() {
+    const loadCurrentCuser = this.authorizationService.currentUser();
+    forkJoin([loadCurrentCuser]).subscribe(
+      (data: any) => {
+        const currentUser = data[0];
+        this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
+      });
+    this.initializeForm();
+  }
 
+  initializeForm() {
     this.yearRange = '1920:' + new Date().getFullYear().toString();
     this.availableBloodGroups =
       [
@@ -56,6 +74,7 @@ export class StudentProfileComponent implements OnInit {
       { label: "Widowed", value: "Widowed" },
       ]
 
+    this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
 
     this.student = new Student();
     this.student.gender = "Male";
@@ -68,7 +87,7 @@ export class StudentProfileComponent implements OnInit {
       reader.readAsDataURL(file);
       reader.onload = () => {
       this.imageSrc = reader.result.toString();
-      this.student.avatar = this.imageSrc;
+      this.student.base64Image = this.imageSrc;
     }
   }
   }
@@ -79,24 +98,73 @@ export class StudentProfileComponent implements OnInit {
   }
 
 
-  addStudent() {
-    console.log('call api', this.student);
+  create() {
+    if(!this.student.name) {
+      this.utilityService.showWarning('Warning','Please add name');
+      return;
+    }
+  
+    if(!this.student.cid) {
+      this.utilityService.showWarning('Warning','Please add cid');
+      return;
+    }
+
+    if(!this.student.did) {
+      this.utilityService.showWarning('Warning','Please add did');
+      return;
+    }
+
+    if(this.student.email) {
+      if(!this.validateEmail(this.student.email)) {
+        this.utilityService.showWarning('Warning','Invalid email');
+        return;
+      }
+    }
+
     this.utilityService.showLoading('Saving...')
-    console.log("dateofbirth before", this.student.dateOfBirth)
-    if (this.student.dateOfBirth)
-      this.student.dateOfBirth = moment(new Date(this.student.dateOfBirth)).format('DD/MM/yyyy');
-    console.log("dateofbirth after", this.student.dateOfBirth)
+    this.student.dateOfBirth = this.selectedDateOfBirth ? moment(this.selectedDateOfBirth).format('DD/MM/yyyy') : null;
+    if(this.student.id) {
+      this.student.inDate  = new Date();
+    }
     this.studentService.saveStudent(this.student).subscribe(
       (response: HttpResponseData) => {
         if (response.status) {
           this.utilityService.showSuccess('Success', 'Save Successfully')
+          if(response.id) {
+            this.getStudentById(response.id);
+          }
         }
         else {
-
+          this.utilityService.showError("Save fail", response.message);
         }
       }, (error: any) => {
         this.utilityService.showError(error, 'Unable to Save')
       },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
+  }
+
+  getStudentById(studentId: string) {
+    this.utilityService.showLoading('Loading...');
+    this.studentService.getStudentById(studentId).subscribe(
+      (res: Student) => {
+        if(res) {
+           this.student = res;
+           this.title = res.name;
+           if(res.dateOfBirth) {
+             this.selectedDateOfBirth = moment(this.student.dateOfBirth, 'DD/MM/yyyy').toDate();
+           }
+          this.utilityService.hideLoading();
+        }
+      },(error: any) => {
+      this.utilityService.hideLoading()
+        this.utilityService.subscribeError(
+        error,
+        'Unable to load student'
+      );
+    },
       () => {
         this.utilityService.hideLoading();
       }
@@ -108,6 +176,19 @@ export class StudentProfileComponent implements OnInit {
     this.student.gender = "Male";
   }
 
-
+  validateEmail(email: string) {
+    if (email) {
+      const emailList = email.split(',');
+      const pattern = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
+      for (const x of emailList) {
+        if (!x.trim().match(pattern)) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      return true;
+    }
+  }
 
 }

@@ -13,6 +13,7 @@ export const RoutesModel = {
     TrainerList: 'trainer/trainer-list',
     TrainerDetail: 'trainer/trainer-detail',
     UserList: 'user/user-list',
-    UserDetail: 'user/user-detail'
+    UserDetail: 'user/user-detail',
+    DropDownSetup: 'dropdown/downdown-setup'
 
 }

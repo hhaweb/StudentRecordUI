@@ -1,7 +1,8 @@
 <p-menubar [model]="items">
     <ng-template pTemplate="end">
-        <fa-icon class="menu-icon" icon="user-circle" (click)="menu.toggle($event)"></fa-icon>
-
+        <span style="color: #ffffff; margin-right: 10px;">{{userName}}</span>
+        <p-avatar *ngIf="profileImage" [image]="profileImage"  (click)="menu.toggle($event)"  shape="circle"></p-avatar>
+        <fa-icon *ngIf="!profileImage" class="menu-icon" icon="user-circle" (click)="menu.toggle($event)"></fa-icon>
         <p-menu #menu [popup]="true" [model]="rightMenuItem"></p-menu>
     </ng-template>
 </p-menubar>

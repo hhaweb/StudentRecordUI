@@ -1,0 +1,22 @@
+<div class="grid">
+    <div class="col-12">
+        <p-card header="Dropdown Setup">
+            <div class="grid align-items-center">
+                 <div class="col-3">
+                    <p-dropdown [style]="{'width': '95%'} " [disabled]="!isEditable" [options]="availableName" id="courseLevel"
+                        required="true" [(ngModel)]="selectedName"  placeholder="Select Dropdown Name">
+                    </p-dropdown>
+                 </div>  
+                 <div class="col-4" style="text-align: left;">
+                    <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                    label="Search" (click)="search()" class="p-button-success"></button>
+                    <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                    label="Create new" (click)="create()" class="p-button-success"></button>
+                 </div>
+            </div>
+            <app-dropdwon-list *ngIf="dropDownList && dropDownList.length > 0" #dropdownItem [dropDownItem] = "dropDownList" [isEditable]="isEditable" [dropDownName]="selectedName"></app-dropdwon-list>
+
+        </p-card>
+    </div>
+</div>
+

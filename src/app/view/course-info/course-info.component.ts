@@ -1,3 +1,4 @@
+import { CommonService } from './../../service/controller-service/common.service';
 import { repeat } from 'lodash';
 import { forkJoin } from 'rxjs';
 
@@ -13,6 +14,7 @@ import { Course } from 'src/app/model/student/course.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { SelectItem } from 'primeng/api';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-course-info',
@@ -28,8 +30,14 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   isEditable: boolean;
   tableLoading: boolean;
   totalStudents: number;
+  selectedStartDate: Date;
+  selectedEndDate: Date;
 
   availableTrainerList: SelectItem[] =[];
+  availableCourseLevel: SelectItem[] =[];
+  availableCourseStatus: SelectItem[] = [];
+  availableCoursesector: SelectItem[] = [];
+
 
   constructor(
     private route: ActivatedRoute,
@@ -37,18 +45,28 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     private utilityService: UtilityService,
     private router: Router,
     private courseService: CourseService,
-    private authorizationService: AuthorizationService) { }
+    private authorizationService: AuthorizationService,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     const loadCurrentCuser = this.authorizationService.currentUser();
     const loadTrainerItems = this.courseService.getTrainerItems();
+    const loadCourseLevel = this.commonService.getDropDownItem("Course Level");
+    const loadCourseStatus = this.commonService.getDropDownItem("Course Status");
+    const loadCourseSector = this.commonService.getDropDownItem("Course sector");
     this.studentList = [];
-    forkJoin([loadCurrentCuser,loadTrainerItems]).subscribe(
+    forkJoin([loadCurrentCuser,loadTrainerItems, loadCourseLevel, loadCourseStatus, loadCourseSector]).subscribe(
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.availableTrainerList = data[1];
-        this.availableTrainerList.unshift({label: 'Blank', value: null, disabled: false})
+        this.availableTrainerList.unshift({label: '-', value: null, disabled: false})
+        this.availableCourseLevel = data[2];
+        this.availableCourseLevel.unshift({label: '-', value: null, disabled: false})
+        this.availableCourseStatus = data[3];
+        this.availableCourseStatus.unshift({label: '-', value: null, disabled: false})
+        this.availableCoursesector = data[4];
+        this.availableCoursesector.unshift({label: '-', value: null, disabled: false})
       });
     this.route.params.subscribe((params) => {
       if (params.id) {
@@ -75,6 +93,14 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         (res: Course) => {
           if (res) {
             this.course = res;
+            if(res.startDate) {
+              this.selectedStartDate = moment(res.startDate, 'DD/MM/yyyy').toDate();
+            }
+
+            if(res.endDate) {
+              this.selectedEndDate = moment(res.endDate, 'DD/MM/yyyy').toDate();
+            }
+
             this.getStudentByCourseId(res.courseId);
           }
         }, (error: any) => {
@@ -115,6 +141,14 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   
   save() {
+    if(this.selectedStartDate) {
+      this.course.startDate = moment(this.selectedStartDate).format('DD/MM/yyyy');
+    }
+
+    if(this.selectedEndDate) {
+      this.course.endDate = moment(this.selectedEndDate).format('DD/MM/yyyy');
+    }
+
     this.courseService.saveCourse(this.course).subscribe(
       (response: HttpResponseData) => {
         if(response.status) {

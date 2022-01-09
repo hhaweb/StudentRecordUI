@@ -5,7 +5,7 @@
     </div>
     <div class="col-6 text-right">
         <button style="margin-right: 10px;" pButton pRipple  type="button" label="Show All" (click)="showAll()" ></button>
-        <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Trainer" (click)="create()" class="p-button-success"></button>
+        <button pButton pRipple  [disabled]="!isEditable"   type="button" label="Create User" (click)="create()" class="p-button-success"></button>
     </div>
     <div class="col-12">
         <p-table  #dt rowHover="true" [value]="userList" [paginator]="true" [rows]="50"

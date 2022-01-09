@@ -55,10 +55,7 @@ export class TrainerDetailComponent implements OnInit {
     this.courseService.getTrainerById(id).subscribe(
       (response: Trainer) => {
         if(response) {
-          console.log('join date',response.joinDate);
-          if(response.joinDate) {
-            this.selectedJoinDate = moment(response.joinDate, "DD/MM/yyyy").toDate();
-          }
+          this.selectedJoinDate = response.joinDate ? moment(response.joinDate, "DD/MM/yyyy").toDate() : null;
           this.trainer = response;
         }
       }, (error: any) => {
@@ -70,6 +67,10 @@ export class TrainerDetailComponent implements OnInit {
   }
 
   saveTrainer() {
+    if(!this.trainer.trainerId) {
+      this.utilityService.showWarning('Warning','Please add trainer id');
+      return;
+    }
     if(!this.trainer.trainerName) {
       this.utilityService.showWarning('Warning','Please add trainer name');
       return;

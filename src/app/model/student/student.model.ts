@@ -17,7 +17,7 @@ export class Student {
     public batchNo: number;
     public maritalStatus: string;
     public userId: number;
-    public inDate: string;
+    public inDate: Date;
     public employmentTypeId: number;
     public trainingCenterId: number
     public totalRecord: number;
@@ -27,6 +27,7 @@ export class Student {
 	public deletedDate: string;
     public employment: Employment;
     public courseList: Course[];
+    public base64Image: string;
     constructor() {
         this.courseList = [];
         //this.employment = new Employment();
