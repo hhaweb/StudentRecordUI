@@ -9,7 +9,7 @@
                      auto='true' customUpload="true" multiple="false" accept=".csv"  (uploadHandler)="onUploadEvent($event,'student')">
                     </p-fileUpload>
                     
-                    <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Student Simple')">download simple file</span>
+                    <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Student Simple')">download sample file</span>
 
                     <div class="grid" *ngIf="uploadResult && uploadResult.uploadType === 'Student'">
                         <div class="col-12 mt-15"><strong>Student Upload Result</strong></div>
@@ -24,7 +24,7 @@
                     <p-fileUpload #courseUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Course"
                      auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'course')">
                     </p-fileUpload>
-                    <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Course Simple')">download simple file</span>
+                    <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Course Simple')">download sample file</span>
 
                     <div class="grid"  *ngIf="uploadResult && uploadResult.uploadType === 'Course'">
                         <div class="col-12 mt-15"><strong>Course Upload Result</strong></div>
@@ -37,7 +37,7 @@
                     <p-fileUpload #trainerUploadFile mode="basic" class="width-auto" name="courseUploadFile" chooseLabel="Upload Trainer"
                     auto='true' customUpload="true"  multiple="false" accept=".csv" (uploadHandler)="onUploadEvent($event,'trainer')">
                    </p-fileUpload>
-                   <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Trainer Simple')">download simple file</span>
+                   <span class="icon-donwload" style="padding-top: 10px; display: block;" (click)="downloadSimple('Trainer Simple')">download sample file</span>
 
                    <div class="grid" *ngIf="uploadResult && uploadResult.uploadType === 'Trainer'">
                     <div class="col-12 mt-15"><strong>Trainer Upload Result</strong></div>

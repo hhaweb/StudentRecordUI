@@ -8,7 +8,7 @@
         <span *ngIf="isEditable">
             <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Course" (click)="create()" class="p-button-success"></button>
         </span>
-        <button pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
+        <button *ngIf="courseList.length > 0" pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
     <div class="col-12">
         <p-table  #dt rowHover="true" [value]="courseList" [paginator]="true" [rows]="50"
@@ -111,7 +111,7 @@
                  </td>
 
                 <td style="max-width: 50px;" class="justify-content-center">
-                    <a style="margin-right: 10px;">
+                    <a style="margin-right: 10px;" pTooltip="Edit">
                         <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
                     </a>
                 </td>

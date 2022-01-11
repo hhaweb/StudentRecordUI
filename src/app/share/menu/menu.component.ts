@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
       that.userName = data.userName;
       console.log('user name', that.userName);
       that.items = data.menus;
-      if(data.role === AppConfigData.AdminRole || data.role === AppConfigData.SuperAdminRole) {
+      if(data.role === AppConfigData.SuperAdminRole) {
         this.rightMenuItem = [
           {
             items: [{
@@ -61,6 +61,32 @@ export class MenuComponent implements OnInit {
               icon: 'pi pi-fw pi-list',
               command: () => {
                 this.goToDropDownSetup();
+            }
+            },
+            {
+                label: 'Logout',
+                icon: 'pi pi-times',
+                command: () => {
+                  this.logout();
+              }
+            }
+        ]}
+        ]
+      } else if(data.role === AppConfigData.AdminRole ) {
+        this.rightMenuItem = [
+          {
+            items: [{
+                label: 'Profile',
+                icon: 'pi pi-user',
+                command: () => {
+                  this.goToUserProfile();
+              }
+            },
+            {
+              label: 'User List',
+              icon: 'pi pi-fw pi-list',
+              command: () => {
+                this.goToUserList();
             }
             },
             {

@@ -19,7 +19,7 @@
     </div>
     <div class="col-3" style="text-align: right;">
         <button style="margin-right: 10px;" pButton pRipple  type="button"  style="margin-right: 10px;" label="Show All" (click)="showAll()" ></button>
-        <button pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
+        <button *ngIf="students.length > 0"  pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
     <div [hidden]="searchInfo != 'student' " class="col-12" style="margin-top: 5px;">
         <p-table  #dt rowHover="true" styleClass="p-datatable-striped"  [value]="students" [paginator]="true" [rows]="50"
