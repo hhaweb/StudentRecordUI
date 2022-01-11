@@ -5,10 +5,10 @@
 export const environment = {
   environmentName: 'DEV',
   production: false,
-  // API_BASE: 'http://172.104.40.242:4100/api',
-  // UI_URL: 'http://172.104.40.242:4200',
-API_BASE: 'http://localhost:4100/api',
-UI_URL: 'http://localhost:4200',
+  API_BASE: 'http://172.104.40.242:4100/api',
+  UI_URL: 'http://172.104.40.242:4200',
+// API_BASE: 'http://localhost:4100/api',
+// UI_URL: 'http://localhost:4200',
   Version: '1.0.0',
 };
 

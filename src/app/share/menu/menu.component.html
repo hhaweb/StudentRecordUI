@@ -1,8 +1,10 @@
-<p-menubar [model]="items">
-    <ng-template pTemplate="end">
+<p-menubar [model]="items" autoDisplay='true' autoZIndex='true'>
+    <ng-template pTemplate="end" >
+     <span (mouseenter)='menu.toggle($event)'>
         <span style="color: #ffffff; margin-right: 10px;">{{userName}}</span>
         <p-avatar *ngIf="profileImage" [image]="profileImage"  (click)="menu.toggle($event)"  shape="circle"></p-avatar>
-        <fa-icon *ngIf="!profileImage" class="menu-icon" icon="user-circle" (click)="menu.toggle($event)"></fa-icon>
+        <fa-icon *ngIf="!profileImage" class="menu-icon" icon="user-circle"  (click)="menu.toggle($event)"></fa-icon>
         <p-menu #menu [popup]="true" [model]="rightMenuItem"></p-menu>
+     </span>
     </ng-template>
 </p-menubar>

@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
     const that = this;
+    this.utilityService.showLoading('Loggin in ...')
     this.authenticationService.loginToWebApi(this.userName, this.password).subscribe(
       (response: TokenResponse) => {
         if (!response.status) {
