@@ -150,15 +150,15 @@ export class TrainerListComponent implements OnInit {
   
 
   showAll() {
-    this.dataTable.reset();
+    this.dataTable.clear();
     this.searchKeyWord = null;
-    this.DefaultSearch();
+    // this.DefaultSearch();
   }
 
   export() {
     this.utilityService.showLoading('Exporting');
     if(this.searchKeyWord) {
-      this.currentSearch.searchKeyword = this.searchKeyWord;
+      this.currentSearch.searchKeyword = this.searchKeyWord.trim();
     }
     this.courseService.exportTrainerList(this.currentSearch).subscribe(
       (res: any) => {

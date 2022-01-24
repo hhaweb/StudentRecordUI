@@ -165,13 +165,13 @@ export class StudentListComponent implements OnInit {
     this.trainerSearchKeyWord = null;
     this.dataTable.clear();
     this.searchInfo = 'student'
-    this.DefaultSearch();
+    //this.DefaultSearch();
   }
 
   export() {
     this.utilityService.showLoading('Exporting');
     if(this.studentSearchKeyWord) {
-      this.currentSearch.searchKeyword = this.studentSearchKeyWord;
+      this.currentSearch.searchKeyword = this.studentSearchKeyWord.trim();
     }
     this.studentService.exportStudentList(this.currentSearch).subscribe(
       (res: any) => {

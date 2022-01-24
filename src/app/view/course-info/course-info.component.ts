@@ -206,6 +206,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   export() {
     this.utilityService.showLoading('Exporting');
+    console.log('export ==', this.course);
     if(this.course) {
       this.courseService.exportCourseDetail(this.course.id).subscribe(
         (res: any) => {

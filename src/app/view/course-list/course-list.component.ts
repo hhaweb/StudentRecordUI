@@ -128,13 +128,13 @@ export class CourseListComponent implements OnInit {
   showAll() {
     this.dataTable.clear();
     this.searchKeyWord = null;
-    this.DefaultSearch();
+    //this.DefaultSearch();
   }
 
   export() {
     this.utilityService.showLoading('Exporting');
     if(this.searchKeyWord) {
-      this.currentSearch.searchKeyword = this.searchKeyWord;
+      this.currentSearch.searchKeyword = this.searchKeyWord.trim();
     }
     this.courseService.exportCourseList(this.currentSearch).subscribe(
       (res: any) => {
