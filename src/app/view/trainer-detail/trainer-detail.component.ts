@@ -23,6 +23,7 @@ export class TrainerDetailComponent implements OnInit {
   trainerId: string;
   selectedJoinDate: Date;
   availableGender: SelectItem[] = [];
+  isViewOnly: boolean;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -32,6 +33,14 @@ export class TrainerDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
+    this.route.params.subscribe((params) => {
+      if (params.id) {
+        this.trainerId = params.id;
+        this.isViewOnly = params.type == 'view' ? true : false;
+        this.getTrainerById(params.id);
+      }
+    });
     this.availableGender = [{label: 'Male', value: 'Male'}, {label: 'Female', value: 'Female'}];
     this.trainer = new Trainer();
     const loadCurrentCuser = this.authorizationService.currentUser();
@@ -39,15 +48,10 @@ export class TrainerDetailComponent implements OnInit {
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
+        if(this.isViewOnly) {
+          this.isEditable = false;
+        }
       });
-
-    this.route.params.subscribe((params) => {
-      if (params.id) {
-        this.trainerId = params.id;
-        this.getTrainerById(params.id);
-      }
-      
-    });
   }
 
   getTrainerById(id: string) {

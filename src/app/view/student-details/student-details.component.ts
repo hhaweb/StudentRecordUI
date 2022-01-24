@@ -31,6 +31,7 @@ export class StudentDetailsComponent implements OnInit {
   isStudent: boolean;
   selectedDateOfBirth: Date;
   imageSrc: any;
+  currentDate: Date;
 
   availableGender: SelectItem[] = [];
   availableMartialStatus: SelectItem[] = [];
@@ -40,7 +41,7 @@ export class StudentDetailsComponent implements OnInit {
   availableBloodGroups: SelectItem[];
   availableMaritalStatues: SelectItem[];
   title: string = "Create New Student";
-
+  isViewOnly: boolean;
 
   constructor(private route: ActivatedRoute,
     private studentService: StudentService,
@@ -56,6 +57,17 @@ export class StudentDetailsComponent implements OnInit {
     const studentStatus = this.studentService.getStudentStatus();
     const loadEmploymentStatus = this.commonService.getDropDownItem("Employment Status");
     const loadOrganizationType = this.commonService.getDropDownItem("Organization Type");
+    this.initializeForm();
+    this.route.params.subscribe((params) => {
+      if (params.id) {
+        this.studentId = params.id;
+        this.isViewOnly = params.type == 'view' ? true : false;
+        this.isNew = false;
+        this.getStudentById(params.id);
+      } else {
+        this.isNew = true;
+      } 
+    });
 
     forkJoin([loadCurrentCuser,studentStatus, loadEmploymentStatus, loadOrganizationType]).subscribe(
       (data: any) => {
@@ -65,18 +77,11 @@ export class StudentDetailsComponent implements OnInit {
         this.availableOrganizationType = data[3];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.isStudent = currentUser.roleName === AppConfigData.StudentRole ? true : false;
+        if(this.isViewOnly) {
+          this.isEditable = false;
+        }
       });
-    this.initializeForm();
-    this.route.params.subscribe((params) => {
-      if (params.id) {
-        this.studentId = params.id;
-        this.isNew = false;
-        this.getStudentById(params.id);
-      } else {
-        this.isNew = true;
-      } 
-    });
-    console.log('oninit',this.student)
+
   }
 
   back() {
@@ -134,7 +139,7 @@ export class StudentDetailsComponent implements OnInit {
     this.recommendedCourseList = [];
     this.yearRange = '1920:'+new Date().getFullYear().toString();
     this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
-    this.availableMartialStatus = [{label: 'Male', value: 'M'},{label: '-', value: null}, {label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
+    this.availableMartialStatus = [{label: '-', value: null}, {label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
     {label: 'Select', value: 'Select'},{label: 'Divorced', value: 'Divorced'},{label: 'Widowed', value: 'Widowed'}];
    // this.availableEmploymentStatus = [{label: 'FT',value: 'FT'},{label: 'PT',value: 'PT'},{label: 'Intern',value: 'Intern'},{label: 'OJT',value: 'OJT'}]
    // this.availableOrganizationType = [{label: 'Gov',value: 'Gov'},{label: 'Private',value: 'Private'}]
@@ -157,7 +162,7 @@ export class StudentDetailsComponent implements OnInit {
     { label: "Divorced", value: "Divorced" },
     { label: "Widowed", value: "Widowed" },
     ]
- 
+  this.currentDate = new Date();
   }
 
   getStudentById(studentId: string) {
@@ -268,4 +273,15 @@ export class StudentDetailsComponent implements OnInit {
     this.student.base64Image = null;
   }
 
+  checkBodDate() {
+    const current = moment(new Date());
+    const selectedDate = moment(this.selectedDateOfBirth);
+    const yearDiff = current.diff(selectedDate, 'year');
+    if(yearDiff < 16) {
+      this.utilityService.showWarning('Warning', 'Date Of birth must be above 16 years old')
+     setTimeout(() => {
+      this.selectedDateOfBirth = null;
+     }, 1000);
+    }
+  }
 }

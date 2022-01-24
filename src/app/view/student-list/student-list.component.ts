@@ -1,3 +1,4 @@
+import { Table } from 'primeng/table';
 import { HttpResponseData } from './../../model/config-model/response.data';
 import { ConfirmationService } from 'primeng/api';
 import { TrainerListComponent } from './../trainer-list/trainer-list.component';
@@ -19,6 +20,7 @@ import { CourseListComponent } from '../course-list/course-list.component';
   styleUrls: ['./student-list.component.scss']
 })
 export class StudentListComponent implements OnInit {
+  @ViewChild('dt', { static: true }) dataTable: Table;
   @ViewChild('courseList', { static: true })
   courseList: CourseListComponent;
 
@@ -144,16 +146,16 @@ export class StudentListComponent implements OnInit {
       inputModel.rowsPerPage = 50;
       inputModel.sortName = 'inDate';
       inputModel.sortType = 1;
-      inputModel.searchKeyword = this.studentSearchKeyWord;
+      inputModel.searchKeyword = this.studentSearchKeyWord.trim();
       this.getStudentList(inputModel);
 
     } else if(searchType === 'course' && this.courseSearchKeyWord) {
       this.searchInfo = 'course';
-      this.courseList.searchFromStudentList(this.courseSearchKeyWord);
+      this.courseList.searchFromStudentList(this.courseSearchKeyWord.trim());
 
     } else if(searchType === 'trainer'){
       this.searchInfo = 'trainer';
-      this.trainerList.searchFromStudent(this.trainerSearchKeyWord);
+      this.trainerList.searchFromStudent(this.trainerSearchKeyWord.trim());
     }
 
   }
@@ -161,6 +163,7 @@ export class StudentListComponent implements OnInit {
     this.studentSearchKeyWord = null;
     this.courseSearchKeyWord = null;
     this.trainerSearchKeyWord = null;
+    this.dataTable.clear();
     this.searchInfo = 'student'
     this.DefaultSearch();
   }
@@ -221,4 +224,7 @@ export class StudentListComponent implements OnInit {
     });
   }
 
+  create() {
+    void this.router.navigate([`${RoutesModel.StudentProfile}`]);
+  }
 }

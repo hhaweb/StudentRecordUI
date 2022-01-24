@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       (response: TokenResponse) => {
         if (!response.status) {
           this.utilityService.showError('Error', 'Invalid username and password');
-          console.log('Invalid user name and password')
+          this.utilityService.hideLoading();
           return;
         }
         console.log('login', response);

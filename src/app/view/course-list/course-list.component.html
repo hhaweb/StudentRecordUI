@@ -16,104 +16,91 @@
         (onLazyLoad)="lazyLoadEvent($event)"  scrollable="true" scrollHeight="600px" 
         [loading] = "tableLoading"> 
         <ng-template pTemplate="header">
-            <tr>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <th style="background-color: #ffffff !important; min-width: 300px;" class="justify-content-start"></th>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <!-- <th style="background-color: #ffffff !important; max-width: 100px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 100px;"></th> -->
-
-                <th colspan="2" style="max-width: 200px;" class="justify-content-center">Cohort Size</th>
-                <th style="background-color: #ffffff !important; max-width: 150px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 200px;"></th>
-                <th style="background-color: #ffffff !important; max-width: 50px;"></th>
-            </tr>
             <tr >
-
-                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="courseId">
+                <th style="max-width: 120px;" class="justify-content-start" pSortableColumn="courseId">
                     Course ID
                     <p-sortIcon field="courseId"></p-sortIcon>
                 </th>
-                <th style="min-width: 300px;" class="justify-content-start" pSortableColumn="courseName">
+                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="courseName">
                     Course Name
                     <p-sortIcon field="courseName"></p-sortIcon>
                 </th>
                 <th style="max-width: 150px;" class="justify-content-start"  pSortableColumn="status">
-                    Course Status
+                  
+                    <span pTooltip='Course Status'> Status</span>
                     <p-sortIcon field="status"></p-sortIcon>
                 </th>
-                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="courseLevel">
-                    Course Level
+                <th style="max-width: 130px;" class="justify-content-start" pSortableColumn="courseLevel">
+                     <span pTooltip='Course Level'>Level</span>
                     <p-sortIcon field="courseLevel"></p-sortIcon>
                 </th>
-                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="startDate">
+                <th style="max-width: 120px;" class="justify-content-start" pSortableColumn="startDate">
                     Start Date
                     <p-sortIcon field="startDate"></p-sortIcon>
                 </th>
-                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="endDate">
+                <th style="max-width: 120px;" class="justify-content-start" pSortableColumn="endDate">
                     End Date
                     <p-sortIcon field="endDate"></p-sortIcon>
                 </th>
-                <th style="max-width: 100px;" class="justify-content-end" pSortableColumn="cohortSizeMale">
-                    Male
+                <th style="max-width: 100px;" class="justify-content-center" pSortableColumn="cohortSizeMale">
+                    <span pTooltip='Cohort Size Male'>Male</span>
                     <p-sortIcon field="cohortSizeMale"></p-sortIcon>
                 </th>
-                <th style="max-width: 100px;" class="justify-content-end" pSortableColumn="cohortSizeFemale">
-                    Female
+                <th style="max-width: 100px;" class="justify-content-center" pSortableColumn="cohortSizeFemale">
+                    <span pTooltip='Cohort Size Female'>Female</span>
                     <p-sortIcon field="cohortSizeFemale"></p-sortIcon>
                 </th>
                 <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="batchNo">
-                    Batch Number
+                    <span pTooltip='Batch Number'> Batch No.</span>
                     <p-sortIcon field="batchNo"></p-sortIcon>
                 </th>
-                <th style="max-width: 200px;" class="justify-content-start" pSortableColumn="trainingLoaction">
-                    Training Location
+                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="trainingLoaction">   
+                    <span pTooltip='Training Location'>Location</span>
                     <p-sortIcon field="trainingLoaction"></p-sortIcon>
                 </th>
-                <th  style="max-width: 50px;" class="justify-content-start">Action</th>
+                <th  style="min-width: 230px !important;" class="justify-content-center">Action</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
             let-columns="columns">
             <tr #row [pSelectableRow]="rowData" id="{{ rowData.courseId }}">
-                <td style="max-width: 150px;">
+                <td style="max-width: 120px;">
                     {{rowData.courseId}}
                 </td>
-                <td style="min-width: 300px;" class="justify-content-start" [pTooltip]="rowData.courseName">
-                    {{ rowData.courseName }}
+                <td style="min-width: 200px;" class="justify-content-start" >
+                   <span pTooltip="Course Name"> {{ rowData.courseName }}  </span>
                 </td>
-                <td style="max-width: 150px;" class="justify-content-start"  [pTooltip]="rowData.status">
-                    {{ rowData.status }}
+                <td style="max-width: 150px;" class="justify-content-start"  >
+                   <span pTooltip="Course Status"> {{ rowData.status }}</span>
                 </td>
-                <td style="max-width: 150px;" class="justify-content-start" [pTooltip]="rowData.courseLevel"> 
-                    {{ rowData.courseLevel }}
+                <td style="max-width: 130px;" class="justify-content-start" > 
+                    <span pTooltip="Course Level">{{ rowData.courseLevel }}</span>
                 </td>
-                <td style="max-width: 150px;" class="justify-content-start">
+                <td style="max-width: 120px;" class="justify-content-start">
                    {{rowData.startDate || "" | date: "dd/MM/yy" }}
                 </td>
-                <td style="max-width: 150px;" class="justify-content-start">
+                <td style="max-width: 120px;" class="justify-content-start">
                     {{ rowData.endDate || "" | date: "dd/MM/yy" }}
                  </td>
                  <td style="max-width: 100px;" class="justify-content-end">
-                    {{ rowData.cohortSizeMale}}
+                   <span pTooltip="Cohort Size Male"> {{ rowData.cohortSizeMale}}</span>
                  </td>
                  <td style="max-width: 100px;" class="justify-content-end">
-                    {{ rowData.cohortSizeFemale}}
+                    <span  pTooltip="Cohort Size Female">{{ rowData.cohortSizeFemale}}</span>
                  </td>
                  <td style="max-width: 150px;" class="justify-content-start">
                     {{ rowData.batchNo}}
                  </td>
-                 <td style="max-width: 200px;" class="justify-content-start" [pTooltip]="rowData.trainingLoaction">
-                    {{ rowData.trainingLoaction}}
+                 <td style="min-width: 200px;" class="justify-content-start" >
+                    <span pTooltip='Training Location'> {{ rowData.trainingLoaction}}</span>
                  </td>
 
-                <td style="max-width: 50px;" class="justify-content-center">
-                    <a style="margin-right: 10px;" pTooltip="Edit">
-                        <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
-                    </a>
+                <td style="min-width: 230px;" class="justify-content-start">
+         
+                    <button (click)="view(rowData.id)" pButton pRipple type="button"  label="View" class="p-button-info"></button>
+                    <button (click)="edit(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button"  label="Edit" class="p-button-success"></button>
+                    <button (click)="delete(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+
                 </td>
             </tr>
         </ng-template>

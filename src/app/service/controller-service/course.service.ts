@@ -89,6 +89,14 @@ export class CourseService {
     );
   }
 
+  deleteCourseById(courseId: string): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    params = params.append('courseId', courseId);
+    return this.httpClient.get<HttpResponseData>(
+      APIUrls.CourseUrls.DeleteCourse, { params }
+    );
+  }
+
   exportCourseDetail(courseId: number): any {
     let params = new HttpParams();
     params = params.append('courseId', courseId.toString());

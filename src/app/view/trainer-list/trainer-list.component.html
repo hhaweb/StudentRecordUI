@@ -56,7 +56,7 @@
                      <p-sortIcon field="dspCenter"></p-sortIcon>
                  </th>
 
-                <th style="min-width: 50px;" class="justify-content-center">
+                <th style="min-width: 250px;" class="justify-content-center">
                     Action
                 </th>
             </tr>
@@ -91,13 +91,10 @@
                 <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.dspCenter"> 
                     {{ rowData.dspCenter }}
                 </td>
-                <td style="min-width: 50px;" class="justify-content-center">
-                    <a style="margin-right: 10px;"  pTooltip="Edit">
-                        <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
-                    </a>
-                    <a *ngIf="isEditable" style="color: red;" pTooltip="Delete">
-                        <i class="pi pi-trash" (click)="delete(rowData)"></i>
-                    </a>
+                <td style="min-width: 250px;" class="justify-content-start">
+                    <button (click)="view(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="View" class="p-button-info"></button>
+                    <button (click)="edit(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
+                    <button (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
                 </td>
             </tr>
         </ng-template>

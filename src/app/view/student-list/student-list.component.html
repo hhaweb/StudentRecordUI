@@ -1,24 +1,27 @@
 <div class="grid p-card" style="margin-top: 30px;">
     <div class="col-3">
         <div class="p-inputgroup" style="width: 70%;">
-            <button type="button" pButton pRipple label="Search Student" (click)="search('student')" ></button>
-            <input type="text" pInputText placeholder="Search with id or name" [(ngModel)] = "studentSearchKeyWord">          
+            <input type="text" pInputText placeholder="Search with id, name and cid" [(ngModel)] = "studentSearchKeyWord">   
+            <button type="button" pButton pRipple label="Search Student" (click)="search('student')" ></button>       
         </div>
     </div>
     <div class="col-3">
         <div class="p-inputgroup" style="width: 70%;">
-            <button type="button" pButton pRipple label="Search Course"  (click)="search('course')" ></button>
-            <input type="text" pInputText placeholder="Search with id or name" [(ngModel)] = "courseSearchKeyWord">          
+            <input type="text" pInputText placeholder="Search with id or name" [(ngModel)] = "courseSearchKeyWord">
+            <button type="button" pButton pRipple label="Search Course"  (click)="search('course')" ></button>          
         </div>
     </div>
     <div class="col-3">
         <div class="p-inputgroup" style="width: 70%;">
-            <button type="button" pButton pRipple label="Search Trainer"  (click)="search('trainer')"></button>
-            <input type="text" pInputText placeholder="Search with id or name"  [(ngModel)] = "trainerSearchKeyWord">          
+            <input type="text" pInputText placeholder="Search with id or name"  [(ngModel)] = "trainerSearchKeyWord">  
+            <button type="button" pButton pRipple label="Search Trainer"  (click)="search('trainer')"></button>        
         </div>
     </div>
     <div class="col-3" style="text-align: right;">
         <button style="margin-right: 10px;" pButton pRipple  type="button"  style="margin-right: 10px;" label="Show All" (click)="showAll()" ></button>
+        <span *ngIf="isEditable">
+            <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Create Student" (click)="create()" class="p-button-success"></button>
+        </span>
         <button *ngIf="students.length > 0"  pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
     <div [hidden]="searchInfo != 'student' " class="col-12" style="margin-top: 5px;">
@@ -65,7 +68,7 @@
                        Batch No
                         <p-sortIcon field="bloodGroup"></p-sortIcon>
                     </th>
-                    <th style="max-width: 150px;" class="justify-content-start">
+                    <th style="min-width: 230px;" class="justify-content-center">
                         Action
                     </th>
                 </tr>
@@ -100,9 +103,9 @@
                     <td style="max-width: 150px;" class="justify-content-start">
                         {{rowData.batchNo}}
                     </td>
-                    <td style="max-width: 150px;" class="justify-content-start">
+                    <td style="min-width: 230px;" class="justify-content-start">
                             
-                            <a pTooltip="View" style="margin-right: 15px;">
+                            <!-- <a pTooltip="View" style="margin-right: 15px;">
                                 <i class="pi pi-eye" (click)="viewStudent(rowData.id)"></i>
                             </a>
 
@@ -112,7 +115,11 @@
                             
                             <a pTooltip="Delete"  *ngIf="isEditable" style="color: red;">
                                 <i class="pi pi-trash" (click)="delete(rowData)"></i>
-                            </a>  
+                            </a>   -->
+                            <button (click)="viewStudent(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="View" class="p-button-info"></button>
+                            <button (click)="editStudent(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
+                            <button (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+
                     </td>
                 </tr>
             </ng-template>

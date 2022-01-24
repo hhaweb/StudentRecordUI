@@ -132,11 +132,19 @@ body{
   .p-menubar-root-list > li > a > .p-submenu-icon {
     color: #ffffff !important;
   }
-
+  .p-datatable .p-sortable-column .p-sortable-column-icon {
+    margin-left: 0 !important;
+  }
   .p-datatable .p-datatable-thead > tr > th{
     z-index: 1000 !important;
     background-color: #3f51b5 !important;
     color: #ffffff !important;
+  }
+
+  body .p-datatable .p-datatable-thead > tr.white-background > th {
+    background-color: #ffffff !important;
+    color: #212121 !important;
+   // padding: 0.314em 0.857em !important;
   }
 
 //   .input-filled .p-inputtext {
@@ -244,4 +252,15 @@ body{
 }
 .p-button{
   padding: 0.35rem 0.75rem !important;
+}
+.one-line-span {
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  /* require the following to work on firefox */
+  max-height: 2em;
+  white-space: nowrap;
+  display: block !important;
 }

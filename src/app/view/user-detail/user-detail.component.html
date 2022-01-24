@@ -42,9 +42,9 @@
             </div>
         </div>
 
-        <div class="grid col-12 align-items-center justify-content-end">
+        <div class="grid col-12 align-items-center justify-content-end" *ngIf="!isStudent">
             <button style="margin-right: 10px;" pButton pRipple  [disabled]="!isEditable"   type="button" label="Save" (click)="save()" class="p-button-success"></button>
-            <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
+            <p-button label="Back" (click)="back()"   styleClass="p-button-secondary"></p-button>
         </div>
     </div>
 </div>

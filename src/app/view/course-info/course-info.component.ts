@@ -15,6 +15,7 @@ import { AuthorizationService } from 'src/app/service/utility/authorization.serv
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { SelectItem } from 'primeng/api';
 import * as moment from 'moment';
+import { toBase64String } from '@angular/compiler/src/output/source_map';
 
 @Component({
   selector: 'app-course-info',
@@ -25,7 +26,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   courseId: string;
   course: Course;
 
-
+  isNew: boolean;
   studentList: Student[];
   isEditable: boolean;
   tableLoading: boolean;
@@ -37,7 +38,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   availableCourseLevel: SelectItem[] =[];
   availableCourseStatus: SelectItem[] = [];
   availableCoursesector: SelectItem[] = [];
-
+  isViewOnly: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,19 +47,34 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     private router: Router,
     private courseService: CourseService,
     private authorizationService: AuthorizationService,
-    private commonService: CommonService) { }
+    private commonService: CommonService,
+    ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      if (params.id) {
+        this.courseId = params.id;
+        this.isViewOnly = params.type == 'view' ? true : false;
+        this.isNew = false;
+        this.getCourseDetail(params.id);
+      } else {
+        this.isNew = true;
+      }      
+    });
     const loadCurrentCuser = this.authorizationService.currentUser();
     const loadTrainerItems = this.courseService.getTrainerItems();
     const loadCourseLevel = this.commonService.getDropDownItem("Course Level");
     const loadCourseStatus = this.commonService.getDropDownItem("Course Status");
     const loadCourseSector = this.commonService.getDropDownItem("Course sector");
+    this.course = new Course();
     this.studentList = [];
     forkJoin([loadCurrentCuser,loadTrainerItems, loadCourseLevel, loadCourseStatus, loadCourseSector]).subscribe(
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
+        if(this.isViewOnly) {
+          this.isEditable = false;
+        }
         this.availableTrainerList = data[1];
         this.availableTrainerList.unshift({label: '-', value: null, disabled: false})
         this.availableCourseLevel = data[2];
@@ -68,14 +84,6 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         this.availableCoursesector = data[4];
         this.availableCoursesector.unshift({label: '-', value: null, disabled: false})
       });
-    this.route.params.subscribe((params) => {
-      if (params.id) {
-        this.courseId = params.id;
-        this.getCourseDetail(params.id);
-      } else {
-        this.course = new Course();
-      }      
-    });
   }
   
   ngOnDestroy(): void {
@@ -101,7 +109,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
               this.selectedEndDate = moment(res.endDate, 'DD/MM/yyyy').toDate();
             }
 
-            this.getStudentByCourseId(res.courseId);
+            this.getStudentByCourseId(res.id);
           }
         }, (error: any) => {
           this.utilityService.subscribeError(
@@ -116,9 +124,10 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  getStudentByCourseId(courseId: string) {
+  getStudentByCourseId(id: number) {
     this.studentList = [];
     this.tableLoading = true;
+    const courseId = id.toString(); // id from course table not course id
     this.studentService.getStudentsByCourseId(courseId).subscribe(
       (response: Student[]) => {
         if(response?.length > 0) {
@@ -141,6 +150,16 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   
   save() {
+    if(!this.course.courseId || this.course.courseId.trim() == '') {
+      this.utilityService.showWarning('warning', 'Please add course id');
+      return;
+    }
+
+    if(!this.course.courseName || this.course.courseName.trim() == '') {
+      this.utilityService.showWarning('warning', 'Please add course name');
+      return;
+    }
+
     if(this.selectedStartDate) {
       this.course.startDate = moment(this.selectedStartDate).format('DD/MM/yyyy');
     }
@@ -154,6 +173,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         if(response.status) {
           this.utilityService.showSuccess('Success', 'Save Successfully');
           this.getCourseDetail(response.id);
+          this.isNew = false;
         } else {
           this.utilityService.subscribeError(
             'Unable to save course',

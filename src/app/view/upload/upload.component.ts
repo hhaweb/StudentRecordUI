@@ -31,6 +31,7 @@ export class UploadComponent implements OnInit {
     private commonService: CommonService) { }
 
   ngOnInit(): void {
+    this.uploadResult = new UploadResult();
   }
 
   onUploadEvent(event: any, type: string) {

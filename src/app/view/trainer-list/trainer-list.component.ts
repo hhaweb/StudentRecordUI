@@ -129,7 +129,7 @@ export class TrainerListComponent implements OnInit {
   }
 
   edit(id: number) {
-    void this.router.navigate([`${RoutesModel.TrainerDetail}/${id}`]);
+    void this.router.navigate([`${RoutesModel.TrainerDetail}/${id}/edit`]);
   }
 
   search() {
@@ -143,6 +143,11 @@ export class TrainerListComponent implements OnInit {
       this.getTrainerList(inputModel);
     }
   }
+
+  view(id: number) {
+    void this.router.navigate([`${RoutesModel.TrainerDetail}/${id}/view`]);
+  }
+  
 
   showAll() {
     this.dataTable.reset();

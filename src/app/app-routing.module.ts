@@ -65,7 +65,7 @@ const routes: Routes = [
     data: { newRoute: RoutesModel.CourseInfo }
   },
   {
-    path: RoutesModel.CourseInfo + '/:id',
+    path: RoutesModel.CourseInfo + '/:id/:type',
     component: CourseInfoComponent,
     canActivate: [CanActivateRoute],
     data: { newRoute: RoutesModel.CourseInfo }
@@ -88,7 +88,7 @@ const routes: Routes = [
     data: { newRoute: RoutesModel.TrainerDetail }
   },
   {
-    path: RoutesModel.TrainerDetail + '/:id',
+    path: RoutesModel.TrainerDetail + '/:id/:type',
     component: TrainerDetailComponent,
     canActivate: [CanActivateRoute],
     data: { newRoute: RoutesModel.TrainerDetail }

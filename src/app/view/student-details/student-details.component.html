@@ -42,7 +42,8 @@
                                         <p-calendar [(ngModel)]="selectedDateOfBirth" placeholder="dd/MM/yy"
                                             dateFormat="dd/mm/yy" [monthNavigator]="true" [yearNavigator]="true"
                                             [yearRange]="yearRange" inputId="dob" [showButtonBar]="true"
-                                            [readonlyInput]="true" [showIcon]="true" inputId="icon"></p-calendar>
+                                            [readonlyInput]="true" [showIcon]="true" inputId="icon"
+                                            (onSelect)="checkBodDate()" [maxDate]= "currentDate"></p-calendar>
                                     </span>
                                     <span *ngIf="!isEditable && selectedDateOfBirth">
                                         {{selectedDateOfBirth || "" | date: "dd/MM/yyyy"}}
@@ -179,11 +180,15 @@
                                         <img [src]="imageSrc" style="height:100px" />
                                     </div>
                                     <div class="col-5" style="padding: 0;" *ngIf="imageSrc">
-                                        <p-button label="Remove"  styleClass="p-button-danger" (click)="removeImage($event)"></p-button>
+                                        <span *ngIf="isEditable">
+                                            <p-button label="Remove"  styleClass="p-button-danger" (click)="removeImage($event)"></p-button>
+                                        </span>
                                     </div> 
                                     <div class="col-5" style="padding: 0;">
+                                       <span *ngIf="isEditable">
                                         <input #fileInput type="file" accept="image/*" name="image" id="image" (change)="onPhotoUpload($event)"
                                         />  
+                                       </span>
                                     </div> 
 
                                     

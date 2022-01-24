@@ -24,7 +24,7 @@ export class UserDetailComponent implements OnInit {
   isNew: boolean;
   selectedRoleId: string;
   availableRoles: SelectItem[] = [];
-
+  isStudent: boolean;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,24 +34,21 @@ export class UserDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.user = new User('','');
     const getRoles = this.authenService.getRoles();
     const loadCurrentCuser = this.authorizationService.currentUser();
     forkJoin([getRoles,loadCurrentCuser]).subscribe(
       (data: any) => {
         this.availableRoles = data[0];
-        console.log('this.availableRoles = ', this.availableRoles);
         const currentUser = data[1];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
-        console.log('this.isEditable =', this.isEditable)
+        this.isStudent = currentUser.roleName === AppConfigData.StudentRole ? true : false;
+
       });
     this.route.params.subscribe((params) => {
       if (params.id) {
         this.userId = params.id;
         this.getUserById(params.id);
-      } else {
-        console.log('user =',this.user)
-        this.user = new User("","");
-        console.log('user =',this.user)
       }
     });
   }

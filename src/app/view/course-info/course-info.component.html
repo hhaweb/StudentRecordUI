@@ -3,11 +3,14 @@
         <p-card>
             <div class="grid col-12" style="margin:auto">
                 <div class="grid col-12">
-                    <div class="col-3" style="font-size: 18px;"><strong>Course Detail</strong></div>
+                    <div class="col-3" style="font-size: 18px;">
+                        <strong *ngIf="isNew">Create New Course</strong>
+                        <strong *ngIf="!isNew">Course Detail</strong>
+                    </div>
                     <div class="grid col-9 justify-content-end">
                         <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
                             label="Save" (click)="save()" class="p-button-success"></button>
-                        <button *ngIf="isEditable" style="margin-right: 10px;" pButton pRipple type="button"
+                        <button *ngIf="isEditable && !isNew" style="margin-right: 10px;" pButton pRipple type="button"
                             label="Export Course Detail" (click)="export()" class="p-button-success"></button>
                         <p-button label="Back" (click)="back()" styleClass="p-button-secondary"></p-button>
 
@@ -16,7 +19,7 @@
 
                 <div class="grid col-12">
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Course ID</strong></div>
+                        <div class="col-4 mt-2"><strong>Course ID<span style="color: red;">*</span></strong></div>
                         <div class="col-8"> <input [disabled]="!isEditable" [(ngModel)]="course.courseId" type="text"
                                 placeholder="Course ID" pInputText /></div>
                     </div>
@@ -30,9 +33,9 @@
 
                     </div> 
                     <div class="grid col-4">
-                        <div class="col-4 mt-2"><strong>Course Name</strong></div>
+                        <div class="col-4 mt-2"><strong>Course Name</strong> <span style="color: red;">*</span></div>
                         <div class="col-8">
-                            <textarea style="width: 90% !important;font-family: inherit" [rows]="2"
+                            <textarea style="width: 90% !important;font-family: inherit" [rows]="1"
                                 [(ngModel)]="course.courseName" autoResize="autoResize" placeholder="Course Name"
                                 pInputTextarea></textarea>
                         </div>
@@ -61,7 +64,7 @@
                                 placeholder="Duration" pInputText /></div>
                     </div>
                 </div>
-
+<!-- 
                 <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>CId</strong></div>
@@ -78,7 +81,7 @@
                         <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.batchNo"
                                 placeholder="Batch No" pInputText /></div>
                     </div>
-                </div>
+                </div> -->
                 <div class="grid col-12">
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Start Date</strong></div>
@@ -108,7 +111,7 @@
                     <div class="grid col-4">
                         <div class="col-4 mt-2"><strong>Trainer Name</strong></div>
                         <div class="col-8"> <p-dropdown [style]="{'width': '95%'} " [options]="availableTrainerList" id="trainerName"
-                            required="true" [(ngModel)]="course.trainerId"  placeholder="Select Trainer Name ">
+                            required="true" [(ngModel)]="course.trainerId" [disabled]="!isEditable"  placeholder="Select Trainer Name ">
                         </p-dropdown></div>
                     </div>
 
@@ -174,6 +177,16 @@
                                 [(ngModel)]="course.numberOfCertifiedFemale" placeholder="Number Of Certified Female">
                             </p-inputNumber>
                         </div>
+                    </div> 
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Batch No</strong></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.batchNo"
+                                placeholder="Batch No" pInputText /></div>
+                    </div>
+                    <div class="grid col-4">
+                        <div class="col-4 mt-2"><strong>Training Location</strong></div>
+                        <div class="col-8"> <input type="text" [disabled]="!isEditable" [(ngModel)]="course.trainingLoaction"
+                                placeholder="Training Location" pInputText /></div>
                     </div>
                 </div>
 
@@ -182,9 +195,10 @@
     </div>
 
     <!-- Student that attended to course -->
-    <div class="col-12" >
+    <div class="col-12" *ngIf="!isNew">
         <p-card style="margin-top: 20px;">
             <div class="grid">
+                <div class="col-12"  style="font-size: 18px;"><strong>Student List</strong></div>
                 <div class="col-12">
                     <p-table #dt rowHover="true"  [value]="studentList"
                         [paginator]="true" [rows]="50" [rowsPerPageOptions]="[50, 100, 200]"
@@ -234,6 +248,30 @@
                                     Action
                                 </th>
                             </tr>
+                            <tr class="white-background">
+                                <th style="max-width: 150px;">
+                                    <input pInputText type="text" class="width-full" (input)="
+                                    dt.filter($event.target.value.trim(), 'id', 'contains')
+                                  " />
+                                </th>
+                                <th style="min-width: 200px;">
+                                    <input pInputText type="text" class="width-full" (input)="
+                                    dt.filter($event.target.value.trim(), 'name', 'contains')
+                                  " />
+                                </th>
+                                <th style="max-width: 150px;">
+                                    <input pInputText type="text" class="width-full" (input)="
+                                    dt.filter($event.target.value.trim(), 'cid', 'contains')
+                                  " />
+                                </th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                                <th style="max-width: 150px;"></th>
+                            </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" 
                             let-columns="columns">
@@ -267,10 +305,10 @@
                                 </td>
                                 <td style="max-width: 150px;" class="justify-content-start">
 
-                                    <button style="margin-right: 10px;" pButton class="p-button-sm" type="button"
+                                    <button style="margin-right: 10px;" pButton class="p-button-info" type="button"
                                         label="View" (click)="viewStudent(rowData.id)"></button>
                                     <span *ngIf="isEditable">
-                                        <button pButton class="p-button-sm" type="button" label="Edit"
+                                        <button pButton class="p-button-success" type="button" label="Edit"
                                             (click)="editStudent(rowData.id)"></button>
                                     </span>
                                 </td>

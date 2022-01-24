@@ -1,3 +1,4 @@
+import { RoutesModel } from './../../model/config-model/route-model';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { forkJoin } from 'rxjs';
 import { AuthorizationService } from './../../service/utility/authorization.service';
@@ -27,7 +28,7 @@ export class StudentProfileComponent implements OnInit {
   availableMaritalStatues: SelectItem[];
   availableTrainingYears: SelectItem[];
   availableGender: SelectItem[];
-
+  currentDate: Date;
   imageSrc: string;
   selectedGender: string;
   student: Student;
@@ -77,7 +78,7 @@ export class StudentProfileComponent implements OnInit {
     this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
 
     this.student = new Student();
-    this.student.gender = "Male";
+    this.currentDate = new Date();
   }
 
   onPhotoUpload(event: any) {
@@ -99,17 +100,17 @@ export class StudentProfileComponent implements OnInit {
 
 
   create() {
-    if(!this.student.name) {
+    if(!this.student.name || this.student.name.trim() == '') {
       this.utilityService.showWarning('Warning','Please add name');
       return;
     }
   
-    if(!this.student.cid) {
+    if(!this.student.cid || this.student.cid.trim() == '') {
       this.utilityService.showWarning('Warning','Please add cid');
       return;
     }
 
-    if(!this.student.did) {
+    if(!this.student.did || this.student.did.trim() == '') {
       this.utilityService.showWarning('Warning','Please add did');
       return;
     }
@@ -174,6 +175,7 @@ export class StudentProfileComponent implements OnInit {
   clear() {
     this.student = new Student();
     this.student.gender = "Male";
+    void this.router.navigate([`${RoutesModel.StudentList}`]);
   }
 
   validateEmail(email: string) {
@@ -191,4 +193,15 @@ export class StudentProfileComponent implements OnInit {
     }
   }
 
+  checkBodDate() {
+    const current = moment(new Date());
+    const selectedDate = moment(this.selectedDateOfBirth);
+    const yearDiff = current.diff(selectedDate, 'year');
+    if(yearDiff < 16) {
+      this.utilityService.showWarning('Warning', 'Date Of birth must be above 16 years old')
+     setTimeout(() => {
+      this.selectedDateOfBirth = null;
+     }, 1000);
+    }
+  }
 }
