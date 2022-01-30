@@ -1,22 +1,22 @@
 import { DropdwonSetupComponent } from './view/dropdown/dropdwon-setup.component';
 import { RoutesModel } from './model/config-model/route-model';
-import { UserListComponent } from './view/user-list/user-list.component';
-import { TrainerDetailComponent } from './view/trainer-detail/trainer-detail.component';
-import { TrainerListComponent } from './view/trainer-list/trainer-list.component';
+import { UserListComponent } from './view/user/user-list/user-list.component';
+import { TrainerDetailComponent } from './view/trainer/trainer-detail/trainer-detail.component';
+import { TrainerListComponent } from './view/trainer/trainer-list/trainer-list.component';
 import { Trainer } from './model/student/trainer.model';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
-import { StudentListComponent } from './view/student-list/student-list.component';
+import { StudentListComponent } from './view/student/student-list/student-list.component';
 import { UploadComponent } from './view/upload/upload.component';
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './view/home/home.component';
 import { LoginComponent } from './share/login/login.component';
-import { StudentProfileComponent } from './view/student-profile/student-profile.component';
-import { StudentDetailsComponent } from "./view/student-details/student-details.component";
-import { CourseInfoComponent } from './view/course-info/course-info.component';
-import { UserDetailComponent } from './view/user-detail/user-detail.component';
+import { StudentProfileComponent } from './view/student/student-profile/student-profile.component';
+import { StudentDetailsComponent } from "./view/student/student-details/student-details.component";
+import { CourseInfoComponent } from './view/course/course-info/course-info.component';
+import { UserDetailComponent } from './view/user/user-detail/user-detail.component';
 import { CanActivateRoute } from './service/utility/can-activate-route.service';
-import { CourseListComponent } from './view/course-list/course-list.component';
+import { CourseListComponent } from './view/course/course-list/course-list.component';
 
 const routes: Routes = [
   { path: '', redirectTo: RoutesModel.Home, pathMatch: 'full' },

@@ -24,7 +24,7 @@ import { AuthenticationService } from './service/utility/authentication.service'
 import { ConfigDataLoadedEvent } from './share/event/config-data-loaded.event';
 import { UploadComponent } from './view/upload/upload.component';
 import { FullScreenService } from './share/event/full-screen.service';
-import { StudentListComponent } from './view/student-list/student-list.component';
+import { StudentListComponent } from './view/student/student-list/student-list.component';
 import {ButtonModule} from 'primeng/button';
 import {FileUploadModule} from 'primeng/fileupload';
 import { LoadingComponent } from './share/loading/loading.component';
@@ -32,7 +32,7 @@ import { ToastComponent } from './share/toast/toast.component';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
-import { StudentProfileComponent } from './view/student-profile/student-profile.component';
+import { StudentProfileComponent } from './view/student/student-profile/student-profile.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {TableModule} from 'primeng/table';
@@ -49,21 +49,24 @@ import {
 import {faUserCircle}  from '@fortawesome/free-solid-svg-icons';
 import {AvatarModule} from 'primeng/avatar';
 import { UploadHistoryComponent } from './view/upload/upload-history.component';
-import { StudentDetailsComponent } from './view/student-details/student-details.component';
-import { CourseInfoComponent } from './view/course-info/course-info.component';
+import { StudentDetailsComponent } from './view/student/student-details/student-details.component';
+import { CourseInfoComponent } from './view/course/course-info/course-info.component';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { StudentService } from './service/controller-service/student.service';
-import { TrainerListComponent } from './view/trainer-list/trainer-list.component';
-import { TrainerDetailComponent } from './view/trainer-detail/trainer-detail.component';
-import { UserListComponent } from './view/user-list/user-list.component';
-import { UserDetailComponent } from './view/user-detail/user-detail.component';
+import { TrainerListComponent } from './view/trainer/trainer-list/trainer-list.component';
+import { TrainerDetailComponent } from './view/trainer/trainer-detail/trainer-detail.component';
+import { UserListComponent } from './view/user/user-list/user-list.component';
+import { UserDetailComponent } from './view/user/user-detail/user-detail.component';
 import { CanActivateRoute } from './service/utility/can-activate-route.service';
 import { CookieService } from 'ngx-cookie-service';
-import { CourseListComponent } from './view/course-list/course-list.component';
+import { CourseListComponent } from './view/course/course-list/course-list.component';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { DropdwonSetupComponent } from './view/dropdown/dropdwon-setup.component';
 import { DropdwonListComponent } from './view/dropdown/dropdwon-list.component';
 import {AvatarGroupModule} from 'primeng/avatargroup';
+import {PanelModule} from 'primeng/panel';
+import { StudentDialogComponent } from './view/student/student-dialog/student-dialog.component';
+import { ChipModule } from 'primeng/chip';
 
 
 @NgModule({
@@ -86,7 +89,8 @@ import {AvatarGroupModule} from 'primeng/avatargroup';
     UserDetailComponent,
     CourseListComponent,
     DropdwonSetupComponent,
-    DropdwonListComponent
+    DropdwonListComponent,
+    StudentDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +119,9 @@ import {AvatarGroupModule} from 'primeng/avatargroup';
     CalendarModule,
     AvatarModule,
     InputTextareaModule,
-    AvatarGroupModule
+    AvatarGroupModule,
+    PanelModule,
+    ChipModule
   ],
   providers: [
     MessageService,

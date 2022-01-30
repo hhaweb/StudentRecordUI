@@ -1,6 +1,6 @@
-import { AppConfigData } from './../../model/config-model/config-data';
+import { AppConfigData } from '../../../model/config-model/config-data';
 import { forkJoin } from 'rxjs';
-import { AuthorizationService } from './../../service/utility/authorization.service';
+import { AuthorizationService } from '../../../service/utility/authorization.service';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { CurrentUser } from 'src/app/model/user/user.model';
 import { Router } from '@angular/router';

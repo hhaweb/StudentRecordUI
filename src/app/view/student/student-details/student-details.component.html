@@ -20,7 +20,7 @@
                             <div class="grid align-items-center">
                                 <div class="col-4 fw-500">Id</div>
                                 <div class="col-8">
-                                    <input type="text" [disabled]="!isEditable" [(ngModel)]="student.id"
+                                    <input type="text" [disabled]="true" [(ngModel)]="student.id"
                                         placeholder="StudentID" pInputText />
                                 </div>
                             </div>
@@ -177,7 +177,8 @@
                                 <div class="col-5 fw-500">Choose Profile Photo</div>
                                 <div class="grid col-7 align-items-end">
                                     <div class="col-12" style="padding: 0;">
-                                        <img [src]="imageSrc" style="height:100px" />
+                                        <img *ngIf="imageSrc" [src]="imageSrc"  alt="people.jpeg" style="height:100px" />
+                                        <img *ngIf="!imageSrc" src="/assets/people.jpg"  alt="people.jpeg" style="height:100px" />
                                     </div>
                                     <div class="col-5" style="padding: 0;" *ngIf="imageSrc">
                                         <span *ngIf="isEditable">
@@ -190,9 +191,6 @@
                                         />  
                                        </span>
                                     </div> 
-
-                                    
-                                  
                                 </div>
                             </div>
                         </div>

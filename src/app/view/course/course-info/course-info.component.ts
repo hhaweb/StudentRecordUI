@@ -1,9 +1,8 @@
-import { CommonService } from './../../service/controller-service/common.service';
-import { repeat } from 'lodash';
+import { StudentDialogComponent } from './../../student/student-dialog/student-dialog.component';
+import { CommonService } from '../../../service/controller-service/common.service';
 import { forkJoin } from 'rxjs';
-
-import { CourseService } from './../../service/controller-service/course.service';
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { CourseService } from '../../../service/controller-service/course.service';
+import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Student } from 'src/app/model/student/student.model';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,7 +14,7 @@ import { AuthorizationService } from 'src/app/service/utility/authorization.serv
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { SelectItem } from 'primeng/api';
 import * as moment from 'moment';
-import { toBase64String } from '@angular/compiler/src/output/source_map';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-course-info',
@@ -23,6 +22,8 @@ import { toBase64String } from '@angular/compiler/src/output/source_map';
   styleUrls: ['./course-info.component.scss']
 })
 export class CourseInfoComponent implements OnInit, OnDestroy {
+  @ViewChild('studentDialog', { static: true })
+  studentDialog: StudentDialogComponent;
   courseId: string;
   course: Course;
 
@@ -34,8 +35,8 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   selectedStartDate: Date;
   selectedEndDate: Date;
 
-  availableTrainerList: SelectItem[] =[];
-  availableCourseLevel: SelectItem[] =[];
+  availableTrainerList: SelectItem[] = [];
+  availableCourseLevel: SelectItem[] = [];
   availableCourseStatus: SelectItem[] = [];
   availableCoursesector: SelectItem[] = [];
   isViewOnly: boolean;
@@ -48,7 +49,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     private courseService: CourseService,
     private authorizationService: AuthorizationService,
     private commonService: CommonService,
-    ) { }
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -59,7 +60,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         this.getCourseDetail(params.id);
       } else {
         this.isNew = true;
-      }      
+      }
     });
     const loadCurrentCuser = this.authorizationService.currentUser();
     const loadTrainerItems = this.courseService.getTrainerItems();
@@ -68,24 +69,24 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     const loadCourseSector = this.commonService.getDropDownItem("Course sector");
     this.course = new Course();
     this.studentList = [];
-    forkJoin([loadCurrentCuser,loadTrainerItems, loadCourseLevel, loadCourseStatus, loadCourseSector]).subscribe(
+    forkJoin([loadCurrentCuser, loadTrainerItems, loadCourseLevel, loadCourseStatus, loadCourseSector]).subscribe(
       (data: any) => {
         const currentUser = data[0];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
-        if(this.isViewOnly) {
+        if (this.isViewOnly) {
           this.isEditable = false;
         }
         this.availableTrainerList = data[1];
-        this.availableTrainerList.unshift({label: '-', value: null, disabled: false})
+        this.availableTrainerList.unshift({ label: '-', value: null, disabled: false })
         this.availableCourseLevel = data[2];
-        this.availableCourseLevel.unshift({label: '-', value: null, disabled: false})
+        this.availableCourseLevel.unshift({ label: '-', value: null, disabled: false })
         this.availableCourseStatus = data[3];
-        this.availableCourseStatus.unshift({label: '-', value: null, disabled: false})
+        this.availableCourseStatus.unshift({ label: '-', value: null, disabled: false })
         this.availableCoursesector = data[4];
-        this.availableCoursesector.unshift({label: '-', value: null, disabled: false})
+        this.availableCoursesector.unshift({ label: '-', value: null, disabled: false })
       });
   }
-  
+
   ngOnDestroy(): void {
     this.course = new Course();
     this.courseId = null;
@@ -101,11 +102,11 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         (res: Course) => {
           if (res) {
             this.course = res;
-            if(res.startDate) {
+            if (res.startDate) {
               this.selectedStartDate = moment(res.startDate, 'DD/MM/yyyy').toDate();
             }
 
-            if(res.endDate) {
+            if (res.endDate) {
               this.selectedEndDate = moment(res.endDate, 'DD/MM/yyyy').toDate();
             }
 
@@ -130,8 +131,8 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     const courseId = id.toString(); // id from course table not course id
     this.studentService.getStudentsByCourseId(courseId).subscribe(
       (response: Student[]) => {
-        if(response?.length > 0) {
-          console.log('student list ',response);
+        if (response?.length > 0) {
+          console.log('student list ', response);
           this.studentList = response;
           this.totalStudents = response.length;
         }
@@ -143,34 +144,34 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     );
   }
 
-  setTrainerId(){
-    this.course.trainerId= this.course.trainerName;
+  setTrainerId() {
+    this.course.trainerId = this.course.trainerName;
 
   }
 
-  
+
   save() {
-    if(!this.course.courseId || this.course.courseId.trim() == '') {
+    if (!this.course.courseId || this.course.courseId.trim() == '') {
       this.utilityService.showWarning('warning', 'Please add course id');
       return;
     }
 
-    if(!this.course.courseName || this.course.courseName.trim() == '') {
+    if (!this.course.courseName || this.course.courseName.trim() == '') {
       this.utilityService.showWarning('warning', 'Please add course name');
       return;
     }
 
-    if(this.selectedStartDate) {
+    if (this.selectedStartDate) {
       this.course.startDate = moment(this.selectedStartDate).format('DD/MM/yyyy');
     }
 
-    if(this.selectedEndDate) {
+    if (this.selectedEndDate) {
       this.course.endDate = moment(this.selectedEndDate).format('DD/MM/yyyy');
     }
-
+    this.course.courseId = this.course.courseId.trim();
     this.courseService.saveCourse(this.course).subscribe(
       (response: HttpResponseData) => {
-        if(response.status) {
+        if (response.status) {
           this.utilityService.showSuccess('Success', 'Save Successfully');
           this.getCourseDetail(response.id);
           this.isNew = false;
@@ -207,15 +208,15 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   export() {
     this.utilityService.showLoading('Exporting');
     console.log('export ==', this.course);
-    if(this.course) {
+    if (this.course) {
       this.courseService.exportCourseDetail(this.course.id).subscribe(
         (res: any) => {
           this.utilityService.hideLoading();
-          if(!res.headers.get('content-disposition')) {
+          if (!res.headers.get('content-disposition')) {
             this.utilityService.subscribeError(
               'Error',
               'File not found'
-            );  
+            );
           }
           this.utilityService.fileSaveAs(res);
         },
@@ -224,13 +225,60 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
             error,
             'Unable to download attachment'
           );
-          setTimeout(() => this.utilityService.hideLoading(),1000);
+          setTimeout(() => this.utilityService.hideLoading(), 1000);
         },
         () => {
           this.utilityService.hideLoading();
         }
       );
     }
- 
+
+  }
+
+  openStudentDialog() {
+    this.studentDialog.openDialog();
+  }
+
+  addStudentToCourse(studentList: Student[]) {
+    const saveStudentList = studentList.reduce((a: Course[], c) => { 
+      const index = this.studentList.findIndex(x => x.id == c.id);
+      if(index === -1) {
+        const course = _.cloneDeep(this.course);
+        course.id = null;
+        course.cid = c.cid;
+        course.did = c.did;
+        a.push(course);
+        return a;
+      }
+     }, []);
+     console.log('studentList =', saveStudentList);
+     if(!saveStudentList) {
+      this.studentDialog.close();
+      return;
+     }
+
+     this.courseService.addStudent(saveStudentList).subscribe(
+      (response: HttpResponseData) => {
+        if (response.status) {
+          this.utilityService.showSuccess('Success', 'Save Successfully');
+          this.studentDialog.close();
+          this.getStudentByCourseId(this.course.id);
+          this.isNew = false;
+        } else {
+          this.utilityService.subscribeError(
+            'Unable to save course',
+            response.message
+          );
+        }
+      }, (error: any) => {
+        this.utilityService.subscribeError(
+          error,
+          'Unable to save course'
+        );
+      },
+      () => {
+        this.utilityService.hideLoading();
+      }
+    );
   }
 }

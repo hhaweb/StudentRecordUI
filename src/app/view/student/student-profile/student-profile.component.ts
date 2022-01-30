@@ -1,7 +1,7 @@
-import { RoutesModel } from './../../model/config-model/route-model';
+import { RoutesModel } from '../../../model/config-model/route-model';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
 import { forkJoin } from 'rxjs';
-import { AuthorizationService } from './../../service/utility/authorization.service';
+import { AuthorizationService } from '../../../service/utility/authorization.service';
 import { saveAs } from 'file-saver';
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'primeng/api';
@@ -121,7 +121,8 @@ export class StudentProfileComponent implements OnInit {
         return;
       }
     }
-
+    this.student.cid = this.student.cid.trim();
+    this.student.did = this.student.did.trim();
     this.utilityService.showLoading('Saving...')
     this.student.dateOfBirth = this.selectedDateOfBirth ? moment(this.selectedDateOfBirth).format('DD/MM/yyyy') : null;
     if(this.student.id) {

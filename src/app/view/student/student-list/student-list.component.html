@@ -1,6 +1,6 @@
-<div class="grid p-card" style="margin-top: 30px;">
+<div class="grid p-card align-content-center search-container">
     <div class="col-3">
-        <div class="p-inputgroup" style="width: 70%;">
+        <div class="p-inputgroup" style="width: 75%;">
             <input type="text" pInputText placeholder="Search with id, name and cid" [(ngModel)] = "studentSearchKeyWord">   
             <button type="button" pButton pRipple label="Search Student" (click)="search('student')" ></button>       
         </div>
@@ -24,6 +24,10 @@
         </span>
         <button *ngIf="students.length > 0"  pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
+</div>
+
+<div class="grid p-card table-container">
+    <div class="col-12" [hidden]="searchInfo != 'student' " ><strong style="font-size: 1rem;">Student List</strong></div>
     <div [hidden]="searchInfo != 'student' " class="col-12" style="margin-top: 5px;">
         <p-table  #dt rowHover="true" styleClass="p-datatable-striped"  [value]="students" [paginator]="true" [rows]="50"
             [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalStudents" [lazy]="true" [lazyLoadOnInit]="false"
@@ -64,9 +68,9 @@
                         Gender
                         <p-sortIcon field="gender"></p-sortIcon>
                     </th>
-                    <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="bloodGroup">
+                    <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="batchNo">
                        Batch No
-                        <p-sortIcon field="bloodGroup"></p-sortIcon>
+                        <p-sortIcon field="batchNo"></p-sortIcon>
                     </th>
                     <th style="min-width: 230px;" class="justify-content-center">
                         Action
@@ -130,12 +134,13 @@
             </ng-template>
         </p-table>
     </div>
-    <div [hidden]="searchInfo != 'course' " class="col-12" >
-        <app-course-list #courseList [isShowAll] ='false'></app-course-list>
-    </div>
-    <div [hidden]="searchInfo != 'trainer' " class="col-12" >
-        <app-trainer-list #trainerList [isShowAll] ='false'></app-trainer-list>
-    </div>
+</div>
+
+<div [hidden]="searchInfo != 'course' " class="col-12 padding-0" >
+    <app-course-list #courseList [isShowAll] ='false'></app-course-list>
+</div>
+<div [hidden]="searchInfo != 'trainer' " class="col-12 padding-0" >
+    <app-trainer-list #trainerList [isShowAll] ='false'></app-trainer-list>
 </div>
 
 

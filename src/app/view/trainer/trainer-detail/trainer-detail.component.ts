@@ -1,7 +1,7 @@
 import { SelectItem } from 'primeng/api';
 import { repeat } from 'lodash';
 import { forkJoin } from 'rxjs';
-import { CourseService } from './../../service/controller-service/course.service';
+import { CourseService } from '../../../service/controller-service/course.service';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Trainer } from 'src/app/model/student/trainer.model';
@@ -71,14 +71,15 @@ export class TrainerDetailComponent implements OnInit {
   }
 
   saveTrainer() {
-    if(!this.trainer.trainerId) {
+    if(!this.trainer.trainerId || this.trainer.trainerId.trim() == '') {
       this.utilityService.showWarning('Warning','Please add trainer id');
       return;
     }
-    if(!this.trainer.trainerName) {
+    if(!this.trainer.trainerName || this.trainer.trainerName.trim() == '') {
       this.utilityService.showWarning('Warning','Please add trainer name');
       return;
     }
+    this.trainer.trainerId = this.trainer.trainerId.trim();
     this.utilityService.showLoading('Saving');
     if(this.selectedJoinDate) {
       this.trainer.joinDate = moment(this.selectedJoinDate).format('DD/MM/yyyy');

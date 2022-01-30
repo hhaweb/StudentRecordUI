@@ -33,6 +33,12 @@ export class CourseService {
     );
   }
 
+  addStudent(courseList: Course[]): Observable<HttpResponseData> {
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.CourseUrls.AddStudent,courseList
+    );
+  }
+
   getTrainerList(input: SearchModel):Observable<Trainer[]>{
     return this.httpClient.post<Trainer[]>(
       APIUrls.CourseUrls.GetTrainerList,input

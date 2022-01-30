@@ -1,9 +1,9 @@
 import { Table } from 'primeng/table';
-import { HttpResponseData } from './../../model/config-model/response.data';
+import { HttpResponseData } from '../../../model/config-model/response.data';
 import { ConfirmationService } from 'primeng/api';
-import { TrainerListComponent } from './../trainer-list/trainer-list.component';
+import { TrainerListComponent } from '../../trainer/trainer-list/trainer-list.component';
 import { forkJoin } from 'rxjs';
-import { Student } from './../../model/student/student.model';
+import { Student } from '../../../model/student/student.model';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { StudentService } from 'src/app/service/controller-service/student.service';
 import { UtilityService } from 'src/app/service/utility/utility.service';
@@ -12,7 +12,7 @@ import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { RouteModel, SearchModel } from 'src/app/model/common/common.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
-import { CourseListComponent } from '../course-list/course-list.component';
+import { CourseListComponent } from '../../course/course-list/course-list.component';
 
 @Component({
   selector: 'app-student-list',
@@ -86,7 +86,6 @@ export class StudentListComponent implements OnInit {
        if (response?.length > 0) {
         this.students = response;
         this.totalStudents = response[0].totalRecord;
-        console.log(response)
        }
       
       },
@@ -107,58 +106,32 @@ export class StudentListComponent implements OnInit {
   editStudent(id: number) {
     const routeModel = new RouteModel();
     void this.router.navigate([`${RoutesModel.StudentDetails}/${id}/edit`]);
- 
-  }
-
-  getStudentById(studentId: string) {
-   // this.utilService.showLoading('Searching');
-    this.students = [];
-    this.studentService.getStudentById(studentId).subscribe(
-      (res: Student) => {
-        if(res) {
-          this.totalStudents = 1;
-          this.students.push(res);
-          console.log('student ', this.students);
-          this.utilityService.hideLoading();
-        } else {
-          this.utilityService.showWarning('Warning','No record found.')
-        }
-      },(error: any) => {
-      this.utilityService.hideLoading()
-        this.utilityService.subscribeError(
-        error,
-        'Unable to search student'
-      );
-    },
-      () => {
-        this.utilityService.hideLoading();
-      }
-    );
   }
 
 
   search(searchType: string) {
     
-    if(searchType === 'student' && this.studentSearchKeyWord) {
+    if(searchType === 'student') {
       this.searchInfo = 'student';
       const inputModel = new SearchModel();
       inputModel.rowOffset = 0;
       inputModel.rowsPerPage = 50;
       inputModel.sortName = 'inDate';
       inputModel.sortType = 1;
-      inputModel.searchKeyword = this.studentSearchKeyWord.trim();
+      inputModel.searchKeyword = this.studentSearchKeyWord ? this.studentSearchKeyWord.trim() : null;
       this.getStudentList(inputModel);
 
-    } else if(searchType === 'course' && this.courseSearchKeyWord) {
+    } else if(searchType === 'course') {
       this.searchInfo = 'course';
-      this.courseList.searchFromStudentList(this.courseSearchKeyWord.trim());
+      this.courseList.searchFromStudentList(this.courseSearchKeyWord);
 
     } else if(searchType === 'trainer'){
       this.searchInfo = 'trainer';
-      this.trainerList.searchFromStudent(this.trainerSearchKeyWord.trim());
+      this.trainerList.searchFromStudent(this.trainerSearchKeyWord);
     }
 
   }
+
   showAll() {
     this.studentSearchKeyWord = null;
     this.courseSearchKeyWord = null;

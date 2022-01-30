@@ -1,8 +1,8 @@
 import { Table } from 'primeng/table';
-import { RoutesModel } from './../../model/config-model/route-model';
-import { SearchModel } from './../../model/common/common.model';
+import { RoutesModel } from '../../../model/config-model/route-model';
+import { SearchModel } from '../../../model/common/common.model';
 import { forkJoin } from 'rxjs';
-import { UtilityService } from './../../service/utility/utility.service';
+import { UtilityService } from '../../../service/utility/utility.service';
 import { Router } from '@angular/router';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Course } from 'src/app/model/student/course.model';
@@ -103,15 +103,13 @@ export class CourseListComponent implements OnInit {
   }
 
   search() {
-    if (this.searchKeyWord) {
-      const inputModel = new SearchModel();
+    const inputModel = new SearchModel();
       inputModel.rowOffset = 0;
       inputModel.rowsPerPage = 50;
       inputModel.sortName = 'courseName';
       inputModel.sortType = 1;
-      inputModel.searchKeyword = this.searchKeyWord.trim();
+      inputModel.searchKeyword = this.searchKeyWord ? this.searchKeyWord.trim() : null;
       this.getCourseList(inputModel);
-    }
   }
 
   searchFromStudentList(key: string) {
@@ -121,7 +119,7 @@ export class CourseListComponent implements OnInit {
     inputModel.rowsPerPage = 50;
     inputModel.sortName = 'courseName';
     inputModel.sortType = 1;
-    inputModel.searchKeyword = key.trim();
+    inputModel.searchKeyword = key ? key.trim() : null;
     this.getCourseList(inputModel);
   }
 

@@ -1,4 +1,4 @@
-import { RoutesModel } from './../../model/config-model/route-model';
+import { RoutesModel } from '../../../model/config-model/route-model';
 import { forkJoin } from 'rxjs';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -81,11 +81,11 @@ export class UserDetailComponent implements OnInit {
   }
 
   save() {
-    if(!this.user.userName) {
+    if(!this.user.userName || this.user.userName.trim() == '') {
       this.utilityService.showWarning('Warning','Please add user name');
       return;
     }
-    if(!this.user.id && !this.user.password) {
+    if(!this.user.password || this.user.password.trim() == '') {
       this.utilityService.showWarning('Warning','Please add password');
     }
     if(!this.selectedRoleId) {

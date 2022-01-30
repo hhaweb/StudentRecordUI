@@ -1,12 +1,12 @@
-import { CommonService } from './../../service/controller-service/common.service';
-import { CourseService } from './../../service/controller-service/course.service';
+import { CommonService } from '../../../service/controller-service/common.service';
+import { CourseService } from '../../../service/controller-service/course.service';
 import { forkJoin } from 'rxjs';
 import { HttpResponseData } from 'src/app/model/config-model/response.data';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { StudentService } from 'src/app/service/controller-service/student.service';
 import { SelectItem } from 'primeng/api';
-import { Student } from './../../model/student/student.model';
+import { Student } from '../../../model/student/student.model';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Course } from 'src/app/model/student/course.model';
@@ -77,6 +77,8 @@ export class StudentDetailsComponent implements OnInit {
         this.availableOrganizationType = data[3];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.isStudent = currentUser.roleName === AppConfigData.StudentRole ? true : false;
+        console.log('currentUser.roleName =', currentUser.roleName)
+
         if(this.isViewOnly) {
           this.isEditable = false;
         }
@@ -90,19 +92,20 @@ export class StudentDetailsComponent implements OnInit {
   }
 
   save() {
-    if(!this.student.name) {
+    if(!this.student.name || this.student.name.trim() == '') {
       this.utilityService.showWarning('Warning','Please add Name');
       return;
     }
-    if(!this.student.cid) {
+    if(!this.student.cid || this.student.cid.trim() == '') {
       this.utilityService.showWarning('Warning','Please add CID');
       return;
     }
-    if(!this.student.did) {
+    if(!this.student.did || this.student.did.trim() == '') {
       this.utilityService.showWarning('Warning','Please add DID');
       return;
     }
-
+    this.student.cid = this.student.cid.trim();
+    this.student.did = this.student.did.trim();
     if(this.employment.status || this.employment.organizationType || this.employment.organizationName) {
       this.employment.cid = this.student.cid;
       this.student.employment = this.employment;

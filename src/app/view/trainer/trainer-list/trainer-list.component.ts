@@ -1,11 +1,11 @@
-import { HttpResponseData } from './../../model/config-model/response.data';
+import { HttpResponseData } from '../../../model/config-model/response.data';
 import { ConfirmationService } from 'primeng/api';
-import { SearchModel } from './../../model/common/common.model';
+import { SearchModel } from '../../../model/common/common.model';
 import { forkJoin } from 'rxjs';
 import { RoutesModel } from 'src/app/model/config-model/route-model';
 import { Router } from '@angular/router';
-import { CourseService } from './../../service/controller-service/course.service';
-import { Trainer } from './../../model/student/trainer.model';
+import { CourseService } from '../../../service/controller-service/course.service';
+import { Trainer } from '../../../model/student/trainer.model';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { UtilityService } from 'src/app/service/utility/utility.service';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
@@ -63,7 +63,7 @@ export class TrainerListComponent implements OnInit {
     inputModel.rowsPerPage = 50;
     inputModel.sortName = 'trainerName';
     inputModel.sortType = 1;
-    inputModel.searchKeyword = key;
+    inputModel.searchKeyword = key ? key.trim() : null;
     this.getTrainerList(inputModel);
   }
 
@@ -133,15 +133,13 @@ export class TrainerListComponent implements OnInit {
   }
 
   search() {
-    if (this.searchKeyWord) {
-      const inputModel = new SearchModel();
-      inputModel.rowOffset = 0;
-      inputModel.rowsPerPage = 50;
-      inputModel.sortName = 'trainerName';
-      inputModel.sortType = 1;
-      inputModel.searchKeyword = this.searchKeyWord.trim();
-      this.getTrainerList(inputModel);
-    }
+    const inputModel = new SearchModel();
+    inputModel.rowOffset = 0;
+    inputModel.rowsPerPage = 50;
+    inputModel.sortName = 'trainerName';
+    inputModel.sortType = 1;
+    inputModel.searchKeyword = this.searchKeyWord ? this.searchKeyWord.trim() : null;
+    this.getTrainerList(inputModel);
   }
 
   view(id: number) {
