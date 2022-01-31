@@ -3,6 +3,7 @@ export class CurrentUser {
     public userName: string;
     public password: string;
     public email: string;
+    public createDate: string;
     public roleId: number;
     public role: string[];
     public totalRecord: number;

@@ -37,7 +37,7 @@ export class MenuComponent implements OnInit {
     this.configDataLoadedEvent.on().subscribe((data: ConfigData) => {
       that.profileImage = data.profileImage ? data.profileImage: null;
       that.userName = data.userName;
-      console.log('user name', that.userName);
+      //console.log('user name', that.userName);
       that.items = data.menus;
       if(data.role === AppConfigData.SuperAdminRole) {
         this.rightMenuItem = [

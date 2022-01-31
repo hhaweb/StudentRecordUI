@@ -174,4 +174,12 @@ export class AuthenticationService {
       APIUrls.AuthUrls.SaveUser,input
     );
   }
+
+  deleteUser(userId: string): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    return this.httpClient.get<HttpResponseData>(
+      APIUrls.AuthUrls.DeleteUser, {params}
+    );
+  }
 }

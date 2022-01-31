@@ -92,10 +92,10 @@
                 <td style="min-width: 50px;" class="justify-content-start" [pTooltip]="rowData.dspCenter"> 
                     {{ rowData.dspCenter }}
                 </td>
-                <td style="min-width: 250px;" class="justify-content-start">
+                <td style="min-width: 250px;" class="justify-content-center">
                     <button (click)="view(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="View" class="p-button-info"></button>
-                    <button (click)="edit(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
-                    <button (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+                    <button *ngIf="isEditable" (click)="edit(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
+                    <button *ngIf="isEditable" (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
                 </td>
             </tr>
         </ng-template>

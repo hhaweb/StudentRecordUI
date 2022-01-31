@@ -107,22 +107,10 @@
                     <td style="max-width: 150px;" class="justify-content-start">
                         {{rowData.batchNo}}
                     </td>
-                    <td style="min-width: 230px;" class="justify-content-start">
-                            
-                            <!-- <a pTooltip="View" style="margin-right: 15px;">
-                                <i class="pi pi-eye" (click)="viewStudent(rowData.id)"></i>
-                            </a>
-
-                            <a pTooltip="Edit"  style="margin-right: 15px;" *ngIf="isEditable">
-                                <i class="pi pi-pencil" (click)="editStudent(rowData.id)"></i>
-                            </a>   
-                            
-                            <a pTooltip="Delete"  *ngIf="isEditable" style="color: red;">
-                                <i class="pi pi-trash" (click)="delete(rowData)"></i>
-                            </a>   -->
+                    <td style="min-width: 230px;" class="justify-content-center">
                             <button (click)="viewStudent(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="View" class="p-button-info"></button>
-                            <button (click)="editStudent(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
-                            <button (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+                            <button *ngIf="isEditable"  (click)="editStudent(rowData.id)" pButton pRipple type="button" style="margin-right: 7px;" label="Edit" class="p-button-success"></button>
+                            <button *ngIf="isEditable" (click)="delete(rowData)" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
 
                     </td>
                 </tr>

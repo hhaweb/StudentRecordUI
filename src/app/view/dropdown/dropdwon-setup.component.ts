@@ -65,6 +65,6 @@ export class DropdwonSetupComponent implements OnInit {
     this.dropDownList = [];
     this.selectedName = null;
     this.dropDownList.push(new DropDownItem(null))
-    console.log('this.dropdownList' , this.dropDownList)
+    //console.log('this.dropdownList' , this.dropDownList)
   }
 }

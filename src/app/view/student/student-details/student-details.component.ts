@@ -77,7 +77,7 @@ export class StudentDetailsComponent implements OnInit {
         this.availableOrganizationType = data[3];
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
         this.isStudent = currentUser.roleName === AppConfigData.StudentRole ? true : false;
-        console.log('currentUser.roleName =', currentUser.roleName)
+        //console.log('currentUser.roleName =', currentUser.roleName)
 
         if(this.isViewOnly) {
           this.isEditable = false;
@@ -219,7 +219,7 @@ export class StudentDetailsComponent implements OnInit {
       (response: Course[]) => {
         if(response.length > 0) {
           this.recommendedCourseList = response;
-          console.log('recommend =>',this.recommendedCourseList)
+         // console.log('recommend =>',this.recommendedCourseList)
 
         }
       }, (error: any) => {

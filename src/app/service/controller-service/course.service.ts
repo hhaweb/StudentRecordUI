@@ -37,6 +37,12 @@ export class CourseService {
     return this.httpClient.post<HttpResponseData>(
       APIUrls.CourseUrls.AddStudent,courseList
     );
+  } 
+
+  removeStudent(course: Course): Observable<HttpResponseData> {
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.CourseUrls.RemoveStudent, course
+    );
   }
 
   getTrainerList(input: SearchModel):Observable<Trainer[]>{

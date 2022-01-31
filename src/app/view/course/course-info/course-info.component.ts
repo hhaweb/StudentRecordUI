@@ -12,7 +12,7 @@ import { StudentService } from 'src/app/service/controller-service/student.servi
 import { Course } from 'src/app/model/student/course.model';
 import { AuthorizationService } from 'src/app/service/utility/authorization.service';
 import { AppConfigData } from 'src/app/model/config-model/config-data';
-import { SelectItem } from 'primeng/api';
+import { ConfirmationService, SelectItem } from 'primeng/api';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 
@@ -49,6 +49,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     private courseService: CourseService,
     private authorizationService: AuthorizationService,
     private commonService: CommonService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -132,7 +133,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     this.studentService.getStudentsByCourseId(courseId).subscribe(
       (response: Student[]) => {
         if (response?.length > 0) {
-          console.log('student list ', response);
+         // console.log('student list ', response);
           this.studentList = response;
           this.totalStudents = response.length;
         }
@@ -207,7 +208,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   export() {
     this.utilityService.showLoading('Exporting');
-    console.log('export ==', this.course);
+    //console.log('export ==', this.course);
     if (this.course) {
       this.courseService.exportCourseDetail(this.course.id).subscribe(
         (res: any) => {
@@ -243,15 +244,16 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     const saveStudentList = studentList.reduce((a: Course[], c) => { 
       const index = this.studentList.findIndex(x => x.id == c.id);
       if(index === -1) {
-        const course = _.cloneDeep(this.course);
-        course.id = null;
+        const course = new Course();
+        c.gender === 'M' ? this.course.cohortSizeMale ++ : this.course.cohortSizeFemale ++;
+        course.id = this.course.id;
         course.cid = c.cid;
         course.did = c.did;
         a.push(course);
-        return a;
       }
+      return a;
      }, []);
-     console.log('studentList =', saveStudentList);
+    // console.log('studentList =', saveStudentList);
      if(!saveStudentList) {
       this.studentDialog.close();
       return;
@@ -260,8 +262,9 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
      this.courseService.addStudent(saveStudentList).subscribe(
       (response: HttpResponseData) => {
         if (response.status) {
-          this.utilityService.showSuccess('Success', 'Save Successfully');
+        //  this.utilityService.showSuccess('Success', 'Save Successfully');
           this.studentDialog.close();
+          this.save();
           this.getStudentByCourseId(this.course.id);
           this.isNew = false;
         } else {
@@ -280,5 +283,39 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         this.utilityService.hideLoading();
       }
     );
+  }
+
+  removeStudent(student: Student) {
+    this.confirmationService.confirm({
+      key: 'globalConfirm',
+      message:
+        'Are you sure that you want to remove ',
+      header: 'Confirmation',
+      icon: 'pi pi-question-circle',
+      accept: () => {
+        const course = _.cloneDeep(this.course);
+        course.cid = student.cid;
+        course.did = student.did;
+        this.courseService.removeStudent(course).subscribe(
+          (response: HttpResponseData) => {
+            if(response.status) {
+            //  this.utilityService.showSuccess('Success','Remove Successfully');
+              student.gender === 'M' ? this.course.cohortSizeMale -- : this.course.cohortSizeFemale --;
+              this.save();
+              this.getStudentByCourseId(this.course.id);
+            } else {
+              this.utilityService.showError('Error', response.message)
+            }
+          }, (error: any) => {
+            this.utilityService.subscribeError(error, 'Unable to remove')
+
+          }, () => {
+            this.utilityService.hideLoading();
+          }
+        );
+      },
+    });
+
+    // removeStudent
   }
 }

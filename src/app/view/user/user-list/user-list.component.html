@@ -23,9 +23,9 @@
                     User Name
                     <p-sortIcon field="trainerName"></p-sortIcon>
                 </th>
-                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="createdDate">
+                <th style="min-width: 50px;" class="justify-content-start" pSortableColumn="createDate">
                     Created Date
-                    <p-sortIcon field="createdDate"></p-sortIcon>
+                    <p-sortIcon field="createDate"></p-sortIcon>
                 </th>
                 <th style="min-width: 50px;" class="justify-content-center">
                     Action
@@ -42,16 +42,22 @@
                     {{ rowData.userName }}
                 </td>
                 <td style="min-width: 50px;" class="justify-content-start">
-                   {{ rowData.createdDate}}
+                   {{ rowData.createDate}}
                 </td>
                 <td style="min-width: 50px;" class="justify-content-center">
-                    <a style="margin-right: 10px;">
+                    <!-- <a style="margin-right: 10px;">
                         <i class="pi pi-pencil pr-15" (click) = "edit(rowData.id)"></i>
                     </a>
                     <a>
                         <i class="pi pi-trash red" (click)="delete(rowData)"></i>
-                    </a>
-        
+                    </a> -->
+                    <button  (click)="edit(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button"  label="Edit" class="p-button-success"></button>
+
+                    <span *ngIf="isEditable">
+                        <button (click)="delete(rowData)" style="margin-left: 10px;" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+                    </span>
+
+                  
                 </td>
             </tr>
         </ng-template>

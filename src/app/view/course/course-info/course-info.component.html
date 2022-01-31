@@ -199,9 +199,9 @@
         <p-card style="margin-top: 20px;">
             <div class="grid">
                 <div class="col-10"  style="font-size: 18px;">
-                    <strong>Student List</strong>
+                    <strong>Student List {{totalStudents}}</strong>
                 </div>
-                <div class="col-2" style="text-align: right;">
+                <div *ngIf="isEditable" class="col-2" style="text-align: right;">
                     <button (click)="openStudentDialog()" pButton pRipple type="button"  label="Add Student" class="p-button-success"></button>
                 </div>
                 <div class="col-12">
@@ -249,7 +249,7 @@
                                     Batch No
                                     <p-sortIcon field="bloodGroup"></p-sortIcon>
                                 </th>
-                                <th style="max-width: 150px;" class="justify-content-start">
+                                <th style="min-width: 250px;" class="justify-content-center">
                                     Action
                                 </th>
                             </tr>
@@ -275,7 +275,7 @@
                                 <th style="max-width: 150px;"></th>
                                 <th style="max-width: 150px;"></th>
                                 <th style="max-width: 150px;"></th>
-                                <th style="max-width: 150px;"></th>
+                                <th style="min-width: 250px;"></th>
                             </tr>
                         </ng-template>
                         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" 
@@ -308,14 +308,16 @@
                                 <td style="max-width: 150px;" class="justify-content-start">
                                     {{rowData.batchNo}}
                                 </td>
-                                <td style="max-width: 150px;" class="justify-content-start">
+                                <td style="min-width: 250px;" class="justify-content-center">
 
                                     <button style="margin-right: 10px;" pButton class="p-button-info" type="button"
                                         label="View" (click)="viewStudent(rowData.id)"></button>
                                     <span *ngIf="isEditable">
-                                        <button pButton class="p-button-success" type="button" label="Edit"
+                                        <button pButton class="p-button-success" type="button" label="Edit" style="margin-right: 10px;"
                                             (click)="editStudent(rowData.id)"></button>
                                     </span>
+                                    <button *ngIf="isEditable" (click)="removeStudent(rowData)"  pButton pRipple type="button" label="Remove" class="p-button-danger"></button>
+
                                 </td>
                             </tr>
                         </ng-template>

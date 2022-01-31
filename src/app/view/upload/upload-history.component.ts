@@ -32,7 +32,7 @@ export class UploadHistoryComponent implements OnInit {
       (res: UploadHistory[]) => {
         this.uploadHistoryList = res;
         this.totalRecords = res.length;
-        console.log('this.uploadHistoryList', this.totalRecords)
+        //console.log('this.uploadHistoryList', this.totalRecords)
       }, (error: any) => {
         this.utilityService.subscribeError(error, 'Unable to load upload history');
       }, () => {
@@ -42,7 +42,7 @@ export class UploadHistoryComponent implements OnInit {
   }
 
   showAll() {
-    console.log('enter', this.uploadHistoryList)
+    //console.log('enter', this.uploadHistoryList)
     this.dataTable.clear();
     this.dataTable.reset();
     this.getUploadHistory();

@@ -85,7 +85,7 @@ export class TrainerListComponent implements OnInit {
         if (response && response.length > 0) {
           this.trainerList = response;
           this.totalRecord = response[0].totalRecords;
-          console.log('trainerList', this.trainerList);
+          //console.log('trainerList', this.trainerList);
         }
       }, (error: any) => {
         this.tableLoading = false;

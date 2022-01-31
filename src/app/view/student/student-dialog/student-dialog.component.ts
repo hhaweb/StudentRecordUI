@@ -53,7 +53,7 @@ export class StudentDialogComponent implements OnInit {
       student.avatar
       student.base64Image
       this.selectedStudentList.push(student);
-      console.log('selected student =', this.selectedStudentList);
+      //console.log('selected student =', this.selectedStudentList);
     }
   }
 

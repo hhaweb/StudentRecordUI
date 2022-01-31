@@ -5,6 +5,7 @@ const baseUrl: string = environment.API_BASE + '/' + controllerName + '/';
 export const CourseUrls = {
     SaveCourse: baseUrl + 'save-course',
     AddStudent: baseUrl + 'add-student',
+    RemoveStudent: baseUrl + 'remove-student',
     GetCourseList: baseUrl + 'get-course-list',
     GetCourseById: baseUrl + 'get-course-by-id',
     GetTrainerList: baseUrl +'get-trainer-list',

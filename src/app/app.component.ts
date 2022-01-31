@@ -26,7 +26,7 @@ export class AppComponent   {
     private configDataLoadedEvent: ConfigDataLoadedEvent  ) {
     this.fullScreenService.on().subscribe(() => {
       this.showFullScreen = true;
-      console.log(' this.showFullScreen ' ,  this.showFullScreen );
+      //console.log(' this.showFullScreen ' ,  this.showFullScreen );
     });
   }
 

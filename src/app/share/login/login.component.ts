@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.fullScreenService.fire();
-    console.log('enter');
+    //console.log('enter');
   }
 
   login() {
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.utilityService.hideLoading();
           return;
         }
-        console.log('login', response);
+        //console.log('login', response);
         that.utilityService.hideLoading();
         that.webApiToken = response;
         const today = new Date();
@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         const loadSystemConfig = this.authenticationService.getSystemConfig();
         forkJoin([loadSystemConfig]).subscribe(
           (data: any) => {
-            console.log('get config data ', data[0]);
+            //console.log('get config data ', data[0]);
             this.app.configData = new ConfigData();
             this.app.configData = data[0];
             if (this.app.configData.routeList) {
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         );
       },
       (err) => {
-        console.log('error:::::', err.message);
+        //console.log('error:::::', err.message);
         let errorMessage = err.error
           ? err.error.error_description
           : 'Login Failed';

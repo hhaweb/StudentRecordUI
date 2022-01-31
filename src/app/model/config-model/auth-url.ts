@@ -5,6 +5,7 @@ const baseUrl: string = environment.API_BASE + '/' + controllerName + '/';
 export const AuthUrls = {
     Login: baseUrl + 'login',
     SaveUser: baseUrl + 'save-user',
+    DeleteUser: baseUrl + 'delete-user',
     GetCurrentUser: baseUrl + 'get-current-user',
     LogOut: baseUrl + 'logout',
     GetSystemConfig: baseUrl + 'get-system-config',

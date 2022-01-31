@@ -96,11 +96,11 @@
                     <span pTooltip='Training Location'> {{ rowData.trainingLoaction}}</span>
                  </td>
 
-                <td style="min-width: 230px;" class="justify-content-start">
+                <td style="min-width: 230px;" class="justify-content-center">
          
                     <button (click)="view(rowData.id)" pButton pRipple type="button"  label="View" class="p-button-info"></button>
-                    <button (click)="edit(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button"  label="Edit" class="p-button-success"></button>
-                    <button (click)="delete(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
+                    <button *ngIf="isEditable" (click)="edit(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button"  label="Edit" class="p-button-success"></button>
+                    <button *ngIf="isEditable" (click)="delete(rowData.id)" style="margin-left: 10px;" pButton pRipple type="button" label="Delete" class="p-button-danger"></button>
 
                 </td>
             </tr>
