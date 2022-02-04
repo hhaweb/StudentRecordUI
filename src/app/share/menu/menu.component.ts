@@ -45,23 +45,22 @@ export class MenuComponent implements OnInit {
             items: [{
                 label: 'Profile',
                 icon: 'pi pi-user',
-                command: () => {
+                escape: false,
+                command: (event) => {
                   this.goToUserProfile();
               }
             },
             {
               label: 'User List',
               icon: 'pi pi-fw pi-list',
-              command: () => {
-                this.goToUserList();
-            }
+              routerLink: ['user/user-list']
+            
             },
             {
               label: 'DropDown Setup',
               icon: 'pi pi-fw pi-list',
-              command: () => {
-                this.goToDropDownSetup();
-            }
+              routerLink: ['dropdown/downdown-setup']
+
             },
             {
                 label: 'Logout',
@@ -81,13 +80,6 @@ export class MenuComponent implements OnInit {
                 command: () => {
                   this.goToUserProfile();
               }
-            },
-            {
-              label: 'User List',
-              icon: 'pi pi-fw pi-list',
-              command: () => {
-                this.goToUserList();
-            }
             },
             {
                 label: 'Logout',

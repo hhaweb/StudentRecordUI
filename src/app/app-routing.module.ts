@@ -48,7 +48,9 @@ const routes: Routes = [
   },
   {
     path: RoutesModel.StudentProfile,
-    component: StudentProfileComponent
+    component: StudentProfileComponent,
+    canActivate: [CanActivateRoute],
+    data: { newRoute: RoutesModel.StudentProfile }
   },
   {
     path: RoutesModel.StudentDetails,
