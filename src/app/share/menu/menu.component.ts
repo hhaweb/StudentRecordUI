@@ -37,8 +37,8 @@ export class MenuComponent implements OnInit {
     this.configDataLoadedEvent.on().subscribe((data: ConfigData) => {
       that.profileImage = data.profileImage ? data.profileImage: null;
       that.userName = data.userName;
-      //console.log('user name', that.userName);
       that.items = data.menus;
+      console.log('menu item', that.items);
       if(data.role === AppConfigData.SuperAdminRole) {
         this.rightMenuItem = [
           {
@@ -48,7 +48,8 @@ export class MenuComponent implements OnInit {
                 escape: false,
                 command: (event) => {
                   this.goToUserProfile();
-              }
+              },
+              routerLink: []
             },
             {
               label: 'User List',
@@ -60,14 +61,14 @@ export class MenuComponent implements OnInit {
               label: 'DropDown Setup',
               icon: 'pi pi-fw pi-list',
               routerLink: ['dropdown/downdown-setup']
-
             },
             {
                 label: 'Logout',
                 icon: 'pi pi-times',
                 command: () => {
                   this.logout();
-              }
+              },
+              routerLink: []
             }
         ]}
         ]
@@ -79,14 +80,16 @@ export class MenuComponent implements OnInit {
                 icon: 'pi pi-user',
                 command: () => {
                   this.goToUserProfile();
-              }
+              },
+              routerLink: []
             },
             {
                 label: 'Logout',
                 icon: 'pi pi-times',
                 command: () => {
                   this.logout();
-              }
+              },
+              routerLink: []
             }
         ]}
         ]
@@ -98,14 +101,16 @@ export class MenuComponent implements OnInit {
                 icon: 'pi pi-user',
                 command: () => {
                   this.goToUserProfile();
-              }
+              },
+              routerLink: []
             },
             {
                 label: 'Logout',
                 icon: 'pi pi-times',
                 command: () => {
                   this.logout();
-              }
+              },
+              routerLink: []
             }
         ]}
         ]
