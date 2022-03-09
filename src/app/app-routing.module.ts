@@ -1,3 +1,4 @@
+import { PasswordChangeComponent } from './share/password-change/password-change.component';
 import { DropdwonSetupComponent } from './view/dropdown/dropdwon-setup.component';
 import { RoutesModel } from './model/config-model/route-model';
 import { UserListComponent } from './view/user/user-list/user-list.component';
@@ -114,9 +115,12 @@ const routes: Routes = [
     component: DropdwonSetupComponent,
     canActivate: [CanActivateRoute],
     data: { newRoute: RoutesModel.DropDownSetup }
-
+  },
+  {
+    path: RoutesModel.PasswordChange,
+    component: PasswordChangeComponent
   }
-
+  
 ];
 
 @NgModule({

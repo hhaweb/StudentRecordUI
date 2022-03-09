@@ -4,6 +4,7 @@ export class CurrentUser {
     public password: string;
     public email: string;
     public createDate: string;
+    public firstTimeLogin: boolean;
     public roleId: number;
     public role: string[];
     public totalRecord: number;
@@ -14,6 +15,7 @@ export class User {
     public userName: string;
     public password: string;
     public roleId: number;
+    public firstTimeLogin: boolean;
     public role: string[];
     constructor(password: string, userName: string) {
         this.password = password;
@@ -37,6 +39,7 @@ export class TokenResponse {
     // public menuList: Menu[];
     // public roles: string[];
     public status: boolean;
+    public firstTimeLogin: boolean;
 }
 
 export class LoginUser {

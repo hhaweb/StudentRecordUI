@@ -121,6 +121,14 @@ export class StudentProfileComponent implements OnInit {
         return;
       }
     }
+
+    if(this.student.did) {
+      if(!this.validateDid(this.student.did)) {
+        this.utilityService.showWarning('Warning','Invalid did format');
+        return;
+      }
+    }
+
     this.student.cid = this.student.cid.trim();
     this.student.did = this.student.did.trim();
     this.utilityService.showLoading('Saving...')
@@ -189,6 +197,19 @@ export class StudentProfileComponent implements OnInit {
         }
       }
       return true;
+    } else {
+      return true;
+    }
+  }
+
+  validateDid(did: string) {
+    if(did) {
+      const pattern = '[D][S][(][0-9]+[)][0-9]+[-][0-9]+'
+      if( did.trim().match(pattern) ) {
+        return true;
+      } else {
+        return false;
+      }
     } else {
       return true;
     }

@@ -5,6 +5,7 @@ import { DropDownItem } from './../../model/common/common.model';
 import { Component, Input, OnInit } from '@angular/core';
 import { LEADING_TRIVIA_CHARS } from '@angular/compiler/src/render3/view/template';
 import { ThrowStmt } from '@angular/compiler';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-dropdwon-list',
@@ -21,7 +22,8 @@ export class DropdwonListComponent implements OnInit {
 
   constructor(
     private utilityService: UtilityService,
-    private commonService: CommonService
+    private commonService: CommonService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -67,27 +69,38 @@ export class DropdwonListComponent implements OnInit {
     this.dropDownItem.push(new DropDownItem(this.dropDownName));
   }
 
+
   delete() {
     if(!this.dropDownName) {
       this.utilityService.showWarning('Warning', 'Please select dropdown name');
       return;
     }
 
-    this.utilityService.showLoading('Deleting')
-    this.commonService.deleteDropDown(this.dropDownName).subscribe(
-      (response: HttpResponseData) => {
-        if(response.status) {
-          this.utilityService.showSuccess('Success', 'Delete Successfully')
-          this.dropDownItem = [];
-          this.dropDownName = null;
-        } else {
-          this.utilityService.showError('Error', "Unable to delete")
-        }
-      }, (error: any) => {
-        this.utilityService.subscribeError(error,"Unable to delete")
-      } ,() => {
-        this.utilityService.hideLoading();
-      }
-    );
+    this.confirmationService.confirm({
+      key: 'globalConfirm',
+      message:
+        'Are you sure that you want to delete ?',
+      header: 'Confirmation',
+      icon: 'pi pi-question-circle',
+      accept: () => {
+        this.utilityService.showLoading('Deleting')
+        this.commonService.deleteDropDown(this.dropDownName).subscribe(
+          (response: HttpResponseData) => {
+            if(response.status) {
+              this.utilityService.showSuccess('Success', 'Delete Successfully')
+              this.dropDownItem = [];
+              this.dropDownName = null;
+            } else {
+              this.utilityService.showError('Error', "Unable to delete")
+            }
+          }, (error: any) => {
+            this.utilityService.subscribeError(error,"Unable to delete")
+          } ,() => {
+            this.utilityService.hideLoading();
+          }
+        );
+      },
+    });
   }
+
 }

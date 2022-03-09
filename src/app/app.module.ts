@@ -67,6 +67,9 @@ import {AvatarGroupModule} from 'primeng/avatargroup';
 import {PanelModule} from 'primeng/panel';
 import { StudentDialogComponent } from './view/student/student-dialog/student-dialog.component';
 import { ChipModule } from 'primeng/chip';
+import {CheckboxModule} from 'primeng/checkbox';
+import { PasswordChangeComponent } from './share/password-change/password-change.component';
+import {BadgeModule} from 'primeng/badge';
 
 
 @NgModule({
@@ -90,7 +93,8 @@ import { ChipModule } from 'primeng/chip';
     CourseListComponent,
     DropdwonSetupComponent,
     DropdwonListComponent,
-    StudentDialogComponent
+    StudentDialogComponent,
+    PasswordChangeComponent
   ],
   imports: [
     BrowserModule,
@@ -108,9 +112,11 @@ import { ChipModule } from 'primeng/chip';
     CardModule,
     FileUploadModule,
     ConfirmDialogModule,
+    CheckboxModule,
     DropdownModule,
     RadioButtonModule,
     InputNumberModule,
+    BadgeModule,
     MessagesModule,
     MessageModule,
     MenuModule,

@@ -199,7 +199,9 @@
         <p-card style="margin-top: 20px;">
             <div class="grid">
                 <div class="col-10"  style="font-size: 18px;">
-                    <strong>Student List - {{totalStudents}}</strong>
+                    <strong>Student List 
+                        <i class="pi pi-users icon-style" pBadge [value]="totalStudents"></i>
+                    </strong>
                 </div>
                 <div *ngIf="isEditable" class="col-2" style="text-align: right;">
                     <button (click)="openStudentDialog()" pButton pRipple type="button"  label="Add Student" class="p-button-success"></button>

@@ -63,6 +63,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         this.isNew = true;
       }
     });
+    this.totalStudents = 0;
     const loadCurrentCuser = this.authorizationService.currentUser();
     const loadTrainerItems = this.courseService.getTrainerItems();
     const loadCourseLevel = this.commonService.getDropDownItem("Course Level");

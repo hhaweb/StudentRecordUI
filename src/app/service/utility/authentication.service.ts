@@ -175,6 +175,14 @@ export class AuthenticationService {
     );
   }
 
+  changePassword(password: string): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    params = params.append('password', password);
+    return this.httpClient.get<HttpResponseData>(
+      APIUrls.AuthUrls.ChangePassword, {params}
+    );
+  }
+
   deleteUser(userId: string): Observable<HttpResponseData> {
     let params = new HttpParams();
     params = params.append('userId', userId);

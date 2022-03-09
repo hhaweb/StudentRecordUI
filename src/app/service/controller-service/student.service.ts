@@ -32,6 +32,13 @@ export class StudentService {
     );
   }
 
+  deleteStudents(student: Student[]): Observable<HttpResponseData> {
+    let params = new HttpParams();
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.StudentUrls.DeleteStudents, student
+    );
+  }
+
   getStudentList(input: SearchModel): Observable<Student[]> {
     return this.httpClient.post<Student[]>(
       APIUrls.StudentUrls.GetStudentList, input

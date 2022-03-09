@@ -85,11 +85,15 @@ export class UserDetailComponent implements OnInit {
       this.utilityService.showWarning('Warning','Please add user name');
       return;
     }
-    if(!this.user.password || this.user.password.trim() == '') {
-      this.utilityService.showWarning('Warning','Please add password');
+    if(!this.user.id) {
+      if(!this.user.password || this.user.password.trim() == '' ) {
+        this.utilityService.showWarning('Warning','Please add password');
+        return;
+      }
     }
     if(!this.selectedRoleId) {
       this.utilityService.showWarning('Warning', 'Please add role')
+      return;
     } else {
       this.user.roleId = Number(this.selectedRoleId);
     }
@@ -101,7 +105,7 @@ export class UserDetailComponent implements OnInit {
          this.utilityService.showSuccess('Success', "Save Successfully");
          this.getUserById(response.id);
         } else {
-
+          this.utilityService.showError('Error', response.message);
         }
       }, (error: any) => {
         this.utilityService.subscribeError(error, 'Unable to save');

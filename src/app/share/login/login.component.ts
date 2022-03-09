@@ -1,3 +1,4 @@
+import { RoutesModel } from './../../model/config-model/route-model';
 import { AuthorizationService } from './../../service/utility/authorization.service';
 import { UtilityService } from './../../service/utility/utility.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
@@ -59,6 +60,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.utilityService.hideLoading();
           return;
         }
+        
         //console.log('login', response);
         that.utilityService.hideLoading();
         that.webApiToken = response;
@@ -104,16 +106,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
               expirationDate,
               '/'
             );
-
-            if (this.app.configData.role === AppConfigData.SuperAdminRole) {
-              this.returnUrl = 'upload/data-upload'
-            } else if (this.app.configData.role === AppConfigData.AdminRole) {
-              this.returnUrl = 'student/student-list'
-            } else {
-              this.returnUrl = 'student/student-details/' + this.app.configData.studentId + '/view'
-            }
-            void this.router.navigate([this.returnUrl]);
             this.configDataLoadedEvent.fire(data[0]);
+
+            if(response.firstTimeLogin) {
+              void this.router.navigate([RoutesModel.PasswordChange]);
+            } else {
+              if (this.app.configData.role === AppConfigData.SuperAdminRole) {
+                this.returnUrl = 'upload/data-upload'
+              } else if (this.app.configData.role === AppConfigData.AdminRole) {
+                this.returnUrl = 'student/student-list'
+              } else {
+                this.returnUrl = 'student/student-details/' + this.app.configData.studentId + '/view'
+              }
+              void this.router.navigate([this.returnUrl]);
+            }
           }
           ,
           (error: any) => {

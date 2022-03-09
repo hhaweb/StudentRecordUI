@@ -11,5 +11,7 @@ export const AuthUrls = {
     GetSystemConfig: baseUrl + 'get-system-config',
     GetUserList: baseUrl + 'get-user-list',
     GetUser: baseUrl + 'get-user',
-    GetRoles: baseUrl + 'get-roles'
+    GetRoles: baseUrl + 'get-roles',
+    ChangePassword: baseUrl + 'change-password',
+    
 }

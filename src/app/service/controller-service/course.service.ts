@@ -101,11 +101,23 @@ export class CourseService {
     );
   }
 
+  deleteTrainers(trainer: Trainer[]): Observable<HttpResponseData> {
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.CourseUrls.DeleteTainers, trainer
+    );
+  }
+
   deleteCourseById(courseId: string): Observable<HttpResponseData> {
     let params = new HttpParams();
     params = params.append('courseId', courseId);
     return this.httpClient.get<HttpResponseData>(
       APIUrls.CourseUrls.DeleteCourse, { params }
+    );
+  }
+
+  deleteCourses(course: Course[]): Observable<HttpResponseData> {
+    return this.httpClient.post<HttpResponseData>(
+      APIUrls.CourseUrls.DeleteCourses, course
     );
   }
 

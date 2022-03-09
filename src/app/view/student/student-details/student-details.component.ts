@@ -39,7 +39,6 @@ export class StudentDetailsComponent implements OnInit {
   availableEmploymentStatus: SelectItem[] =[];
   availableOrganizationType: SelectItem[] =[];
   availableBloodGroups: SelectItem[];
-  availableMaritalStatues: SelectItem[];
   title: string = "Create New Student";
   isViewOnly: boolean;
 
@@ -141,13 +140,15 @@ export class StudentDetailsComponent implements OnInit {
     this.courseList = [];
     this.recommendedCourseList = [];
     this.yearRange = '1920:'+new Date().getFullYear().toString();
-    this.availableGender = [{label: 'Male', value: 'M'}, {label: 'Female', value: 'F'}];
-    this.availableMartialStatus = [{label: '-', value: null}, {label: 'Single', value: 'Single'}, {label: 'Married', value: 'Married'},
-    {label: 'Select', value: 'Select'},{label: 'Divorced', value: 'Divorced'},{label: 'Widowed', value: 'Widowed'}];
-   // this.availableEmploymentStatus = [{label: 'FT',value: 'FT'},{label: 'PT',value: 'PT'},{label: 'Intern',value: 'Intern'},{label: 'OJT',value: 'OJT'}]
-   // this.availableOrganizationType = [{label: 'Gov',value: 'Gov'},{label: 'Private',value: 'Private'}]
+    this.availableGender = [ 
+      {label: '-', value: null},
+      {label: 'Male', value: 'M'}, 
+      {label: 'Female', value: 'F'}
+    ];
+
     this.availableBloodGroups =
     [
+      {label: '-', value: null},
       { label: "A-", value: "A-" },
       { label: "AB-", value: "AB-" },
       { label: "B-", value: "B-" },
@@ -159,8 +160,10 @@ export class StudentDetailsComponent implements OnInit {
       { label: "O+", value: "O+" }
     ]
 
-  this.availableMaritalStatues =
-    [{ label: "Single", value: "Single" },
+  this.availableMartialStatus =
+    [
+    {label: '-', value: null},
+    { label: "Single", value: "Single" },
     { label: "Married", value: "Married" },
     { label: "Divorced", value: "Divorced" },
     { label: "Widowed", value: "Widowed" },
@@ -184,6 +187,8 @@ export class StudentDetailsComponent implements OnInit {
             this.getCoursesByCid(res.cid);
             this.getRecommendedCourses(res.cid);
            this.utilityService.hideLoading();
+         } else {
+          this.utilityService.showError('Errir', 'Unauthorize to look other student data');
          }
        },(error: any) => {
        this.utilityService.hideLoading()

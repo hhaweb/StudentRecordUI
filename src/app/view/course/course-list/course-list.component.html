@@ -1,4 +1,4 @@
-<div class="grid justify-content-center p-card" style="margin-top: 15px">
+<div class="grid p-card" style="margin-top: 15px">
     <div class="col-6 text-right" *ngIf="isShowAll">
             <input  type="text" id="name" [(ngModel)] = "searchKeyWord" (onClick) ="search()" pInputText placeholder="Search with id or name" style="width: 30%; margin-right: 10px;"/>
             <button pButton  type="button" label="Search" (click)="search()" ></button>
@@ -10,15 +10,21 @@
         </span>
         <button *ngIf="courseList.length > 0" pButton  type="button" class="p-button-success" label="Export" (click)="export()" ></button>  
     </div>
-    <div class="col-12" *ngIf="!isShowAll"><strong style="font-size: 1rem;">Course List</strong></div>
+    <div class="col-6" ><strong *ngIf="!isShowAll" style="font-size: 1rem;">Course List</strong></div>
+    <div class="col-6" style="text-align: right;" *ngIf="selectedCourseList.length > 0 && isEditable">
+        <p-button label="Delete" (click)="deleteCourses()" icon="pi pi-users" styleClass="p-button-danger" [badge]="selectedCourseList.length" badgeClass="p-badge-danger"></p-button>
+    </div>
     <div class="col-12">
-        <p-table  #dt rowHover="true" [value]="courseList" [paginator]="true" [rows]="50"
+        <p-table  #dt rowHover="true" styleClass="p-datatable-striped" [value]="courseList" [paginator]="true" [rows]="50"
         [rowsPerPageOptions]="[50, 100, 200]" [totalRecords]="totalRecord" [lazy]="true" [lazyLoadOnInit]="false"
         (onLazyLoad)="lazyLoadEvent($event)"  scrollable="true" scrollHeight="600px" 
-        [loading] = "tableLoading"> 
+        [loading] = "tableLoading" [(selection)]="selectedCourseList">  
         <ng-template pTemplate="header">
             <tr >
-                <th style="max-width: 120px;" class="justify-content-start" pSortableColumn="courseId">
+                <th style="max-width: 50px;">
+                    <p-checkbox [(ngModel)]="deleteAll" (click)="checkAll()" binary="true" inputId="binary"></p-checkbox>
+                </th>
+                <th style="max-width: 150px;" class="justify-content-start" pSortableColumn="courseId">
                     Course ID
                     <p-sortIcon field="courseId"></p-sortIcon>
                 </th>
@@ -55,7 +61,7 @@
                     <span pTooltip='Batch Number'> Batch No.</span>
                     <p-sortIcon field="batchNo"></p-sortIcon>
                 </th>
-                <th style="min-width: 200px;" class="justify-content-start" pSortableColumn="trainingLoaction">   
+                <th style="min-width: 150px;" class="justify-content-start" pSortableColumn="trainingLoaction">   
                     <span pTooltip='Training Location'>Location</span>
                     <p-sortIcon field="trainingLoaction"></p-sortIcon>
                 </th>
@@ -64,8 +70,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex" let-expanded="expanded"
             let-columns="columns">
-            <tr #row [pSelectableRow]="rowData" id="{{ rowData.courseId }}">
-                <td style="max-width: 120px;">
+            <tr #row [pSelectableRow]="rowData" class="p-selectable-row" id="{{ rowData.courseId }}">
+                <td style="max-width: 50px;">
+                    <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                </td>
+                <td style="max-width: 150px;">
                     {{rowData.courseId}}
                 </td>
                 <td style="min-width: 200px;" class="justify-content-start" >
@@ -92,7 +101,7 @@
                  <td style="max-width: 150px;" class="justify-content-start">
                     {{ rowData.batchNo}}
                  </td>
-                 <td style="min-width: 200px;" class="justify-content-start" >
+                 <td style="min-width: 150px;" class="justify-content-start" >
                     <span pTooltip='Training Location'> {{ rowData.trainingLoaction}}</span>
                  </td>
 
@@ -107,7 +116,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
             <tr>
-                <td [attr.colspan]="11">No records found</td>
+                <td [attr.colspan]="12">No records found</td>
             </tr>
         </ng-template>
         </p-table>

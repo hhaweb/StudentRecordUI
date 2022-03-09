@@ -28,6 +28,8 @@ export class StudentListComponent implements OnInit {
   trainerList: TrainerListComponent;
 
   students: Student[];
+  selectedStudents: Student[];
+  deleteAll: boolean;
   currentSearch: SearchModel;
   totalStudents = 0;
   studentSearchKeyWord: string;
@@ -49,6 +51,7 @@ export class StudentListComponent implements OnInit {
   ngOnInit(): void {
     this.tableLoading = false;
     this.students = [];
+    this.selectedStudents = [];
     const loadCurrentCuser = this.authorizationService.currentUser();
     forkJoin([loadCurrentCuser]).subscribe(
       (data: any) => {
@@ -83,11 +86,11 @@ export class StudentListComponent implements OnInit {
     this.currentSearch = inputModel;
     this.studentService.getStudentList(inputModel).subscribe(
       (response: Student[]) => {
-       if (response?.length > 0) {
-        this.students = response;
-        this.totalStudents = response[0].totalRecord;
-       }
-      
+        if (response?.length > 0) {
+          this.students = response;
+          this.totalStudents = response[0].totalRecord;
+        }
+
       },
       (error: any) => {
         this.tableLoading = false;
@@ -110,8 +113,8 @@ export class StudentListComponent implements OnInit {
 
 
   search(searchType: string) {
-    
-    if(searchType === 'student') {
+
+    if (searchType === 'student') {
       this.searchInfo = 'student';
       const inputModel = new SearchModel();
       inputModel.rowOffset = 0;
@@ -121,11 +124,11 @@ export class StudentListComponent implements OnInit {
       inputModel.searchKeyword = this.studentSearchKeyWord ? this.studentSearchKeyWord.trim() : null;
       this.getStudentList(inputModel);
 
-    } else if(searchType === 'course') {
+    } else if (searchType === 'course') {
       this.searchInfo = 'course';
       this.courseList.searchFromStudentList(this.courseSearchKeyWord);
 
-    } else if(searchType === 'trainer'){
+    } else if (searchType === 'trainer') {
       this.searchInfo = 'trainer';
       this.trainerList.searchFromStudent(this.trainerSearchKeyWord);
     }
@@ -136,24 +139,26 @@ export class StudentListComponent implements OnInit {
     this.studentSearchKeyWord = null;
     this.courseSearchKeyWord = null;
     this.trainerSearchKeyWord = null;
+    this.selectedStudents = [];
     this.dataTable.clear();
     this.searchInfo = 'student'
+    this.deleteAll = false;
     //this.DefaultSearch();
   }
 
   export() {
     this.utilityService.showLoading('Exporting');
-    if(this.studentSearchKeyWord) {
+    if (this.studentSearchKeyWord) {
       this.currentSearch.searchKeyword = this.studentSearchKeyWord.trim();
     }
     this.studentService.exportStudentList(this.currentSearch).subscribe(
       (res: any) => {
         this.utilityService.hideLoading();
-        if(!res.headers.get('content-disposition')) {
+        if (!res.headers.get('content-disposition')) {
           this.utilityService.subscribeError(
             'Error',
             'File not found'
-          );  
+          );
         }
         this.utilityService.fileSaveAs(res);
       },
@@ -162,7 +167,7 @@ export class StudentListComponent implements OnInit {
           error,
           'Unable to download attachment'
         );
-        setTimeout(() => this.utilityService.hideLoading(),1000);
+        setTimeout(() => this.utilityService.hideLoading(), 1000);
       },
       () => {
         this.utilityService.hideLoading();
@@ -174,14 +179,14 @@ export class StudentListComponent implements OnInit {
     this.confirmationService.confirm({
       key: 'globalConfirm',
       message:
-        'Are you sure that you want to delete (' +student.name+')?',
+        'Are you sure that you want to delete (' + student.name + ')?',
       header: 'Confirmation',
       icon: 'pi pi-question-circle',
       accept: () => {
         this.studentService.deleteStudentById(student.id.toString()).subscribe(
           (response: HttpResponseData) => {
-            if(response.status) {
-              this.utilityService.showSuccess('Success','Delete Successfully');
+            if (response.status) {
+              this.utilityService.showSuccess('Success', 'Delete Successfully');
               this.showAll();
             } else {
               this.utilityService.showError('Error', response.message)
@@ -199,5 +204,40 @@ export class StudentListComponent implements OnInit {
 
   create() {
     void this.router.navigate([`${RoutesModel.StudentProfile}`]);
+  }
+
+  checkAll() {
+    this.selectedStudents = this.deleteAll ? this.students : [];
+    //console.log(this.deleteAll);
+  }
+
+  deleteStudents() {
+    if(this.selectedStudents.length > 0) {
+      this.confirmationService.confirm({
+        key: 'globalConfirm',
+        message:
+          'Are you sure that you want to delete (' + this.selectedStudents.length + ') students ?',
+        header: 'Confirmation',
+        icon: 'pi pi-question-circle',
+        accept: () => {
+          this.utilService.showLoading('Deleting');
+          this.studentService.deleteStudents(this.selectedStudents).subscribe(
+            (response: HttpResponseData) => {
+              if (response.status) {
+                this.utilityService.showSuccess('Success', 'Delete Successfully');
+                this.showAll();
+              } else {
+                this.utilityService.showError('Error', response.message)
+              }
+            }, (error: any) => {
+              this.utilityService.subscribeError(error, 'Unable to delete')
+  
+            }, () => {
+              this.utilityService.hideLoading();
+            }
+          );
+        },
+      });
+    }
   }
 }

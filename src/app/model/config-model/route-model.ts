@@ -14,6 +14,7 @@ export const RoutesModel = {
     TrainerDetail: 'trainer/trainer-detail',
     UserList: 'user/user-list',
     UserDetail: 'user/user-detail',
-    DropDownSetup: 'dropdown/downdown-setup'
+    DropDownSetup: 'dropdown/downdown-setup',
+    PasswordChange: 'change-password'
 
 }

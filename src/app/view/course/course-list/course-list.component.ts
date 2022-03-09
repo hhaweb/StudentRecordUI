@@ -23,11 +23,13 @@ export class CourseListComponent implements OnInit {
   isShowAll: boolean = true;
 
   courseList: Course[];
+  selectedCourseList: Course[];
   tableLoading: boolean;
   totalRecord: number;
   searchKeyWord: string;
   isEditable: boolean;
   currentSearch: SearchModel;
+  deleteAll: boolean;
   constructor(
     private courseService: CourseService,
     private router: Router,
@@ -45,6 +47,7 @@ export class CourseListComponent implements OnInit {
         this.isEditable = currentUser.roleName === AppConfigData.SuperAdminRole ? true : false;
       });
     this.courseList = [];
+    this.selectedCourseList = [];
     if(this.isShowAll) {
       this.DefaultSearch();
     }
@@ -126,6 +129,8 @@ export class CourseListComponent implements OnInit {
   showAll() {
     this.dataTable.clear();
     this.searchKeyWord = null;
+    this.selectedCourseList = [];
+    this.deleteAll = false;
     //this.DefaultSearch();
   }
 
@@ -166,6 +171,7 @@ export class CourseListComponent implements OnInit {
       header: 'Confirmation',
       icon: 'pi pi-question-circle',
       accept: () => {
+        this.utilityService.showLoading('Deleting')
         this.courseService.deleteCourseById(id.toString()).subscribe(
           (response: HttpResponseData) => {
             if(response.status) {
@@ -185,4 +191,37 @@ export class CourseListComponent implements OnInit {
     });
   }
 
+  checkAll() {
+    this.selectedCourseList = this.deleteAll ? this.courseList : [];
+  }
+
+  deleteCourses() {
+    if(this.selectedCourseList.length > 0) {
+      this.confirmationService.confirm({
+        key: 'globalConfirm',
+        message:
+          'Are you sure that you want to delete (' + this.selectedCourseList.length + ') courses ?',
+        header: 'Confirmation',
+        icon: 'pi pi-question-circle',
+        accept: () => {
+          this.utilityService.showLoading('Deleting')
+          this.courseService.deleteCourses(this.selectedCourseList).subscribe(
+            (response: HttpResponseData) => {
+              if (response.status) {
+                this.utilityService.showSuccess('Success', 'Delete Successfully');
+                this.showAll();
+              } else {
+                this.utilityService.showError('Error', response.message)
+              }
+            }, (error: any) => {
+              this.utilityService.subscribeError(error, 'Unable to delete')
+  
+            }, () => {
+              this.utilityService.hideLoading();
+            }
+          );
+        },
+      });
+    }
+  }
 }
