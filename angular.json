@@ -30,6 +30,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/WEB-INF",
               "src/favicon.png",
               "src/assets"
             ],
@@ -44,6 +45,7 @@
           },
           "configurations": {
             "production": {
+              
               "budgets": [
                 {
                   "type": "initial",
